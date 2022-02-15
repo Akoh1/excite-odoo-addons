@@ -1,0 +1,107 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<record id="view_checklist_tree" model="ir.ui.view">
+	   	<field name="name">checklist.information.tree</field>
+	  	<field name="model">checklist.information</field>
+	   	<field name="priority">2</field>
+	   	<field name="arch" type="xml">
+	    	<tree string="Checklist">
+	     		<field name="checklist_id"/>
+	     		<field name="responsible_user_id"/>
+	     		<field name="remarks"/>
+	     		<field name="state"/>	     
+	    	</tree>
+	   	</field>
+    </record> 
+
+    <record id="view_checklist_form" model="ir.ui.view">
+	   	<field name="name">checklist.information.form</field>
+	   	<field name="model">checklist.information</field>
+	   	<field name="arch" type="xml">
+	    <form string="Checklist" >
+	    	<header>
+	    		
+                <button name="action_confirm" string="Confirm"
+                    	type="object" states="new" class="btn-primary"/>
+                <button name="action_approve" string="Approve"
+                    	type="object" states="confirm" class="btn-primary"/>
+	    		<field name="state" widget="statusbar" statusbar_visible="new,confirm,approved"/>
+	    	</header>
+	     	<sheet> 
+	     		<group>    
+					<field name="checklist_id" attrs="{'readonly' : [('state','!=','new')]}"/>
+					<field name="responsible_user_id" attrs="{'readonly' : [('state','!=','new')]}"/>
+					<field name="remarks" attrs="{'readonly' : [('state','!=','new')]}"/>
+			
+					<field name="checklist_line_ids" attrs="{'readonly' : [('state','!=','new')]}"/>
+				</group>
+	     	</sheet> 
+	    </form> 
+	   	</field> 
+	</record> 
+
+	<record id="action_exit_checklist" model="ir.actions.act_window">
+	  	<field name="name">Checklist</field>
+	  	<field name="type">ir.actions.act_window</field>
+	  	<field name="res_model">checklist.information</field>
+	  	<field name="binding_view_types">form</field>
+	  	<field name="view_mode">tree,form,kanban</field>
+	  	<field name="help" type="html">
+	   		<p class="oe_view_nocontent_create"> </p>
+	   		<p></p>
+	  	</field>
+	</record>
+	
+	<menuitem action="action_exit_checklist" id="menu_employee_exit_checklist" parent="sub_menu_employee_exit" name="Employee Exit Checklist" sequence="30" groups="hr_exit_process.hr_exit_hr_manager_id"/>
+
+	<record id="view_checklist_new_tree" model="ir.ui.view">
+	   	<field name="name">exit.checklist.tree</field>
+	   	<field name="model">exit.checklist</field>
+	   	<field name="priority">2</field>
+	   	<field name="arch" type="xml">
+	    <tree string="Checklist">
+	     	<field name="name"/>
+	     	<field name="responsible_user_id"/>
+	     	<field name="notes"/>
+	    </tree>
+	   	</field>
+    </record> 
+
+    <record id="view_checklist_new_form" model="ir.ui.view">
+	   	<field name="name">exit.checklist.form</field>
+	   	<field name="model">exit.checklist</field>
+	   	<field name="arch" type="xml">
+	    <form string="Checklist" >
+	    	<header>
+            </header>
+	     	<sheet> 
+	     		<group>    
+					<field name="name"/>
+					<field name="responsible_user_id"/>
+					<field name="notes"/>
+					<field name="checklist_line_ids">
+				 	<tree editable='bottom'>
+	    				<field name="name"/>	
+	    			</tree>
+	    			</field>
+				</group>
+	     	</sheet> 
+	    </form> 
+	   </field> 
+	</record> 
+
+	<record id="action_exit_checklist_new" model="ir.actions.act_window">
+	  	<field name="name">Checklist</field>
+	  	<field name="type">ir.actions.act_window</field>
+	  	<field name="res_model">exit.checklist</field>
+	  	<field name="binding_view_types">form</field>
+	  	<field name="view_mode">tree,form,kanban</field>
+	  	<field name="help" type="html">
+	   		<p class="oe_view_nocontent_create"> </p>
+	   		<p></p>
+	  	</field>
+	</record>
+
+	<menuitem action="action_exit_checklist_new" id="menu_employee_exit_checklist_config" parent="sub_menu_employee_exit" name="Configuration Checklist" sequence="31" groups="hr_exit_process.hr_exit_hr_manager_id" />
+	
+</odoo>

@@ -1,0 +1,65 @@
+
+<odoo>
+	<data>
+		<record id="view_payroll_register_month" model="ir.ui.view">
+			<field name="name">Paryroll Register</field>
+			<field name="model">payroll.register</field>
+			<field name="arch" type="xml">
+				<form string="Employee Payroll Register">
+					<div> This wizard will print report of payroll register for given dates" </div>
+					<group colspan="4">
+						<field name="name" />
+						<newline />
+						<field name="start_date" />
+						<field name="end_date" />
+						<field name="xls_output" colspan="2" />
+					</group>
+					<notebook colspan="4">
+						<page string="Salary Rules">
+							<group colspan="4">
+								<separator string="Salary Rules" colspan="4" />
+								<field name="rule_ids" nolabel="1" />
+							</group>
+						</page>
+						<page string="Employees">
+							<group colspan="4">
+								<separator string="Employees" colspan="4" />
+								<field name="employee_ids" nolabel="1" />
+							</group>
+						</page>
+					</notebook>
+					<footer>
+						<button name="print_report" string="Print" type="object" class="oe_highlight" />
+
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_payroll_register_month" model="ir.actions.act_window">
+			<field name="name">Paryroll Register</field>
+			<field name="res_model">payroll.register</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem name="Payroll Register" id="menu_payroll_register_new"
+				  parent="hr_payroll.menu_hr_payroll_report"
+				  action="ng_hr_payroll.action_payroll_register_month"
+				  groups="hr_payroll.group_hr_payroll_manager"
+				  sequence="11"
+			  />
+
+<!--		<menuitem name="Pension Administration" id="hr_pension"-->
+<!--              parent="hr.menu_human_resources_configuration"-->
+<!--              action="employee_custom.hr_pension_window"-->
+<!--              groups="hr.group_hr_manager"-->
+<!--              sequence="2"/>-->
+
+<!--		<menuitem name="Paryroll Register" parent="hr.menu_hr_reporting_timesheet"-->
+<!--			sequence="5" action="ng_hr_payroll.action_payroll_register_month"-->
+<!--			id="menu_payroll_register_month" groups="hr.group_hr_user,hr.group_hr_manager" />-->
+
+	</data>
+</odoo>

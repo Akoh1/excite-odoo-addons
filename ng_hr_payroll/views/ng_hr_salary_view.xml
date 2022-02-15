@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<record id="view_pfa_tree" model="ir.ui.view">
+			<field name="name">pfa.tree</field>
+			<field name="model">pfa</field>
+			<field name="arch" type="xml">
+				<tree string="Pension Funds Administrators">
+					<field name="name" />
+					<field name="code" />
+					<field name="name_person" />
+					<field name="email" />
+					<field name="phone" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_pfa_form" model="ir.ui.view">
+			<field name="name">pfa.form</field>
+			<field name="model">pfa</field>
+			<field name="arch" type="xml">
+				<form string="Pension Funds Administrators">
+					<group>
+						<group>
+							<field name="name" />
+							<field name="name_person" />
+							<field name="phone" />
+						</group>
+						<group>
+							<field name="code" />
+							<field name="email" />
+						</group>
+					</group>
+					<field name="contact_address" placeholder="Add contact address of PFA..." colspan="4" />
+					<field name="notes" placeholder="Add internal note..." colspan="4" />
+				</form>
+			</field>
+		</record>
+
+		<record id="action_pfa" model="ir.actions.act_window">
+			<field name="name">Pension Funds Administrators</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">pfa</field>
+			<field name="view_mode">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="action_pfa" sequence="10" id="pfamenu" parent="hr.menu_human_resources_configuration" name="Pension Funds Administrators" />
+
+		<record id="view_hmo_tree" model="ir.ui.view">
+			<field name="name">hmo.tree</field>
+			<field name="model">hmo</field>
+			<field name="arch" type="xml">
+				<tree string="Health Management Organization">
+					<field name="name" />
+					<field name="code" />
+					<field name="name_person" />
+					<field name="email" />
+					<field name="phone" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hmo_form" model="ir.ui.view">
+			<field name="name">hmo.form</field>
+			<field name="model">hmo</field>
+			<field name="arch" type="xml">
+				<form string="Health Management Organization">
+					<group>
+						<group>
+							<field name="name" />
+							<field name="name_person" />
+							<field name="phone" />
+						</group>
+						<group>
+							<field name="code" />
+							<field name="email" />
+						</group>
+					</group>
+					<field name="contact_address" placeholder="Add contact address of HMO..." colspan="4" />
+					<field name="notes" placeholder="Add internal note..." colspan="4" />
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hmo" model="ir.actions.act_window">
+			<field name="name">Health Management Organizations</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hmo</field>
+			<field name="view_mode">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="action_hmo" sequence="10" id="hmomenu" parent="hr.menu_human_resources_configuration" name="Health Management Organizations" />
+
+		<record model="ir.ui.view" id="edit_salary_new_tree">
+			<field name="name">salary.increment.tree</field>
+			<field name="model">salary.increment</field>
+			<field name="arch" type="xml">
+				<tree string="Salary Increment">
+					<field name="employee_id" on_change="onchange_employee_id(date_from, date_from, employee_id)" />
+					<field name="contract_id" />
+					<field name="old_salary" />
+					<field name="expected_salary" />
+					<field name="new_salary" />
+					<field name="manager_id" invisible="1" />
+					<field name="date_from" invisible="1" />
+					<field name="date_to" invisible="1" />
+					<field name="department_id" />
+					<field name="category_id" />
+					<field name="company_id" groups="base.group_multi_company" widget="selection" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_salary_increment_filter" model="ir.ui.view">
+			<field name="name">salary.increment.select</field>
+			<field name="model">salary.increment</field>
+			<field name="arch" type="xml">
+				<search string="Search Increments">
+					<filter string="Draft" domain="[('state','=','draft')]" help="Draft Increments" name="draft"/>
+					<filter name="toapprove" string="To Approve" domain="[('state','=','confirm')]" help="Confirm Increments"/>
+					<filter string="Approved" domain="[('state','=','validate')]" help="Approved Increments" name="approved"/>
+					<field name="employee_id" />
+					<field name="contract_id" />
+					<field name="department_id" widget="selection" />
+					<field name="category_id" widget="selection" />
+					<field name="state" />
+					<group expand="0" string="Group By...">
+						<filter string="Employees" name="employee_id" context="{'group_by':'employee_id'}" />
+						<filter string="Managers"  name="manager_id" context="{'group_by':'manager_id'}" />
+						<filter string="Departments"  name="employee_id" context="{'group_by':'department_id'}" />
+						<filter string="Categories"  name="employee_id" context="{'group_by':'category_id'}" />
+						<separator orientation="vertical" />
+						<filter string="Companies" name="company_id" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>
+						<separator orientation="vertical" />
+						<filter string="States" name="state" context="{'group_by':'state'}"/>
+						<separator orientation="vertical" />
+						<filter string="Create Date" domain="[]" context="{'group_by':'date_from'}" name="create_date"/>
+						<filter string="Approved Date"  domain="[]" context="{'group_by':'date_to'}" name="approved_date"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="edit_salary_new">
+			<field name="name">salary.increment.form</field>
+			<field name="model">salary.increment</field>
+			<field name="priority">1</field>
+			<field name="arch" type="xml">
+				<form string="Salary Increment" version="7.0">
+					<header>
+						<button string="Refuse" name="refuse" states="confirm,validate1" type="workflow" groups="hr.group_hr_user,hr.group_hr_manager" />
+						<button string="Confirm" class="oe_highlight" name="confirm" states="draft" type="workflow" />
+						<button string="Approve" class="oe_highlight" groups="hr.group_hr_user,hr.group_hr_manager" name="validate" states="confirm" type="workflow" />
+						<button string="Set to Draft" name="set_to_draft" states="refuse,validate" type="object" groups="hr.group_hr_user" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}' colspan="2" />
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" />
+							<h1>
+								<field name="name" />
+							</h1>
+							<label for="employee_id" class="oe_edit_only" />
+							<h2>
+								<field name="employee_id" on_change="onchange_employee_id(date_from, date_from, employee_id)" />
+							</h2>
+						</div>
+						<group col="4">
+							<separator string="General" colspan="4" />
+							<field name="contract_id" help="Selected contract wage will be updated on approval with new salary." />
+							<field name="old_salary" />
+							<field name="expected_salary" />
+
+							<field name="department_id" />
+							<field name="category_id" />
+
+							<field name="date_from" />
+							<field name="last_date" />
+
+							<field name="manager_id" />
+							<field name="new_salary" attrs="{'invisible':[('state','=','draft')]}" />
+							<field name="date_to" />
+							<field name="case_id" groups="hr.group_hr_user,hr.group_hr_manager" />
+							<field name="company_id" groups="base.group_multi_company" widget="selection" />
+							<separator string="Notes" colspan="4" />
+							<field name="notes" nolabel="1" colspan="4" />
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="request_approve_salary">
+			<field name="name">Increment Requests</field>
+			<field name="res_model">salary.increment</field>
+			<field name="view_mode">form</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="request_approve_salary_req">
+			<field name="name">Increment Requests to Approve</field>
+			<field name="res_model">salary.increment</field>
+			<field name="context">{'search_default_toapprove': 1}</field>
+			<field name="view_mode">form</field>
+		</record>
+
+		<menuitem name="Increment" parent="hr.menu_hr_root" id="menu_open_salary" sequence="5" />
+		<menuitem parent="menu_open_salary" id="menu_request_salary_increment" action="request_approve_salary" />
+		<menuitem parent="menu_open_salary" groups="hr.group_hr_user,hr.group_hr_manager" id="menu_request_salary_increment_req" action="request_approve_salary_req" />
+
+		<record id="view_hr_contract_history_tree" model="ir.ui.view">
+			<field name="name">contract.history.tree</field>
+			<field name="model">contract.history</field>
+			<field name="arch" type="xml">
+				<tree string="History">
+					<field name="name"/>
+					<field name="wage"/>
+					<field name="contract_id" />
+					<field name="struct_id" />
+					<field name="revision_date"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="hr_contract_form_allow_inherit" model="ir.ui.view">
+			<field name="name">hr.contract.form.inherit</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit" />
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="inside">
+					<page string="Allowances">
+						<group col="2" colspan="2" name="right_column">
+							<separator colspan="2" string="Allowance" />
+							<field name="leave_allow_day" />
+							<field name="hra" />
+							<field name="utility" />
+							<field name="meal" />
+							<field name="entertain" />
+							<field name="transport" />
+						</group>
+					</page>
+					<page string="Deductions">
+						<group col="2" colspan="2" name="left_column">
+						<separator colspan="2" string="Deduction" />
+						<field name="pension_company" />
+						<field name="pension_employee" />
+					</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_hr_contract_history" model="ir.ui.view">
+			<field name="name">hr.contract.salary</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+			<field name="arch" type="xml">
+				    <xpath expr="//form/sheet/notebook/page[2]" position="after">
+    					<page string="History" groups="hr.group_hr_user">
+    						<separator name="Contract History" colspan="4" string="Contract History" />
+    						<field name="history_ids" nolabel="1" colspan="4" />
+    					</page>
+					</xpath>
+			</field>
+		</record>
+
+		<act_window
+			id="act_salary_increment_2_increment_history"
+			domain="[('employee_id', '=', employee_id)]"
+			name="Increment History"
+			res_model="contract.history"
+			binding_model="salary.increment"
+		/>
+
+	</data>
+</odoo>        

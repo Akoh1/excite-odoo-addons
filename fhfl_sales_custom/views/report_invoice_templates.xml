@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+<!--
+        <template id="listing">
+          <ul>
+            <li t-foreach="objects" t-as="object">
+              <a t-attf-href="#{ root }/objects/#{ object.id }">
+                <t t-esc="object.display_name"/>
+              </a>
+            </li>
+          </ul>
+        </template>
+        <template id="object">
+          <h1><t t-esc="object.display_name"/></h1>
+          <dl>
+            <t t-foreach="object._fields" t-as="field">
+              <dt><t t-esc="field"/></dt>
+              <dd><t t-esc="object[field]"/></dd>
+            </t>
+          </dl>
+        </template>
+-->
+        <template id="fhfl_invoice_report"  inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@id='informations']" position="inside">
+               <div class="col-auto col-3 mw-100 mb-2" t-if="o.remita_rr_num" name="remita_rr_num">
+                   <strong>RRR Code for Payment:</strong>
+                   <p class="m-0" t-field="o.remita_rr_num"/>
+               </div>
+            </xpath>
+
+            <xpath expr="//p[@name='payment_communication']" position="after">
+               <p t-if="o.remita_rr_num" name="remita_rr_num_note">
+                   You can use the RRR code generated for this invoice for payment on Remita
+               </p>
+            </xpath>
+        </template>
+    </data>
+</odoo>

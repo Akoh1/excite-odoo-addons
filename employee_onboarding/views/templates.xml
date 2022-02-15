@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+      <record id="action_onboard_missing_form" model="ir.actions.report">
+        <field name="name">Onboarding Form for Missing Fields</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_onboarding.report_onboarding_form</field>
+        <field name="report_file">employee_onboarding.report_onboarding_form</field>
+<!--        <field name="print_report_name">'Employee Details for - %s' % (object.name)</field>-->
+        <field name="binding_model_id" ref="model_hr_employee"/>
+        <field name="binding_type">report</field>
+      </record>
+
+
+      <template id="report_onboarding_form_cus">
+          <!-- <t t-call="web.html_container">
+              <t t-foreach="docs" t-as="o"> -->
+                  <t t-call="web.external_layout">
+                      <div class="page">
+                        <h2>Employee Profile Details</h2>
+                          <!-- <h2>Report title <span t-esc="data['test'][0]"/></h2> -->
+                          <t t-foreach="datas" t-as="d">
+                                <p><t t-esc="d"/>:______________________________________</p>
+                            </t>
+<!--                          <p t-foreach="['1', '2', '3']" t-as="i"> -->
+<!--                           -->
+<!--                            <t t-esc="i" />-->
+<!--                          </p>-->
+<!--                          <t t-foreach="test" t-as="v">-->
+<!--                          <div><t t-esc="v"/> : <t t-esc="v_value"/>:____________________________<br/>-->
+<!--                            </div>-->
+<!--                          </t>-->
+
+                      </div>
+                  </t>
+              <!-- </t>
+          </t> -->
+      </template>
+
+      <template id="report_onboarding_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="employee_onboarding.report_onboarding_form_cus" t-lang="doc.address_id.lang"/>
+            </t>
+        </t>
+    </template>
+<!--
+        <template id="listing">
+          <ul>
+            <li t-foreach="objects" t-as="object">
+              <a t-attf-href="#{ root }/objects/#{ object.id }">
+                <t t-esc="object.display_name"/>
+              </a>
+            </li>
+          </ul>
+        </template>
+        <template id="object">
+          <h1><t t-esc="object.display_name"/></h1>
+          <dl>
+            <t t-foreach="object._fields" t-as="field">
+              <dt><t t-esc="field"/></dt>
+              <dd><t t-esc="object[field]"/></dd>
+            </t>
+          </dl>
+        </template>
+-->
+    </data>
+</odoo>

@@ -1,0 +1,340 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="hr_salary_grade_tree">
+      <field name="name">hr.salary.grade.tree</field>
+      <field name="model">hr.salary.grade</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+<!--          <field name="value"/>-->
+<!--          <field name="value2"/>-->
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_salary_grade_form" model="ir.ui.view">
+        <field name="name">hr.salary.grade.form</field>
+        <field name="model">hr.salary.grade</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form string="Salary Grade">
+<!--                <header>-->
+<!--                    <button name="action_confirm" string="Confirm"-->
+<!--                            type="object" states="draft" class="btn-primary"/>-->
+<!--                    <button name="action_approve_dept" string="Approve Department Manager"-->
+<!--                            type="object" states="confirm" class="btn-primary"-->
+<!--                            groups="hr_exit_process.hr_exit_department_manager_id"/>-->
+<!--                    <button name="action_approve_hr" string="Approve HR Manager"-->
+<!--                            type="object" states="approved_dept" class="btn-primary"-->
+<!--                            groups="hr_exit_process.hr_exit_hr_manager_id"/>-->
+<!--                    <button name="action_approve_gen" string="Approve General Manager"-->
+<!--                            type="object" states="approved_hr" class="btn-primary"-->
+<!--                            groups="hr_exit_process.hr_exit_general_manager_id"/>-->
+<!--                    <button name="action_done" string="Done"-->
+<!--                            type="object" states="approved_gen" class="btn-primary"-->
+<!--                            groups="hr_exit_process.hr_exit_general_manager_id"/>-->
+<!--                    <field name="state" widget="statusbar"-->
+<!--                           statusbar_visible="draft,confirm,approved_dept,approved_hr,approved_gen,done"/>-->
+<!--                </header>-->
+                <sheet>
+                    <h2>
+                        <field name="name"/>
+                    </h2>
+
+                    <group string="Salary Parameters">
+                      <field name="gross_salary"/>
+                      <field name="basic_trans"/>
+                      <field name="housing"/>
+                      <field name="leave_allowance"/>
+                      <field name="utility"/>
+                      <field name="meal"/>
+                        <field name="trans"/>
+                      <field name="wardrobe"/>
+                      <field name="ent"/>
+                      <field name="education"/>
+                      <field name="th_month"/>
+                      <field name="other"/>
+                        <field name="other_two"/>
+<!--                        <group>-->
+<!--                            <field name="name" />-->
+<!--                            -->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="department_manager_id" attrs="{'readonly' : [('state','!=','draft')]}"/>-->
+<!--                            <field name='department_id' attrs="{'readonly' : [('state','!=','draft')]}"/>-->
+<!--                            <field name="job_title_id" attrs="{'readonly' : [('state','!=','draft')]}"/>-->
+<!--                            <field name="survey_id" attrs="{'readonly' : [('state','!=','draft')]}"/>-->
+<!--                            <field name="response_id" invisible="1"/>-->
+<!--                            <field name="user_id" attrs="{'readonly' : [('state','!=','draft')]}"/>-->
+<!--                        </group>-->
+
+
+                    </group>
+
+                </sheet>
+                <group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="hr_salary_grade_window">
+      <field name="name">Salary Grade</field>
+      <field name="res_model">hr.salary.grade</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="Salary Grade" id="hr_salary_grade"
+              parent="hr_work_entry_contract.menu_hr_payroll_configuration"
+              action="employee_custom.hr_salary_grade_window"
+              sequence="1"/>
+    <!--
+    <menuitem name="Server to list" id="module_14_template" parent="module_14_template.menu_2"
+              action="module_14_template.action_server"/>
+-->
+
+      <record id="view_contract_salary_custom" model= "ir.ui.view">
+        <field name="name">hr.salary.grade.contract</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='structure_type_id']" position="after">
+              <field name="salary_grade"/>
+              <field name="check_wage_readonly" invisible="1"/>
+
+          </xpath>
+            <xpath expr="//group[@name='main_info']" position="after">
+
+              <group name="salary_parameter" string="Other Salary Parameters">
+                  <field name="gross_salary"/>
+                  <field name="basic_trans"/>
+                  <field name="housing"/>
+                  <field name="leave_allowance"/>
+                  <field name="utility"/>
+                  <field name="meal"/>
+                  <field name="trans"/>
+                      <field name="wardrobe"/>
+                      <field name="ent"/>
+                      <field name="education"/>
+                      <field name="th_month"/>
+                      <field name="other"/>
+                        <field name="other_two"/>
+              </group>
+          </xpath>
+
+            <xpath expr="//field[@name='wage']" position="attributes">
+              <attribute name="attrs">{'readonly': [('check_wage_readonly', '=', True)]}</attribute>
+
+          </xpath>
+        </field>
+    </record>
+
+      <record id="view_employee_salary_custom" model= "ir.ui.view">
+        <field name="name">employee.salary.custom</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="confirm_employee" string="Confirm Employee"
+                type="object" class="oe_highlight"
+                        attrs="{'invisible': [('confirm_status', '=', 'confirm')]}"
+                groups="hr.group_hr_manager"/>
+<!--                <button name="send_mail_before_confirmation" string="Test Confirm Employee Mail"-->
+<!--                type="object" class="oe_highlight"-->
+<!--                groups="hr.group_hr_manager"/>-->
+            </xpath>
+            <xpath expr="//field[@name='place_of_birth']" position="after">
+              <field name="states"/>
+              <field name="geo_zone"/>
+
+          </xpath>
+
+            <xpath expr="//page[@name='hr_settings']" position="inside">
+                <group>
+                    <group string="Employment Confirmation Status" name="confirm_status">
+<!--                        <field name="user_id" string="Related User" domain="[('share', '=', False)]"/>-->
+                        <field name="emp_status"/>
+                        <field name="emp_date"/>
+                        <field name="prob_days"/>
+                        <field name="confirm_date"/>
+                        <field name="confirm_status"/>
+                        <field name="date_confirm"/>
+                    </group>
+
+                    <group string="Pension and Health Information" name="pension">
+                        <field name="pension_admin"/>
+                        <field name="pension_pin"/>
+                        <field name="hmo_admin"/>
+                        <field name="hmo_id"/>
+                        <field name="paye_state"/>
+                    </group>
+                </group>
+          </xpath>
+            <xpath expr="//field[@name='emergency_phone']" position="after">
+              <field name="emg_rel"/>
+            </xpath>
+        </field>
+    </record>
+
+      <record model="ir.ui.view" id="hr_pension_tree">
+      <field name="name">hr.pension.tree</field>
+      <field name="model">hr.pension</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+<!--          <field name="pin"/>-->
+
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_pension_form" model="ir.ui.view">
+        <field name="name">hr.pension.form</field>
+        <field name="model">hr.pension</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+<!--                            <field name="pin"/>-->
+                        </group>
+                    </group>
+
+                </sheet>
+                <group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="hr_pension_window">
+      <field name="name">Pension Administation</field>
+      <field name="res_model">hr.pension</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="Pension Administration" id="hr_pension"
+              parent="hr.menu_human_resources_configuration"
+              action="employee_custom.hr_pension_window"
+              groups="hr.group_hr_manager"
+              sequence="2"/>
+
+      <record model="ir.ui.view" id="hr_hmo_admin_tree">
+      <field name="name">hr.hmo_admin.tree</field>
+      <field name="model">hr.hmo</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+<!--          <field name="hmo_id"/>-->
+
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_hmo_admin_form" model="ir.ui.view">
+        <field name="name">hr.hmo.admin.form</field>
+        <field name="model">hr.hmo</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+<!--                            <field name="hmo_id"/>-->
+                        </group>
+                    </group>
+
+                </sheet>
+                <group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="hr_hmo_admin_window">
+      <field name="name">HMO Administration</field>
+      <field name="res_model">hr.hmo</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="HMO Administration" id="hr_hmo_admin"
+              parent="hr.menu_human_resources_configuration"
+              action="employee_custom.hr_hmo_admin_window"
+              groups="hr.group_hr_manager"
+              sequence="3"/>
+
+      <record id="res_config_settings_num_days_mail_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.num.days.mail</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="45"/>
+            <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='enrich_employee_setting']" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" id="default_company_schedule_setting">
+                            <div class="o_setting_right_pane">
+                                <label for="set_days_mail"/>
+                                <span class="fa fa-lg fa-building-o" />
+                                <div class="row">
+                                    <div class="text-muted col-lg-8">
+                                        Number of Days before Confirmation of Employee to send mail
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="set_days_mail" class="o_light_label"  />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </xpath>
+<!--                 <xpath expr="//field[@name='module_account_yodlee']/../.." position="after">-->
+<!--                    <div class="col-12 col-lg-6 o_setting_box" id="auto_bank_rec">-->
+<!--                                    <div class="o_setting_left_pane">-->
+<!--                                        <field name="auto_bank_rec" />-->
+<!--                                    </div>-->
+<!--                                    <div class="o_setting_right_pane">-->
+<!--                                        <label for="auto_bank_rec" string="Automatic bank reconciliation"/>-->
+<!--                                        <div class="text-muted">-->
+<!--                                           Automatic bank reconciliation-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                      </div>-->
+
+<!--                </xpath>-->
+            </field>
+        </record>
+  </data>
+</odoo>

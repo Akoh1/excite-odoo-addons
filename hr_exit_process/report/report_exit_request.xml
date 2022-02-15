@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_exit_template">
+			<t t-call="web.external_layout">
+				<t t-set="doc" t-value="doc.with_context({})" />
+				<div class="page">
+
+                    <br/>
+                    <br/>
+                    <br/>
+					<h2 style="text-align: center;font-style:normal;">
+						<span t-field="doc.employee_id.name"/> - <span t-field="doc.state"/>
+					</h2>
+
+
+                    <br/>
+                    <br/>
+               
+					<h2>Genaral Information</h2>
+					<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                        <td><strong >Request Date:</strong> </td>
+                        <td><span t-field="doc.req_date"/></td>
+
+                        <td><strong >Department : </strong> </td>
+                        <td><span t-field="doc.department_id.name" /></td>
+                        
+                        
+                        
+                    </tr>
+                    
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                    	<td><strong >Department Manager: </strong> </td>
+                        <td><span t-field="doc.department_manager_id.name" /></td>
+
+                        <td><strong >Job Title : </strong> </td>
+                        <td><span t-field="doc.job_title_id.name" /></td>
+                        
+                        
+                        
+                    </tr>
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+
+                    	<td><strong >Contact:</strong> </td>
+                        <td><span t-field="doc.partner_id.name" /></td>
+
+                        <td><strong >Last Day Of Work : </strong> </td>
+                        <td><span t-field="doc.last_date" /></td>
+                        
+                    </tr>  
+                    
+                </table>
+                <br/>
+            	<br/>
+                
+                	<h2>Dates</h2>
+					<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                        <td><strong >Confirm Date(Employee):</strong> </td>
+                        <td><span t-field="doc.confirm_date"/></td>
+
+                        <td><strong >Confirm By : </strong> </td>
+                        <td><span t-field="doc.confirmed_by_id.name" /></td>
+                        
+                    </tr>
+                    
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                    	<td><strong >Approved Date(Department Manager) :</strong> </td>
+                        <td><span t-field="doc.approve_date_dept_manager" /></td>
+
+                        <td><strong >Approved By Department Manager :</strong> </td>
+                        <td><span t-field="doc.approved_by_dept_manager_id.name" /></td>
+                        
+                    </tr>
+                    <tr style="padding: 8px;text-align: left;">
+
+                    	<td><strong >Approved Date(HR Manager) : </strong> </td>
+                        <td><span t-field="doc.approve_date_hr_manager" /></td>
+
+                        <td><strong >Approved By HR Manager :  </strong> </td>
+                        <td><span t-field="doc.approved_by_hr_manager_id.name" /></td>
+                        
+                    </tr>
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+
+                    	<td><strong >Approved Date(General Manager) : </strong> </td>
+                        <td><span t-field="doc.approve_date_gen_manager" /></td>
+
+                        <td><strong >Approved By General Manager : </strong> </td>
+                        <td><span t-field="doc.approved_by_hr_genral_id.name" /></td>
+                        
+                    </tr>
+                </table>
+                <br/>
+            	<br/>
+                
+            	<p style="page-break-after: always;"/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                
+                <h2>Checklist</h2>
+            	<table class="table table-condensed">
+							<thead style="border: 5px solid #ddd;">
+								<tr class="text-center">
+									<th>Checklist</th>
+									<th>Responsible User</th>
+									<th>Remarks</th>
+									<th>State</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr t-foreach="doc.checklist_ids" t-as="line" style="border-bottoms: 1px solid #ddd;" class="text-center">
+
+										<td>
+											<span t-esc="line.checklist_id.name" />
+										</td>
+										<td>
+											<span t-esc="line.responsible_user_id.name" />
+										</td>
+										<td>
+											<span t-esc="line.remarks" />
+										</td>
+										<td >
+											<span t-esc="line.state" />
+										</td>
+										
+								</tr>
+							</tbody>
+						</table>
+                <br/>
+                <br/>
+
+                <h5 style="text-align:left;"><b>Reason For Leaving</b></h5>
+                <div class="row" style="text-align:left;padding: 13px;">
+                <span t-raw="doc.reasone" />
+                </div>
+
+                <h5 style="text-align:left;"><b>Notes</b></h5>
+                <div class="row" style="text-align:left;padding: 13px;">
+                <span t-raw="doc.notes" />
+                </div>                
+
+				</div>
+			</t>
+		</template>
+
+		<template id="report_exit_id">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="hr_exit_process.report_exit_template"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

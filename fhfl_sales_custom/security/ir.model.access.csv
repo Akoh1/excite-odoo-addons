@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_wizard,fhfl.sales.order.wizard,model_sale_order_wizard,base.group_user,1,1,1,1
+access_product_estate,fhfl.product.estate,model_product_estate,base.group_user,1,1,1,1
+access_sale_order_installment,fhfl.sale.order.installment,model_sale_order_installment,base.group_user,1,1,1,1
+access_installment_schedule,fhfl.installment.schedule,model_installment_schedule,base.group_user,1,1,1,1
+access_crm_investment,fhfl.crm.investment,model_crm_investment,base.group_user,1,1,1,1
+access_appraisal_fee_config,fhfl.appraisal.fee.config,model_appraisal_fee_config,base.group_user,1,1,1,1
+access_investment_reject_wizard,fhfl.investment.reject.wizard,model_investment_reject_wizard,base.group_user,1,1,1,1

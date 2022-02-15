@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="payroll_register_report">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.internal_layout">
+						<div class="page">
+							<div style="text-align:center;">
+								<span><h2><b>Payroll Register</b></h2></span>
+								<span><h3><b><t t-esc="data['form']['name']"/></b></h3></span>
+								<span>From <u><t t-esc="data['form']['start_date']"/></u> 
+										To <u><t t-esc="data['form']['end_date']"/></u> 
+										of <u><t t-es="data['form']['category_id'][1]"/></u>
+								</span>
+								<table class="table" style="font-size:10px;">
+									<thead>
+										<t t-foreach="get_periods(data['form'])" t-as="m">
+											<tr style="border-top:1px solid #D0D0D0;">
+<!--												<th width="18%">Job Title</th>-->
+<!--												<th width="18%">Name</th>-->
+												<th width="9%"><t t-esc=" m[0]!= 'None' and m[0] or ''"/></th>
+												<th width="9%"><t t-esc=" m[1]!= 'None' and m[1] or ''"/></th>
+												<th width="9%"><t t-esc=" m[2]!= 'None' and m[2] or ''"/></th>
+												<th width="9%"><t t-esc=" m[3]!= 'None' and m[3] or ''"/></th>
+												<th width="9%"><t t-esc=" m[4]!= 'None' and m[4] or ''"/></th>
+												<th width="9%"><t t-esc=" m[5]!= 'None' and m[5] or ''"/></th>
+												<th width="9%"><t t-esc=" m[6]!= 'None' and m[6] or ''"/></th>
+												<th width="9%"><t t-esc=" m[7]!= 'None' and m[7] or ''"/></th>
+												<!--th><t t-esc=" m[8]!= 'None' and m[8] or ''"/></th>
+												<th><t t-esc=" m[9]!= 'None' and m[9] or ''"/></th>
+												<th><t t-esc=" m[10]!= 'None' and m[10] or ''"/></th>
+												<th><t t-esc=" m[11]!= 'None' and m[11] or ''"/></th-->
+												<th width="10%" style="text-align:right;">Total</th>
+											</tr>
+										</t>
+									</thead>
+									<tbody>
+										<tr t-foreach="get_employee(data['form'])" t-as="e">
+<!--											<td width="18%"><span>Job Title Placeholder</span></td>-->
+<!--											<td width="18%"><span><t t-esc="e[0]"/></span></td>-->
+											<td width="9%"><span><t t-esc="(e[1]!='' and e[1])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[2]!='' and e[2])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[3]!='' and e[3])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[4]!='' and e[4])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[5]!='' and e[5])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[6]!='' and e[6])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[7]!='' and e[7])"/></span></td>
+											<td width="9%"><span><t t-esc="(e[8]!='' and e[8])"/></span></td>
+											<!--td><span><t t-esc="(e[9]!='' and formatLang(e[9]))"/></span></td>
+											<td><span><t t-esc="(e[10]!='' and formatLang(e[10]))"/></span></td>
+											<td><span><t t-esc="(e[11]!='' and formatLang(e[11]))"/></span></td>
+											<td><span><t t-esc="(e[12]!='' and formatLang(e[12]))"/></span></td -->
+											<td width="10%" style="text-align:right;"><span><t t-esc="e[9]"/> <t t-esc="company.currency_id.symbol"/></span></td>
+										</tr>
+										<tr t-foreach="get_months_tol()" t-as="t">
+											<td width="18%">
+												<span><b>Total</b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[1]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[2]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[3]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[4]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[5]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[6]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[7]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td width="9%">
+												<span><b><t t-esc="t[8]"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<!--td>
+												<span><b><t t-esc="formatLang(t[9])"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td>
+												<span><b><t t-esc="formatLang(t[10])"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td>
+												<span><b><t t-esc="formatLang(t[11])"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+											<td>
+												<span><b><t t-esc="formatLang(t[12])"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td -->
+											<td width="10%" style="text-align:right;">
+												<span><b><t t-esc="get_total()"/> <t t-esc="company.currency_id.symbol"/></b></span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

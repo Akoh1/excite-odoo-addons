@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="report_employee_exit_print"
+        string="Exit Request"
+        model="exit.request" 
+        report_type="qweb-pdf"
+        file="hr_exit_process.report_exit_id" 
+        name="hr_exit_process.report_exit_id" 
+        
+    />
+             
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+
+
+    <record id="view_fhfl_account_move" model= "ir.ui.view">
+			<field name="name">fhfl.account.move</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='payment_reference']" position="after">
+					<field name="sales_type" />
+                </xpath>
+
+				<xpath expr="//div[@name='journal_div']" position="after">
+					<field name="remita_rr_num" />
+                </xpath>
+
+			</field>
+		</record>
+
+	  <record id="view_fhfl_account_payment_form" model= "ir.ui.view">
+			<field name="name">fhfl.account.move</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='partner_bank_id']" position="after">
+					<field name="remita_rr_num" />
+                </xpath>
+
+			</field>
+		</record>
+
+	  <record id="fhfl_sales_custom_view_account_payment_register_form" model= "ir.ui.view">
+			<field name="name">fhfl.sales.account.payment.register.form</field>
+			<field name="model">account.payment.register</field>
+			<field name="inherit_id" ref="account.view_account_payment_register_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='communication']" position="after">
+					<field name="remita_rr_num" />
+                </xpath>
+
+			</field>
+		</record>
+  </data>
+</odoo>

@@ -1,0 +1,205 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+    <record id="view_exit_req_tree_1" model="ir.ui.view">
+        <field name="name">exit.request.tree</field>
+        <field name="model">exit.request</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <tree string="Exit Request">
+
+                <field name="name"/>
+                <field name="req_date"/>
+                <field name="last_date"/>
+                <field name="department_manager_id"/>
+                <field name='department_id'/>
+                <field name="job_title_id"/>
+                <field name="user_id"/>
+                <field name="confirmed_by_id"/>
+                <field name="approved_by_dept_manager_id"/>
+                <field name='approved_by_hr_manager_id'/>
+                <field name="approved_by_hr_genral_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_exit_req_form" model="ir.ui.view">
+        <field name="name">exit.request.form</field>
+        <field name="model">exit.request</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form string="Exit Request">
+                <header>
+                    <button name="action_confirm" string="Confirm"
+                            type="object" states="draft" class="btn-primary"/>
+                    <button name="action_approve_dept" string="Approve Department Manager"
+                            type="object" states="confirm" class="btn-primary"
+                            groups="hr_exit_process.hr_exit_department_manager_id"/>
+                    <button name="action_approve_hr" string="Approve HR Manager"
+                            type="object" states="approved_dept" class="btn-primary"
+                            groups="hr_exit_process.hr_exit_hr_manager_id"/>
+                    <button name="action_approve_gen" string="Approve General Manager"
+                            type="object" states="approved_hr" class="btn-primary"
+                            groups="hr_exit_process.hr_exit_general_manager_id"/>
+                    <button name="action_done" string="Done"
+                            type="object" states="approved_gen" class="btn-primary"
+                            groups="hr_exit_process.hr_exit_general_manager_id"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm,approved_dept,approved_hr,approved_gen,done"/>
+                </header>
+                <sheet>
+                    <h2>
+                        <field name="employee_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                    </h2>
+
+                    <div class="oe_button_box">
+                        <button name="action_start_survey" class="oe_stat_button" icon="fa-user" type="object"
+                                help="Answer related job question" context="{'survey_id': survey_id}"
+                                attrs="{'invisible':[('survey_id','=',False)]}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Start</span>
+                                <span class="o_stat_text">Interview</span>
+                            </div>
+                        </button>
+                        <button name="action_print_survey" class="oe_stat_button" icon="fa-print" type="object"
+                                help="Print interview report" attrs="{'invisible':[('survey_id','=',False)]}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Print</span>
+                                <span class="o_stat_text">Interview</span>
+                            </div>
+                        </button>
+                        <button name="action_makeMeeting" class="oe_stat_button" icon="fa-calendar" type="object"
+                                help="Schedule interview with this applicant">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Meetings</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="req_date" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            <field name="last_date" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            <field name="partner_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="department_manager_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            <field name='department_id' attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            <field name="job_title_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            <field name="survey_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            <field name="response_id" invisible="1"/>
+                            <field name="user_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="confirmed_by_id"/>
+                            <field name="approved_by_dept_manager_id"/>
+                            <field name='approved_by_hr_manager_id'/>
+                            <field name="approved_by_hr_genral_id"/>
+                        </group>
+                        <group>
+                            <field name="confirm_date"/>
+                            <field name="approve_date_dept_manager"/>
+                            <field name="approve_date_hr_manager"/>
+                            <field name="approve_date_gen_manager"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Information" name="checklist">
+                            <group>
+                                <field name="checklist_ids" attrs="{'readonly' : [('state','!=','draft')]}">
+                                </field>
+                                <field name="reasone" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                                <field name="notes" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                            </group>
+                        </page>
+                        <page string="Contact" attrs="{'readonly' : [('state','!=','draft')]}">
+                            <group>
+                                <group>
+                                    <field name="email" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                                    <field name="phone" attrs="{'readonly' : [('state','!=','draft')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="exit_req_action" model="ir.actions.act_window">
+        <field name="name">Exit Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">exit.request</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create"></p>
+            <p></p>
+        </field>
+    </record>
+    <menuitem id="sub_menu_employee_exit" parent="hr.menu_hr_root" name="Employee Exit" sequence="20"/>
+    <menuitem action="exit_req_action" id="menu_employee_exit" parent="sub_menu_employee_exit" name="Exit Request"
+              sequence="29"/>
+
+    <record id="exit_done_email_template" model="mail.template">
+          <field name="name">Employee Exit e-mail template</field>
+          <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
+          <field name="subject">Employee Exit</field>
+          <field name="email_to">${object.employee_id.work_email|safe}</field>
+          <field name="lang">${object.lang}</field>
+          <field name="model_id" ref="model_exit_request"/>
+          <!-- <field name="model_id"ref="module_name.model_sample.mail"> -->
+          <field name="auto_delete" eval="True"/>
+          <field name="body_html">
+            <![CDATA[
+            <p>Dear All ,<br/><br/>
+            This is to inform you that ${(object.name)} is exiting the organization, 
+            we wish him goodluck in his future endeavours<br/>
+              ${(object.company_id.name)}
+          ]]>
+        </field>
+  </record>
+
+   <record id="hr_exit_wizard_view_form" model="ir.ui.view">
+            <field name="name">hr.exit.wizard.view.form</field>
+            <field name="model">hr.exit.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div>
+                            <p>Do you want to archive this employee?</p>
+                        </div>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <!-- <group id="info" string="Departure Info">
+                            <field name="employee_id" invisible="1"/>
+                            <field name="departure_reason"/>
+                            <field name="departure_description"/>
+                            <field name="archive_private_address"/>
+                        </group>
+                        <group id="date" string="Departure Date">
+                            <field name="departure_date" />
+                        </group> -->
+                    </sheet>
+                    <footer>
+                        <button name="deactivate_employee" string="Archive Employee" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_exit_wizard_action" model="ir.actions.act_window">
+            <field name="name">Archive Employee</field>
+            <field name="res_model">hr.exit.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>

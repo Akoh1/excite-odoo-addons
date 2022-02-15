@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="hr_exit_department_manager_id" model="res.groups">
+		<field name="name">Department Manager (HR)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>
+		
+		
+	</record>
+	<record id="hr_exit_hr_manager_id" model="res.groups">
+		<field name="name">HR Manager (HR)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>
+		<field name="implied_ids" eval="[(4,ref('hr_exit_department_manager_id'))]"/>
+		
+	</record>
+    <record id="hr_exit_general_manager_id" model="res.groups">
+        <field name="name">General Manager (HR)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4,ref('hr_exit_hr_manager_id'))]"/>
+        
+    </record>
+
+	
+</odoo>

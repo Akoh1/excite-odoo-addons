@@ -1,0 +1,42 @@
+<odoo>
+  <data>
+    <record id="view_employee_payroll_extract_wizard" model="ir.ui.view">
+        <field name="name">payroll.extract.wizard.form</field>
+        <field name="model">payroll.extract.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Extract Wizard">
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date" />
+
+                </group>
+                <footer>
+                    <button name="download_excel" string="Extract" type="object" class="btn-primary"/>
+
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_extract_employee_payroll" model="ir.actions.act_window">
+        <field name="name">employee payroll extract</field>
+        <field name="res_model">payroll.extract.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_employee_payroll_extract_wizard"/>
+    </record>
+
+    <record model="ir.actions.server" id="action_hr_payroll_employee_payroll_extract">
+        <field name="name">Confirm</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.action_payslip_done()
+        </field>
+    </record>
+  </data>
+</odoo>

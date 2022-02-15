@@ -1,0 +1,354 @@
+<odoo>
+   <!--  <record model="ir.ui.menu" id="crm.menu_crm_opportunities">
+      <field name="name">Investment</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm.crm_lead_action_pipeline">
+      <field name="name">Investment</field>
+    </record>
+
+    <record id="fhfl_sales_custom_crm_lead_form" model= "ir.ui.view">
+			<field name="name">fhfl.custom.crm.lead.form</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='company_id']" position="after">
+                    <field name="invest_type"/>
+                </xpath>
+
+			</field>
+		</record> -->
+
+    <record id="crm_kanban_view_affordable_investment" model="ir.ui.view">
+            <field name="name">crm.kanban.affordable.investment</field>
+            <field name="model">crm.investment</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <!-- <kanban default_group_by="state" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create" quick_create_view="fhfl_sales_custom.fhfl_crm_investment_form"
+                    archivable="false" sample="1"> -->
+                <kanban default_group_by="state" class="o_kanban_small_column o_opportunity_kanban"
+                    archivable="false" sample="1">
+                    <field name="state" options='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                    <field name="customer_name"/>
+                    <field name="name"/>
+                    <field name="application_id"/>
+                    <field name="priority"/>
+                     <field name="activity_state" />
+                   <!--  <field name="color"/>
+                    <field name="priority"/>
+                    <field name="expected_revenue"/>
+                    <field name="kanban_state"/>
+                    <field name="activity_date_deadline"/>
+                    <field name="user_email"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="activity_summary"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <field name="activity_state" />
+                    <field name="activity_ids" /> -->
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                    <!-- <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="expected_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/> -->
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                               <!--  <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div> -->
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong><field name="customer_name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong><field name="application_id"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <t t-if="record.total_appr_amount.value">
+                                            <field name="total_appr_amount" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                            <!-- <span t-if="record.recurring_revenue and record.recurring_revenue.raw_value"> + </span> -->
+                                        </t>
+                                      <!--   <t t-if="record.recurring_revenue and record.recurring_revenue.raw_value">
+                                            <field name="recurring_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                            <field name="recurring_plan"/>
+                                        </t> -->
+                                    </div>
+                                    <!-- <div>
+                                        <span t-if="record.partner_id.value" t-esc="record.partner_id.value"></span>
+                                    </div>
+ -->                                   <!--  <div>
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    </div> -->
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="priority" groups="base.group_user"/>
+                                           <!--  <field name="activity_ids" widget="kanban_activity"/> -->
+                                        </div>
+                                       <!--  <div class="oe_kanban_bottom_right">
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="view_investment_reject">
+      <field name="name">investment.reject.wizard</field>
+      <field name="model">sale.order.wizard</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form>
+        <footer>
+          <button name="reject_sale_order" string="Reject" type="object" class="btn-primary" />
+          <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+        <p>Reason to refuse request:</p>
+        <field name="refuse_request" />
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="fhfl_crm_investment_tree">
+      <field name="name">fhfl_crm_investment.tree</field>
+      <field name="model">crm.investment</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="customer_name"/>
+        <field name="state"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_crm_investment_form" model="ir.ui.view">
+        <field name="name">fhfl_crm_investment.form</field>
+        <field name="model">crm.investment</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+              <header>
+                <button name="proceed_mcc_one" type="object"
+                        string="Proceed to MCC1 Review" states="new"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_mcc_one,fhfl_sales_custom.group_investment_admin"/>
+                <button name="call_popup_reject_menu" type="object"
+                        string="Refuse"
+                       class="btn-primary" attrs="{'invisible': [('state', 'in', ['refuse'])]}"/>
+                <button name="process_appraisal_fee" type="object"
+                        string="Process Appraisal Fee" states="mcc_one"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_appraisal_fee,fhfl_sales_custom.group_investment_admin"/>
+                 <button name="generate_appraisal_fee" type="object"
+                        string="Generate Appraisal Fee" 
+                        attrs="{'invisible': ['|', ('state', 'not in', ['appraisal']),
+                                ('appraisal_fee_status', 'not in', ['draft'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_appraisal_fee,fhfl_sales_custom.group_investment_admin"/>
+                  <button name="proceed_due_dilligence" type="object"
+                        string="Proceed to Due Diligence" 
+                        attrs="{'invisible': ['|', ('state', 'not in', ['appraisal']),
+                                ('appraisal_fee_status', 'not in', ['paid'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_dilligence,fhfl_sales_custom.group_investment_admin"/>
+                <button name="proceed_mcc_two" type="object"
+                        string="Proceed to MCC2 Review" 
+                        attrs="{'invisible': [('state', 'not in', ['dilligence'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_mcc_two,fhfl_sales_custom.group_investment_admin"/>
+                <button name="proceed_board_approval" type="object"
+                        string="Proceed to Board Approval" 
+                        attrs="{'invisible': [('state', 'not in', ['mcc_two'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_board_approval,fhfl_sales_custom.group_investment_admin"/>
+
+                <button name="first_disbursement" type="object"
+                        string="First Disbursement" 
+                        attrs="{'invisible': [('state', 'not in', ['board'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_disburse,fhfl_sales_custom.group_investment_admin"/>
+                <button name="push_lms" type="object"
+                        string="Push to LMS" 
+                        attrs="{'invisible': [('state', 'not in', ['disburse'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_investment_admin"/>
+               <!--  <button name="generate_appraisal_fee" type="object"
+                        string="Generate Appraisal Fee" attrs="{'invisible': ['|', ('state', 'not in', ['appraisal']), ('appraisal_fee_status', 'not in', ['paid', 'not_paid'])]}"
+                       class="btn-primary"/> -->
+                <field name="state" widget="statusbar" statusbar_visible="new,mcc_one,appraisal,dilligence,mcc_two,board,disburse,done" />
+              </header>
+                <sheet>
+                  <div class="oe_button_box" name="button_box">
+                            <button name="action_view_invoices" type="object"
+                                    class="oe_stat_button" icon="fa-money"
+                                    attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                                <field name="invoice_count" widget="statinfo" string="Invoice(s)"/>
+                            </button>
+                  </div>
+                  <widget name="web_ribbon" title="Appraisal Fee Paid" attrs="{'invisible': [('appraisal_fee_status', 'not in', ['paid'])]}"/>
+                  <div class="oe_title">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1><field name="name"/></h1>
+                  </div>
+                    <!-- <group> -->
+                        <group>
+                          <!-- <field name="appraisal_fee_status"/>
+                            <field name="customer"/>
+                            <field name="customer_name"/> -->
+                            <group string="Comment" attrs="{'invisible': [('state', 'not in', ['mcc_one', 'appraisal', 'dilligence', 'mcc_two', 'board', 'disburse', 'done'])]}">
+                              <field name="mcc_one_comment" 
+                                  attrs="{'invisible': [('state', 'not in', ['mcc_one', 'appraisal', 'dilligence', 'mcc_two', 'board', 'disburse', 'done'])],
+                                          'required': [('state', 'in', 'mcc_one')]}"/>
+                              <field name="appraisal_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['appraisal', 'dilligence', 'mcc_two', 'board', 'disburse', 'done'])],
+                                            'required': [('state', 'in', 'appraisal')]}"/>
+                              <field name="dilligence_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['dilligence', 'mcc_two', 'board', 'disburse', 'done'])],
+                                            'required': [('state', 'in', 'dilligence')]}"/>
+                              
+                              <field name="mcc_two_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['mcc_two', 'board', 'disburse', 'done'])],
+                                            'required': [('state', 'in', 'mcc_two')]}"/>
+                              <field name="board_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])],
+                                            'required': [('state', 'in', 'board')]}"/>
+                              <field name="disburse_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['disburse', 'done'])],
+                                            'required': [('state', 'in', 'disburse')]}"/>
+                            </group>
+                            
+                            <group>
+                              <field name="appraisal_fee_status" invisible="1"/>
+                              <field name="priority" widget="priority"/>
+                            <field name="customer"/>
+                            <field name="customer_name"/>
+                            <field name="appraisal_amount" attrs="{'invisible': [('state', 'not in', ['appraisal'])],}"/>
+                              <field name="company_name"/>
+                              <field name="company_email"/>
+                              <field name="company_phone"/>
+                              <field name="company_website" widget="url"/>
+                              <!-- <field name="tin_or_vax_number"/> -->
+                              <field name="directors_names"/>
+                              <field name="director_addresses"/>
+                              <field name="director_emails"/>
+                              <field name="director_phones"/>
+                              <field name="director_nins"/>
+                            </group>
+                            
+                        </group>
+                        <group>
+                            <group>
+                              <field name="date"/>
+                              <!-- <field name="invest_type"/> -->
+                              
+                              <field name="application_id"/>
+                              <field name="contact_email"/>
+                              <field name="contact_phone"/>
+                              <field name="project_experience"/>
+                              <field name="rc_number"/>
+                              <field name="tin_or_vax_number"/>
+                              <field name="files_url" widget="url"/>
+                            </group>
+                            
+                            <group string="Loan Information" attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])]}">
+                              <field name="total_appr_amount"/>
+                              <field name="first_dis_amount"/>
+                              <field name="application_date"/>
+                              <field name="effective_date"/>
+                              <field name="credit_purpose"/>
+                              <field name="intrest_rate"/>
+                            </group> 
+
+                            <group string="Accounting Information" attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])]}">
+                              <field name="journal_id"/>
+                              <field name="loan_account"/>
+                              <field name="disburse_account"/>
+                              <field name="remain_amount"/>
+                              <field name="journal_entry"/>
+                            </group> 
+                        </group>
+                <!--     </group> -->
+
+                </sheet>
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fhfl_crm_investment_window">
+      <field name="name">Investments</field>
+      <field name="res_model">crm.investment</field>
+      <field name="view_mode">kanban,form,tree</field>
+    </record>
+
+    <menuitem name="Investments" id="fhfl_crm_investment_menu"
+              parent="crm.crm_menu_sales"
+              action="fhfl_sales_custom.fhfl_crm_investment_window"
+              sequence="1"/>
+
+
+    <record model="ir.ui.view" id="fhfl_crm_appraisal_fee_config_tree">
+      <field name="name">fhfl.crm.appraisal.fee.config.tree</field>
+      <field name="model">appraisal.fee.config</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="income_account"/>
+       
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_crm_appraisal_fee_config_form" model="ir.ui.view">
+        <field name="name">fhfl.crm.appraisal.fee.config.form</field>
+        <field name="model">appraisal.fee.config</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+             
+                <sheet>
+                 
+                    <group>
+                        <group>
+                            <field name="income_account"/>
+                            
+                            
+                        </group>
+                        
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+  <!--   <record model="ir.actions.act_window" id="fhfl_crm_appraisal_fee_config_window">
+      <field name="name">Appraisal Fee Account</field>
+      <field name="res_model">appraisal.fee.config</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Appraisal Fee Account" id="fhfl_crm_appraisal_fee_config_menu"
+              parent="crm.crm_menu_config"
+              action="fhfl_sales_custom.fhfl_crm_appraisal_fee_config_window"
+              sequence="1"/> -->
+</odoo>

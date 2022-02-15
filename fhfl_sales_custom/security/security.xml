@@ -1,0 +1,60 @@
+
+<odoo>
+    <data>
+        <record id="group_sale_manager_approval" model="res.groups">
+            <field name="name">Approval Admin</field>
+
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record model="ir.module.category" id="module_category_affordable_investment">
+             <field name="name">Affordable Housing Investment</field>
+             <field name="description">User access level for Affordable Housing Investment</field>
+             <field name="sequence">20</field>
+        </record>
+
+        <record id="group_mcc_one" model="res.groups">
+            <field name="name">MCC 1</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+      <!--       <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+
+        <record id="group_appraisal_fee" model="res.groups">
+            <field name="name">Appraisal Fee</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+      <!--       <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+
+        <record id="group_dilligence" model="res.groups">
+            <field name="name">Due Dillegence</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+           <!--  <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+
+        <record id="group_mcc_two" model="res.groups">
+            <field name="name">MCC 2</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+        <!--     <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+
+        <record id="group_board_approval" model="res.groups">
+            <field name="name">Board Approval</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+          <!--   <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+
+        <record id="group_disburse" model="res.groups">
+            <field name="name">Disbursement</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+           <!--  <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+
+        <record id="group_investment_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_category_affordable_investment"/>
+         <!--    <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/> -->
+        </record>
+    </data>
+</odoo>

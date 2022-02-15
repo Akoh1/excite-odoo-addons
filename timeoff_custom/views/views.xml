@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+    <record id="view_timeoff_custom" model= "ir.ui.view">
+        <field name="name">timeoff.custom</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="stand_in"/>
+            </xpath>
+
+          <xpath expr="//button[@name='action_refuse']" position="after">
+                <button name="action_resume" string="Resume"
+                        type="object" class="oe_highlight"
+                        attrs="{'invisible': [('state', 'not in', ['validate', 'resume'])]}"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="replace">
+                <button string="Refuse" name="action_refuse" type="object"
+                        attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', 'not in', ('confirm','validate1','validate', 'resume'))]}"/>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,78 @@
+
+<odoo>
+    <record model="ir.ui.view" id="product_estate_tree">
+      <field name="name">product.estate.tree</field>
+      <field name="model">product.estate</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="address"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="product_estate_form" model="ir.ui.view">
+        <field name="name">product.estate.form</field>
+        <field name="model">product.estate</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="address"/>
+                        </group>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="product_estate_window">
+      <field name="name">Estate</field>
+      <field name="res_model">product.estate</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="Estate" id="product_estate_menu"
+              parent="stock.menu_stock_config_settings"
+              action="fhfl_sales_custom.product_estate_window"
+              groups="stock.group_stock_user,stock.group_stock_manager"
+              sequence="1"/>
+
+    <record id="fhfl_sales_custom_product_template_form_view" model= "ir.ui.view">
+			<field name="name">fhfl.sales.product.template.form.view</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//div[@name='options']" position="inside">
+					<div>
+                        <field name="is_property"/>
+                        <label for="is_property"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+					<page string="Property Details" attrs="{'invisible':[('is_property','=',False)]}" name="property_details">
+                        <group>
+                            <group>
+                                <field name="estate_id"/>
+                                <field name="property_type"/>
+                            </group>
+                            <group>
+                                <field name="sqm_unit"/>
+                                <field name="prod_ref_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+			</field>
+		</record>
+</odoo>

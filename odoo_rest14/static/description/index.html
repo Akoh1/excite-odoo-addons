@@ -1,0 +1,646 @@
+ <section class="oe_container oe_dark lead">
+
+       <div class="oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Odoo Rest API</h2>
+        <h3 class="oe_slogan">A REST API is an application program interface (API) that uses HTTP requests to GET, PUT, POST and DELETE data.</h3>
+        <h4 class="text-primary oe_slogan" >
+          In this module, we create an Odoo REST API endpoints which touch the Database records and Schema in JSON and XML format.
+        </h4>
+    </div>
+
+        <div>
+            <div>
+            <div class="panel panel-primary" id="wkid0">
+                <div class="panel-heading">
+                <h3 class="panel-title mt-2" style="font-size: 25px;"><i class="fa fa-mail-forward "></i><b>Endpoints Allow</b></h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled">
+                      <li><i class="fa fa-check text-primary"></i>
+                        Fetch a record from Database.</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Create a record in Database</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Update a record in Database</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Delete a record in Database</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Search records in Database</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Get the Schema of a Table.</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Trigger your odoo actions.</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Access rights message in Endpoint response.</li>
+                        <li><i class="fa fa-check text-primary"></i>
+                        Quick and Easy Installation.</li>
+
+                        <br>
+                        <li><span class="text-primary"><b>Admin Control</b></span>
+                             <ul class="list-unstyled">
+                                <li class="text-primary"> <i class="fa fa-hand-o-right"></i>
+                                            Create API key to access <b>Endpoints </b></li>
+
+                                <li class="text-primary"> <i class="fa fa-hand-o-right"></i>
+                                            Seperate API key for <b>end point users</b> </li>
+                                <li class="text-primary"> <i class="fa fa-hand-o-right "></i>
+                                            Give different access right to <b>multiple API key </b> </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+		<a class="btn btn-success"  href="/odoo_rest/static/description/Odoo Rest Documentation.pdf" download="odoo_rest" type="application/octet-stream" target="_blank">Download Documentation</a>
+            </div>
+            </div>
+        </div>
+    </section>
+
+<div class="container">
+  <div>
+    <div id="home">
+      <h4 class="text-primary oe_slogan" >
+        Configuration
+      </h4>
+      
+      <section class="oe_container oe_dark">
+                    <div>
+                        <div class="panel panel-primary" id="wkid0">
+                            <div class="panel-heading">
+                              <h3 class="panel-title"><b>Odoo Rest API</b></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-arrow-circle-o-right"></i><b> Webservices Menu</b>
+                                </div>
+                                <a href="1.jpg">
+                                    <img class="img-border img-responsive thumbnail" src="1.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div>
+                        <div class="panel panel-primary" id="wkid0">
+                            <div class="panel-heading">
+                              <h3 class="panel-title"><b>Odoo Rest API</b></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-arrow-circle-o-right"></i><b>Permission to resource</b>
+                                </div>
+                                <a href="2.jpg">
+                                    <img class="img-border img-responsive thumbnail" src="2.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="panel panel-primary" id="wkid0">
+                            <div class="panel-heading">
+                              <h3 class="panel-title"><b>Odoo Rest API</b></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-arrow-circle-o-right"></i><b>Specific Permission to resource</b>
+                                </div>
+                                <a href="3.jpg">
+                                    <img class="img-border img-responsive thumbnail" src="3.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+      <div >
+          <div id="wkid0">
+              <div class="panel-heading">
+                <h3 class='oe_slogan'><b>JSON representaion of Odoo Rest API</b></h3>
+              </div>
+                    <p>
+                      <strong>Exapmle 1: Search record from product.product</strong><br>
+                      <strong> Request Type : GET</strong><br>
+                      <strong>End Point : {{base_url}}/api/product.template/search?domain=[('id','in',[13,10,11,12,14])]&amp;fields=['name','description','product_variant_ids']</strong><br>
+                      <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                      {
+                          "object_name": "product.template",
+                          "responseCode": 2,
+                          "fields": "['name','description','product_variant_ids']",
+                          "model_id": 145,
+                          "permisssions": {
+                              "read": true,
+                              "create": true,
+                              "delete": true,
+                              "write": true
+                          },
+                          "message": "Allowed all Models Permission: all",
+                          "success": true,
+                          "domain": "[('id','in',[13,10,11,12,14])]",
+                          "data": [
+                              {
+                                  "id": 11,
+                                  "name": "Bose Mini Bluetooth Speaker",
+                                  "description": false,
+                                  "product_variant_ids": [
+                                      {
+                                          "id": 14,
+                                          "name": "Bose Mini Bluetooth Speaker"
+                                      }
+                                  ]
+                              },
+                              {
+                                  "id": 14,
+                                  "name": "iPad Mini",
+                                  "description": false,
+                                  "product_variant_ids": [
+                                      {
+                                          "id": 17,
+                                          "name": "iPad Mini"
+                                      }
+                                  ]
+                              },
+                              {
+                                  "id": 10,
+                                  "name": "iPad Retina Display",
+                                  "description": false,
+                                  "product_variant_ids": [
+                                      {
+                                          "id": 10,
+                                          "name": "iPad Retina Display"
+                                      },
+                                      {
+                                          "id": 11,
+                                          "name": "iPad Retina Display"
+                                      },
+                                      {
+                                          "id": 12,
+                                          "name": "iPad Retina Display"
+                                      }
+                                  ]
+                              },
+                              {
+                                  "id": 12,
+                                  "name": "Custom Computer (kit)",
+                                  "description": "Custom computer shipped in kit.",
+                                  "product_variant_ids": [
+                                      {
+                                          "id": 15,
+                                          "name": "Custom Computer (kit)"
+                                      }
+                                  ]
+                              },
+                              {
+                                  "id": 13,
+                                  "name": "Parts Replacement",
+                                  "description": false,
+                                  "product_variant_ids": [
+                                      {
+                                          "id": 16,
+                                          "name": "Parts Replacement"
+                                      }
+                                  ]
+                              }
+                          ]
+                      }
+                    </pre>
+
+                    <p>
+                      <strong>Exapmle 2: Get schema for table product.product</strong><br>
+                      <strong>Request Type : GET</strong><br>
+                      <strong>End Point : {{base_url}}/api/res.lang/schema</strong><br>
+                      <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                      {
+                          "responseCode": 2,
+                          "model_id": 73,
+                          "permisssions": {
+                              "read": true,
+                              "create": true,
+                              "delete": true,
+                              "write": true
+                          },
+                          "message": "Allowed all Models Permission: all",
+                          "object_name": "res.lang",
+                          "success": true,
+                          "data": [
+                              {
+                                  "field_type": "char",
+                                  "label": "Name",
+                                  "readonly": false,
+                                  "required": true,
+                                  "field_name": "name"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Locale Code",
+                                  "readonly": false,
+                                  "required": true,
+                                  "field_name": "code"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "ISO code",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "iso_code"
+                              },
+                              {
+                                  "field_type": "boolean",
+                                  "label": "Translatable",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "translatable"
+                              },
+                              {
+                                  "field_type": "boolean",
+                                  "label": "Active",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "active"
+                              },
+                              {
+                                  "readonly": false,
+                                  "field_name": "direction",
+                                  "field_type": "selection",
+                                  "label": "Direction",
+                                  "required": true,
+                                  "selection": [
+                                      [
+                                          "ltr",
+                                          "Left-to-Right"
+                                      ],
+                                      [
+                                          "rtl",
+                                          "Right-to-Left"
+                                      ]
+                                  ]
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Date Format",
+                                  "readonly": false,
+                                  "required": true,
+                                  "field_name": "date_format"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Time Format",
+                                  "readonly": false,
+                                  "required": true,
+                                  "field_name": "time_format"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Separator Format",
+                                  "readonly": false,
+                                  "required": true,
+                                  "field_name": "grouping"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Decimal Separator",
+                                  "readonly": false,
+                                  "required": true,
+                                  "field_name": "decimal_point"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Thousands Separator",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "thousands_sep"
+                              },
+                              {
+                                  "field_type": "integer",
+                                  "label": "ID",
+                                  "readonly": true,
+                                  "required": false,
+                                  "field_name": "id"
+                              },
+                              {
+                                  "field_type": "char",
+                                  "label": "Display Name",
+                                  "readonly": true,
+                                  "required": false,
+                                  "field_name": "display_name"
+                              },
+                              {
+                                  "field_type": "many2one",
+                                  "label": "Created by",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "create_uid"
+                              },
+                              {
+                                  "field_type": "datetime",
+                                  "label": "Created on",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "create_date"
+                              },
+                              {
+                                  "field_type": "many2one",
+                                  "label": "Last Updated by",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "write_uid"
+                              },
+                              {
+                                  "field_type": "datetime",
+                                  "label": "Last Updated on",
+                                  "readonly": false,
+                                  "required": false,
+                                  "field_name": "write_date"
+                              },
+                              {
+                                  "field_type": "datetime",
+                                  "label": "Last Modified on",
+                                  "readonly": true,
+                                  "required": false,
+                                  "field_name": "__last_update"
+                              }
+                          ]
+                      }
+                    </pre>
+
+                    <p>
+                      <strong>Exapmle 3: Create a record of product.template</strong><br>
+                      <strong>Request Type : POST</strong><br>
+                      <strong>End Point : {{base_url}}/api/product.template/create</strong><br>
+                      <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                      response : {
+                        "responseCode": 2,
+                        "model_id": 145,
+                        "permisssions": {
+                            "read": true,
+                            "create": true,
+                            "delete": true,
+                            "write": true
+                        },
+                        "message": "Allowed all Models Permission: all",
+                        "create_id": 75,
+                        "object_name": "product.template",
+                        "success": true
+                      }
+                    </pre>
+
+                    <p>
+                      <strong>Exapmle 4: Get a record of sale.order.line</strong><br>
+                      <strong>Request Type :GET </strong><br>
+                      <strong>End Point : {{base_url}}/api/sale.order.line/&lt;int: record_id&gt;</strong><br>
+                      <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                      GET
+                    {
+                        "object_name": "sale.order.line",
+                        "responseCode": 2,
+                        "model_id": 241,
+                        "record_id": 2,
+                        "message": "Allowed all Models Permission: all",
+                        "success": true,
+                        "permisssions": {
+                            "read": true,
+                            "create": true,
+                            "delete": true,
+                            "write": true
+                        },
+                        "data": [
+                            {
+                                "sequence": 10,
+                                "__last_update": "2017-10-04 11:28:01",
+                                "is_downpayment": false,
+                                "price_tax": 0,
+                                "customer_lead": 0,
+                                "create_uid": [
+                                    {
+                                        "id": 1,
+                                        "name": "Administrator"
+                                    }
+                                ],
+                                "price_unit": 145,
+                                "product_qty": 5,
+                                "salesman_id": [
+                                    {
+                                        "id": 5,
+                                        "name": "Demo User"
+                                    }
+                                ],
+                                "amt_invoiced": 0,
+                                "id": 2,
+                                "product_packaging": [],
+                                "qty_delivered": 0,
+                                "price_reduce_taxinc": 145,
+                                "price_reduce": 145,
+                                "price_total": 725,
+                                "move_ids": [],
+                                "layout_category_id": [],
+                                "route_id": [],
+                                "create_date": "2017-10-04 11:28:01",
+                                "currency_id": [
+                                    {
+                                        "id": 1,
+                                        "name": "EUR"
+                                    }
+                                ],
+                                "product_id": [
+                                    {
+                                        "id": 5,
+                                        "name": "Datacard"
+                                    }
+                                ],
+                                "write_date": "2017-10-04 11:28:01",
+                                "warning_stock": false,
+                                "amt_to_invoice": 725,
+                                "price_reduce_taxexcl": 145,
+                                "write_uid": [
+                                    {
+                                        "id": 1,
+                                        "name": "Administrator"
+                                    }
+                                ],
+                                "company_id": [
+                                    {
+                                        "id": 1,
+                                        "name": "YourCompany"
+                                    }
+                                ],
+                                "name": "Pen drive, 16GB",
+                                "product_uom_qty": 5,
+                                "qty_to_invoice": 0,
+                                "price_subtotal": 725,
+                                "is_delivery": false,
+                                "invoice_status": "no",
+                                "product_uom": [
+                                    {
+                                        "id": 1,
+                                        "name": "Unit(s)"
+                                    }
+                                ],
+                                "qty_invoiced": 0,
+                                "state": "draft",
+                                "order_id": [
+                                    {
+                                        "id": 1,
+                                        "name": "SO001"
+                                    }
+                                ],
+                                "display_name": "Pen drive, 16GB",
+                                "order_partner_id": [
+                                    {
+                                        "id": 9,
+                                        "name": "Agrolait"
+                                    }
+                                ],
+                                "product_image":""
+                                "layout_category_sequence": 0,
+                                "discount": 0,
+                                "qty_delivered_updateable": false
+                            }
+                        ]
+                    }
+                  </pre>
+
+                  <p>
+                    <strong>Exapmle 5: Update a record of product.template </strong><br>
+                    <strong>Type : PUT </strong><br>
+                    <strong>End Point : {{base_url}}/api/product.template/&lt;int: record_id&gt;</strong><br>
+                    <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                  </p>
+                  <pre class="bg-light text-dark">
+                    PUT Body:
+                  {
+                      "name" : "test product"
+                  }
+                </pre>
+                <pre class="bg-light text-dark">
+                  response : {
+                    "responseCode": 2,
+                    "model_id": 145,
+                    "permisssions": {
+                        "read": true,
+                        "create": true,
+                        "delete": true,
+                        "write": true
+                    },
+                    "message": "Allowed all Models Permission: all",
+                    "create_id": 75,
+                    "object_name": "product.template",
+                    "success": true
+                  }
+                </pre>
+                <p>
+                  <strong>Exapmle 6: Delete a record of product.template </strong><br>
+                  <strong>Request Type : DELETE </strong><br>
+                  <strong>End Point : {{base_url}}/api/product.template/&lt;int: record_id&gt;</strong><br>
+                  <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                </p>
+              <pre class="bg-light text-dark">
+                response : {
+                  "responseCode": 2,
+                  "model_id": 145,
+                  "permisssions": {
+                      "read": true,
+                      "create": true,
+                      "delete": true,
+                      "write": true
+                  },
+                  "message": "Allowed all Models Permission: all",
+                  "object_name": "product.template",
+                  "success": true
+                }
+              </pre>
+
+              <p>
+              <strong>Exapmle 7: Trigger your odoo actions. </strong><br>
+              <strong>Request Type : POST </strong><br>
+              <strong>End Point : {{base_url}}/api/res.partner/execute_kw</strong><br>
+              <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+              <strong>Body : {"method":"name_get","args":[[2]],"kw":{}}</strong><br>
+            </p>
+          <pre class="bg-light text-dark">
+            response : {
+                        "model_id": 74,
+                        "success": true,
+                        "message": "Method Successfully Called",
+                        "result": [
+                            [
+                                2,
+                                "OdooBot"
+                            ]
+                        ],
+                        "responseCode": 2,
+                        "permisssions": {
+                            "read": true,
+                            "write": true,
+                            "delete": true,
+                            "create": true
+                        },
+                        "object_name": "res.partner"
+                  }
+          </pre>
+                </div>
+              </div>
+              <div>
+                  <div class="panel panel-primary" id="wkid0">
+                      <div class="panel-heading">
+                        <h3 class='oe_slogan'><b>XML representation of Odoo Rest API</b></h3>
+                      </div>
+                      <p>
+                        <strong>Simply add the extra Header in each End Points</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","Content-Type":"text/xml"}</strong><br>
+                      </p>
+
+                    </div>
+                  </div>
+
+      </section>
+    </div>
+
+  </div>
+</div>
+
+
+
+</section>
+ <section class="oe_container oe_dark">
+     <div>
+         <div>
+             <h2 class='oe_slogan'>Complimentary Support</h2>
+             <p><center>
+             You will get 90 days free support for any doubt, queries, and bug fixing (excluding data recovery) or any type of issue related to this module.
+           </center></p>
+         </div>
+     </div>
+     <div class="oe_spaced">
+         <div>
+             <h2 class="oe_slogan">Help and Support</h2>
+         </div>
+         <div class="oe_slogan oe_spaced">
+             <img src="icon-help.png">
+             <span ><a onMouseOver="this.style.color='#AC1EE0'"
+    onMouseOut="this.style.color='#7c7bad'" style="color:#7c7bad;" target="_blank" href="http://support.webkul.com/en/customer/create-ticket/">Help</a></span>
+             <img src="icon-support.png">
+             <span ><a onMouseOver="this.style.color='#AC1EE0'"
+    onMouseOut="this.style.color='#7c7bad'" style="color:#7c7bad;" target="_blank" href="http://support.webkul.com/en/customer/create-ticket/">Support</a></span>
+             <img src="icon-features.png">
+             <span ><a onMouseOver="this.style.color='#AC1EE0'"
+    onMouseOut="this.style.color='#7c7bad'" style="color:#7c7bad;" target="_blank" href="http://support.webkul.com/en/customer/create-ticket/">Request new Features</a></span>
+         </div>
+     </div>
+ </section>
+
+
+<section class="oe_container">
+<div>
+<!-- Piwik Image Tracker-->
+<img src="http://odooimg.webkul.com/analytics/piwik/piwik.php?idsite=3&rec=1&action_name=ODOO-REST&url=https://apps.openerp.com/apps/modules/12.0/odoo_rest&uid=odoo_rest" style="border:0" alt="" />
+<!-- End Piwik -->
+</div>
+</section>

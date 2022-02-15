@@ -1,0 +1,118 @@
+<odoo>
+  <data>
+      <record id="view_job_recruit_custom" model= "ir.ui.view">
+        <field name="name">hr.job..recruit.form</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='set_open']" position="after">
+                <button name="hr_approve" string="HR Approve"
+                type="object" class="oe_highlight"
+                states="draft" groups="hr_recruitment.group_hr_recruitment_user"/>
+<!--                groups="hr_recruitment.group_hr_recruitment_user"/>-->
+            </xpath>
+          <xpath expr="//field[@name='name']/../.." position="after">
+               <div class="oe_title">
+                 <label for="ref_num"/>
+                 <field name="ref_num" />
+               </div>
+
+<!--              <div class="oe_title">-->
+<!--                 <label for="salary_structure" class="oe_edit_only"/>-->
+<!--                 <field name="salary_structure" />-->
+<!--               </div>-->
+<!--                <field name="ref_num"/>-->
+<!--                <field name="salary_structure"/>-->
+<!--                groups="hr_recruitment.group_hr_recruitment_user"/>-->
+            </xpath>
+          <xpath expr="//notebook" position="inside">
+                <page string="Salary Structure">
+                  <group>
+                    <group name="salary_strucutre">
+
+                      <field name="salary_structure"/>
+                    </group>
+
+                  </group>
+                </page>
+            </xpath>
+<!--            <xpath expr="//header" position="inside">-->
+<!--                <button name="print_onboard_form" string="Onboarding Form"-->
+<!--                type="object" class="oe_highlight"-->
+<!--                groups="hr_recruitment.group_hr_recruitment_user"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="view_applicant_recruit_custom" model= "ir.ui.view">
+        <field name="name">hr.applicant.recruit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='description']" position="after">
+            <group>
+              <field name="interview_scores"/>
+            </group>
+          </xpath>
+
+        </field>
+    </record>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="module_14_template.list">
+      <field name="name">module_14_template list</field>
+      <field name="model">module_14_template.module_14_template</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="module_14_template.action_window">
+      <field name="name">module_14_template window</field>
+      <field name="res_model">module_14_template.module_14_template</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="module_14_template.action_server">
+      <field name="name">module_14_template server</field>
+      <field name="model_id" ref="model_module_14_template_module_14_template"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="module_14_template" id="module_14_template.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="module_14_template.menu_1" parent="module_14_template.menu_root"/>
+    <menuitem name="Menu 2" id="module_14_template.menu_2" parent="module_14_template.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="module_14_template.menu_1_list" parent="module_14_template.menu_1"
+              action="module_14_template.action_window"/>
+    <menuitem name="Server to list" id="module_14_template" parent="module_14_template.menu_2"
+              action="module_14_template.action_server"/>
+-->
+  </data>
+</odoo>

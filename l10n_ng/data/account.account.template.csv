@@ -1,0 +1,455 @@
+id,code,name,user_type_id:id,reconcile,chart_template_id:id
+10210011,10210011,Cost: Fixtures and Fittings,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10210012,10210012,Finance Leased - Fixtures and Fittings,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10210013,10210013,Revaluation: Fixtures and Fittings,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10210014,10210014,Fixtures and Fittings Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10210015,10210015,Fixtures and Fittings Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10220011,10220011,Cost: Land,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10220012,10220012,Finance Leased - Land,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10220013,10220013,Revaluation: Land,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10230011,10230011,Cost: Building,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10230012,10230012,Finance Leased - Building,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10230013,10230013,Revaluation: Building,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10230014,10230014,Buildings Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10230015,10230015,Buildings Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10240011,10240011,Cost: Motor Vehicles,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10240012,10240012,Finance Leased - Motor Vehicles,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10240013,10240013,Revaluation: Motor Vehicles,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10240014,10240014,Motor Vehicles Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10240015,10240015,Motor Vehicles Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10250011,10250011,Cost: Office Equipment + Computers,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10250012,10250012,Finance Leased - Office Equipment + Computers,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10250013,10250013,Revaluation: Office Equipment + Computers,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10250014,10250014,Office Equipment + Computers Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10250015,10250015,Office Equipment + Computers Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10260011,10260011,"Cost: Plant,Machinery & Equipment",account.data_account_type_fixed_assets,FALSE,l10n_ng
+10260012,10260012,"Financed Leased: Plant,Machinery & Equipment",account.data_account_type_fixed_assets,FALSE,l10n_ng
+10260013,10260013,"Revaluation: Plant,Machinery & Equipment",account.data_account_type_fixed_assets,FALSE,l10n_ng
+10260014,10260014,"Plant,Machinery & Equipment Accum Depreciation",account.data_account_type_fixed_assets,FALSE,l10n_ng
+10260015,10260015,"Plant,Machinery & Equipment Accum Impairment",account.data_account_type_fixed_assets,FALSE,l10n_ng
+10270011,10270011,Cost: Leasehold Improvement,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10270012,10270012,Revaluation: Leasehold Improvement,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10270013,10270013,Leasehold Improvement Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10270014,10270014,Leasehold Improvement Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10280011,10280011,Cost: Asset Type 7 Equipment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10280012,10280012,Financed Leased: Asset Type 7 Equipment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10280013,10280013,Revaluation: Asset Type 7 Equipment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10280014,10280014,Asset Type 7  Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10280015,10280015,Asset Type 7  Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10290011,10290011,Cost: Asset Type 8,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10290012,10290012,Financed Leased: Asset Type 8,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10290013,10290013,Revaluation: Asset Type 8,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10290014,10290014,Asset Type 8 Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10290015,10290015,Asset Type 8 Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10310011,10310011,Cost: Investment Property 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10310012,10310012,Investment Property 1 Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10310013,10310013,Investment Property 1 Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10310014,10310014,Fair Value: Investment Property 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10320011,10320011,Cost: Investment Property 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10320012,10320012,Investment Property 2 Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10320013,10320013,Investment Property 2 Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10320014,10320014,Fair Value: Investment Property 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10330011,10330011,Cost: Investment Property 3,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10330012,10330012,Investment Property 3 Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10330013,10330013,Investment Property 3 Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10330014,10330014,Fair Value: Investment Property 3,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10340011,10340011,Cost: Investment Property 4,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10340012,10340012,Investment Property 4 Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10340013,10340013,Investment Property 4 Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10340014,10340014,Fair Value: Investment Property 4,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10350011,10350011,Cost: Investment Property 5,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10350012,10350012,Investment Property 5 Accum Depreciation,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10350013,10350013,Investment Property 5 Accum Impairment,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10350014,10350014,Fair Value: Investment Property 5,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10410011,10410011,Cost:Software,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10410012,10410012,Revalution: Software,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10410013,10410013,Amortization of Software,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10410014,10410014,Impairment of Software,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10420011,10420011,Cost: Patents & Trademarks,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10420012,10420012,Revaluation: Patents & Trademarks,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10420013,10420013,Amortization of Patents & Trademarks,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10420014,10420014,Impairment of Patents & Trademarks,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10430011,10430011,Cost: License,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10430012,10430012,Revaluation: License,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10430013,10430013,Amortization of License,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10430014,10430014,Impairment of License,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10440011,10440011,Cost: Copyright,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10440012,10440012,Revaluation: Copyright,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10440013,10440013,Amortization of Copyright,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10440014,10440014,Impairment of Copyright,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10450011,10450011,Cost: Other Intangible Assets 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10450012,10450012,Revaluation:Other Intangible Assets 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10450013,10450013,Amortization of Other Intangible Assets 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10450014,10450014,Impairment of Other Intangible Assets 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10460011,10460011,Cost: Other Intangible Assets 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10460012,10460012,Revaluation:Other Intangible Assets 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10460013,10460013,Amortization of Other Intangible Assets 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10460014,10460014,Impairment of Other Intangible Assets 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10470011,10470011,Intangible Assets with an indefinite useful lives 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10470012,10470012,Impairment of intangible assets with an indefinite useful lives 1,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10470013,10470013,Intangible Assets with an indefinite useful lives 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10470014,10470014,Impairment of intangible assets with an indefinite useful lives 2,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10470015,10470015,Intangible Assets with an indefinite useful lives 3,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10470016,10470016,Impairment of intangible assets with an indefinite useful lives 3,account.data_account_type_fixed_assets,FALSE,l10n_ng
+10510011,10510011,Shares of Quoted Company 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10510012,10510012,Shares of Quoted Company 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10510013,10510013,Shares of Quoted Company 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10510014,10510014,Shares of Quoted Company 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10510015,10510015,Shares of Quoted Company 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10510016,10510016,Impairment of Shares of Quoted Company,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10520011,10520011,Shares of Unquoted Company 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10520012,10520012,Shares of Unquoted Company 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10520013,10520013,Shares of Unquoted Company 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10520014,10520014,Shares of Unquoted Company 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10520015,10520015,Shares of Unquoted Company 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10520016,10520016,Impairment of Shares of Unquoted Company,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10530011,10530011,Fixed Deposit in Bank 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10530012,10530012,Fixed Deposit in Bank 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10530013,10530013,Fixed Deposit in Bank 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10530014,10530014,Fixed Deposit in Bank 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10530015,10530015,Fixed Deposit in Bank 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540011,10540011,Investment in Associate 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540012,10540012,Investment in Associate 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540013,10540013,Investment in Associate 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540014,10540014,Investment in Associate 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540015,10540015,Investment in Associate 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540016,10540016,Investment in Joint Ventures 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540017,10540017,Investment in Joint Ventures 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540018,10540018,Investment in Joint Ventures 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540019,10540019,Investment in Joint Ventures 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10540020,10540020,Investment in Joint Ventures 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10550011,10550011,Deferred Tax 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10550012,10550012,Deferred Tax 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10550013,10550013,Deferred Tax 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10550014,10550014,Deferred Tax 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10550015,10550015,Deferred Tax 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10560011,10560011,Prepaid Rent,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10560012,10560012,Prepaid Insurance,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10560013,10560013,Prepaid Others 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10560014,10560014,Prepaid Others 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10560015,10560015,Prepaid Others 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10570011,10570011,Trade Receivables 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10570012,10570012,Impairment of trade receivables 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10570013,10570013,Trade Receivables 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10570014,10570014,Impairment of trade receivables 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10570015,10570015,Trade Receivables 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10570016,10570016,Impairment of trade receivables 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10580011,10580011,Financial Assets 1,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10580012,10580012,Financial Assets 2,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10580013,10580013,Financial Assets 3,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10580014,10580014,Financial Assets 4,account.data_account_type_non_current_assets,FALSE,l10n_ng
+10580015,10580015,Financial Assets 5,account.data_account_type_non_current_assets,FALSE,l10n_ng
+11220011,11220011,Prepaid Rent,account.data_account_type_prepayments,FALSE,l10n_ng
+11220012,11220012,Prepaid Insurance,account.data_account_type_prepayments,FALSE,l10n_ng
+11220013,11220013,Prepaid Others,account.data_account_type_prepayments,FALSE,l10n_ng
+11010011,11010011,Inventory RM Type 1,account.data_account_type_current_assets,FALSE,l10n_ng
+11010012,11010012,Inventory RM Type 2,account.data_account_type_current_assets,FALSE,l10n_ng
+11010013,11010013,Inventory RM Type 3,account.data_account_type_current_assets,FALSE,l10n_ng
+11010014,11010014,Inventory RM Type 4,account.data_account_type_current_assets,FALSE,l10n_ng
+11020011,11020011,Inventory FG Type 1,account.data_account_type_current_assets,FALSE,l10n_ng
+11020012,11020012,Inventory FG Type 2,account.data_account_type_current_assets,FALSE,l10n_ng
+11020013,11020013,Inventory FG Type 3,account.data_account_type_current_assets,FALSE,l10n_ng
+11020014,11020014,Inventory FG Type 4,account.data_account_type_current_assets,FALSE,l10n_ng
+11020015,11020015,Inventory FG Type 5,account.data_account_type_current_assets,FALSE,l10n_ng
+11030011,11030011,Inventory WIP Type 1,account.data_account_type_current_assets,FALSE,l10n_ng
+11030012,11030012,Inventory WIP Type 2,account.data_account_type_current_assets,FALSE,l10n_ng
+11030013,11030013,Inventory WIP Type 3,account.data_account_type_current_assets,FALSE,l10n_ng
+11030014,11030014,Inventory WIP Type 4,account.data_account_type_current_assets,FALSE,l10n_ng
+11030015,11030015,Inventory WIP Type 5,account.data_account_type_current_assets,FALSE,l10n_ng
+11040011,11040011,Inventory OSS Type 1,account.data_account_type_current_assets,FALSE,l10n_ng
+11040012,11040012,Inventory OSS Type 2,account.data_account_type_current_assets,FALSE,l10n_ng
+11040013,11040013,Inventory OSS Type 3,account.data_account_type_current_assets,FALSE,l10n_ng
+11040014,11040014,Inventory OSS Type 4,account.data_account_type_current_assets,FALSE,l10n_ng
+11040015,11040015,Inventory OSS Type 5,account.data_account_type_current_assets,FALSE,l10n_ng
+11110011,11110011,Trade Receivable Control Account 1,account.data_account_type_receivable,TRUE,l10n_ng
+11110012,11110012,Impairment of Trade Receivable Control Account 1,account.data_account_type_receivable,TRUE,l10n_ng
+11110013,11110013,Trade Receivable Control Account 2,account.data_account_type_receivable,TRUE,l10n_ng
+11110014,11110014,Impairment of Trade Receivable Control Account 2,account.data_account_type_receivable,TRUE,l10n_ng
+11110015,11110015,Trade Receivable Control Account 3,account.data_account_type_receivable,TRUE,l10n_ng
+11110016,11110016,Impairment of Trade Receivable Control Account 3,account.data_account_type_receivable,TRUE,l10n_ng
+11110017,11110017,Trade Receivable Control Account 4,account.data_account_type_receivable,TRUE,l10n_ng
+11110018,11110018,Impairment of Trade Receivable Control Account 4,account.data_account_type_receivable,TRUE,l10n_ng
+11110019,11110019,Trade Receivable Control Account 5,account.data_account_type_receivable,TRUE,l10n_ng
+11110020,11110020,Impairment of Trade Receivable Control Account 4,account.data_account_type_receivable,TRUE,l10n_ng
+11120011,11120011,Value Added Tax - Receivable,account.data_account_type_receivable,TRUE,l10n_ng
+11120012,11120012,Withholding Tax Receivable,account.data_account_type_receivable,TRUE,l10n_ng
+11120013,11120013,Deposit for Inventory,account.data_account_type_receivable,TRUE,l10n_ng
+11120014,11120014,Staff Loans Receivable,account.data_account_type_receivable,TRUE,l10n_ng
+11120015,11120015,Staff Cash Advance,account.data_account_type_receivable,TRUE,l10n_ng
+11120016,11120016,Travel Cash Advance,account.data_account_type_receivable,TRUE,l10n_ng
+11120017,11120017,Project Cash Advance,account.data_account_type_receivable,TRUE,l10n_ng
+11120018,11120018,Import Cash Advance,account.data_account_type_receivable,TRUE,l10n_ng
+11120019,11120019,Pre-Operational Expenses,account.data_account_type_receivable,TRUE,l10n_ng
+11120020,11120020,Director 1 Current Account,account.data_account_type_receivable,TRUE,l10n_ng
+11120021,11120021,Director 2 Current Account,account.data_account_type_receivable,TRUE,l10n_ng
+11120022,11120022,Director 3 Current Account,account.data_account_type_receivable,TRUE,l10n_ng
+11120023,11120023,Director 4 Current Account,account.data_account_type_receivable,TRUE,l10n_ng
+11120024,11120024,Director 5 Current Account,account.data_account_type_receivable,TRUE,l10n_ng
+11120025,11120025,Others 1,account.data_account_type_receivable,TRUE,l10n_ng
+11120026,11120026,Others 2,account.data_account_type_receivable,TRUE,l10n_ng
+11120027,11120027,Others 3,account.data_account_type_receivable,TRUE,l10n_ng
+11120028,11120028,Others 4,account.data_account_type_receivable,TRUE,l10n_ng
+11120029,11120029,Others 5,account.data_account_type_receivable,TRUE,l10n_ng
+11120030,11120030,Impairment of other receivables 1,account.data_account_type_receivable,TRUE,l10n_ng
+11120031,11120031,Impairment of other receivables 2,account.data_account_type_receivable,TRUE,l10n_ng
+11120032,11120032,Impairment of other receivables 3,account.data_account_type_receivable,TRUE,l10n_ng
+11120033,11120033,Impairment of other receivables 4,account.data_account_type_receivable,TRUE,l10n_ng
+11120034,11120034,Impairment of other receivables 5,account.data_account_type_receivable,TRUE,l10n_ng
+11410011,11410011,Cash From Sales Accounts 1,account.data_account_type_liquidity,FALSE,l10n_ng
+11410012,11410012,Cash From Sales Accounts 2,account.data_account_type_liquidity,FALSE,l10n_ng
+11410013,11410013,Cash From Sales Accounts 3,account.data_account_type_liquidity,FALSE,l10n_ng
+11410014,11410014,Cash From Sales Accounts 4,account.data_account_type_liquidity,FALSE,l10n_ng
+11410015,11410015,Cash From Sales Accounts 5,account.data_account_type_liquidity,FALSE,l10n_ng
+11420011,11420011,Petty Cash Account 1,account.data_account_type_liquidity,FALSE,l10n_ng
+11420012,11420012,Petty Cash Account 2,account.data_account_type_liquidity,FALSE,l10n_ng
+11420013,11420013,Petty Cash Account 3,account.data_account_type_liquidity,FALSE,l10n_ng
+11420014,11420014,Petty Cash Account 4,account.data_account_type_liquidity,FALSE,l10n_ng
+11420015,11420015,Petty Cash Account 5,account.data_account_type_liquidity,FALSE,l10n_ng
+11430011,11430011,Bank Account 1,account.data_account_type_liquidity,FALSE,l10n_ng
+11430012,11430012,Bank Account 2,account.data_account_type_liquidity,FALSE,l10n_ng
+11430013,11430013,Bank Account 3,account.data_account_type_liquidity,FALSE,l10n_ng
+11430014,11430014,Bank Account 4,account.data_account_type_liquidity,FALSE,l10n_ng
+11430015,11430015,Bank Account 5,account.data_account_type_liquidity,FALSE,l10n_ng
+11430016,11430016,Company Credit Card,account.data_account_type_liquidity,FALSE,l10n_ng
+11440011,11440011,Fixed Deposit in Bank 1,account.data_account_type_liquidity,FALSE,l10n_ng
+11440012,11440012,Fixed Deposit in Bank 2,account.data_account_type_liquidity,FALSE,l10n_ng
+11440013,11440013,Fixed Deposit in Bank 3,account.data_account_type_liquidity,FALSE,l10n_ng
+11440014,11440014,Fixed Deposit in Bank 4,account.data_account_type_liquidity,FALSE,l10n_ng
+11440015,11440015,Fixed Deposit in Bank 5,account.data_account_type_liquidity,FALSE,l10n_ng
+11450011,11450011,Other Current Assets 1,account.data_account_type_current_assets,FALSE,l10n_ng
+11450012,11450012,Other Current Assets 2,account.data_account_type_current_assets,FALSE,l10n_ng
+11450013,11450013,Other Current Assets 3,account.data_account_type_current_assets,FALSE,l10n_ng
+11450014,11450014,Other Current Assets 4,account.data_account_type_current_assets,FALSE,l10n_ng
+11460011,11460011,Non Current Assets Held for Sale 1,account.data_account_type_current_assets,FALSE,l10n_ng
+11460012,11460012,Non Current Assets Held for Sale 2,account.data_account_type_current_assets,FALSE,l10n_ng
+11460013,11460013,Non Current Assets Held for Sale 3,account.data_account_type_current_assets,FALSE,l10n_ng
+11460014,11460014,Non Current Assets Held for Sale 4,account.data_account_type_current_assets,FALSE,l10n_ng
+20180011,20180011,Long Term Loan 1,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20180012,20180012,Long Term Loan 2,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20180013,20180013,Long Term Loan 3,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20180014,20180014,Long Term Loan 4,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20180015,20180015,Long Term Loan 5,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20190011,20190011,Lease Repayments 1,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20190012,20190012,Lease Repayments 2,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20190013,20190013,Lease Repayments 3,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20190014,20190014,Lease Repayments 4,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20190015,20190015,Lease Repayments 5,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+21200011,21200011,Deferred Tax 1,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+21200012,21200012,Deferred Tax 2,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+21200013,21200013,Deferred Tax 3,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+21200014,21200014,Deferred Tax 4,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+21200015,21200015,Deferred Tax 5,account.data_account_type_non_current_liabilities,FALSE,l10n_ng
+20110011,20110011,NCL Trade Payables Control 1,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20110012,20110012,NCL Trade Payables Control 2,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20110013,20110013,NCL Trade Payables Control 3,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20110014,20110014,NCL Trade Payables Control 4,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20110015,20110015,NCL Trade Payables Control 5,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20120011,20120011,Non Current Liabilities 1,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20120012,20120012,Non Current Liabilities 2,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20120013,20120013,Non Current Liabilities 3,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20120014,20120014,Non Current Liabilities 4,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+20120015,20120015,Non Current Liabilities 5,account.data_account_type_non_current_liabilities,TRUE,l10n_ng
+21010011,21010011,Trade Creditors Control 1,account.data_account_type_payable,TRUE,l10n_ng
+21010012,21010012,Trade Creditors Control 2,account.data_account_type_payable,TRUE,l10n_ng
+21010013,21010013,Trade Creditors Control 3,account.data_account_type_payable,TRUE,l10n_ng
+21010014,21010014,Trade Creditors Control 4,account.data_account_type_payable,TRUE,l10n_ng
+21010015,21010015,Trade Creditors Control 5,account.data_account_type_payable,TRUE,l10n_ng
+21020011,21020011,Client's Deposits,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020012,21020012,Other Payables 1,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020013,21020013,Other Payables 2,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020014,21020014,Other Payables 3,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020015,21020015,Other Payables 4,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020016,21020016,Other Payables 5,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020017,21020017,Other Payables 6,account.data_account_type_current_liabilities,TRUE,l10n_ng
+21020018,21020018,Directors Current Account 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21020019,21020019,Directors Current Account 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21020020,21020020,Directors Current Account 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21020021,21020021,Directors Current Account 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21020022,21020022,Directors Current Account 5,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400011,21400011,Short Term Loan 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400012,21400012,Short Term Loan 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400013,21400013,Short Term Loan 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400014,21400014,Short Term Loan 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400015,21400015,Short Term Loan 5,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400016,21400016,Lease Repayment 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400017,21400017,Lease Repayment 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400018,21400018,Lease Repayment 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400019,21400019,Lease Repayment 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21400020,21400020,Lease Repayment 5,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130011,20130011,Legal Fees,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130013,20130013,Audit & Accountancy Fee,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130013,20130013,Recruitment Fees,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130014,20130014,Accrued Insurance premium,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130015,20130015,Accrued Rent & Service Charge,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130016,20130016,Other Accruals 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130017,20130017,Other Accruals 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130018,20130018,Other Accruals 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130019,20130019,Other Accruals 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+20130020,20130020,Other Accruals 5,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100011,21100011,Company Income Tax,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100012,21100012,Witholding Tax Payable,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100013,21100013,VAT Liability,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100014,21100014,Education Tax,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100015,21100015,Other Tax Liability 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100016,21100016,Other Tax Liability 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100017,21100017,Other Tax Liability 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100018,21100018,Other Tax Liability 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21100019,21100019,Other Tax Liability 5,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210011,21210011,Staff Net Salaries & Wages Payable,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210012,21210012,Staff Pension Fund Payable,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210013,21210013,P.A.Y.E. Payable,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210014,21210014,Staff Health Insurance Payable,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210015,21210015,Other payroll Tax 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210016,21210016,Other payroll Tax 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210017,21210017,Other payroll Tax 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210018,21210018,Other payroll Tax 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21210019,21210019,Other payroll Tax 5,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21200011,21200011,Other current liabilities 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21200012,21200012,Other current liabilities 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21200013,21200013,Other current liabilities 3,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21200014,21200014,Other current liabilities 4,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21220011,21220011,Non Current Liabilities Classified as Held for Sale 1,account.data_account_type_current_liabilities,FALSE,l10n_ng
+21220012,21220012,Non Current Liabilities Classified as Held for Sale 2,account.data_account_type_current_liabilities,FALSE,l10n_ng
+30000000,30000000,Called Up Share Capital,account.data_account_type_equity,FALSE,l10n_ng
+30000001,30000001,Share Premium Account,account.data_account_type_equity,FALSE,l10n_ng
+30000002,30000002,Revaluation Reserve,account.data_account_type_equity,FALSE,l10n_ng
+30000003,30000003,Other Reserves 1,account.data_account_type_equity,FALSE,l10n_ng
+30000004,30000004,Other Reserves 2,account.data_account_type_equity,FALSE,l10n_ng
+30000005,30000005,Other Reserves 3,account.data_account_type_equity,FALSE,l10n_ng
+30000006,30000006,Other Reserves 4,account.data_account_type_equity,FALSE,l10n_ng
+30000007,30000007,Other Reserves 5,account.data_account_type_equity,FALSE,l10n_ng
+30000008,30000008,Deposit for Shares 1,account.data_account_type_equity,FALSE,l10n_ng
+30000009,30000009,Deposit for Shares 2,account.data_account_type_equity,FALSE,l10n_ng
+30000010,30000010,Deposit for Shares 3,account.data_account_type_equity,FALSE,l10n_ng
+30000011,30000011,Deposit for Shares 4,account.data_account_type_equity,FALSE,l10n_ng
+30000012,30000012,Deposit for Shares 5,account.data_account_type_equity,FALSE,l10n_ng
+30000013,30000013,Profit and Loss Account,account.data_unaffected_earnings,FALSE,l10n_ng
+40000000,40000000,Sales category 1,account.data_account_type_revenue,FALSE,l10n_ng
+40000001,40000001,Sales category 2,account.data_account_type_revenue,FALSE,l10n_ng
+40000002,40000002,Sales category 3,account.data_account_type_revenue,FALSE,l10n_ng
+40000003,40000003,Sales category 4,account.data_account_type_revenue,FALSE,l10n_ng
+40000004,40000004,Sales category 5,account.data_account_type_revenue,FALSE,l10n_ng
+50000001,50000001,Cost of sales 1,account.data_account_type_direct_costs,FALSE,l10n_ng
+50000002,50000002,Cost of sales 2,account.data_account_type_direct_costs,FALSE,l10n_ng
+50000003,50000003,Cost of sales 3,account.data_account_type_direct_costs,FALSE,l10n_ng
+50000004,50000004,Cost of sales 4,account.data_account_type_direct_costs,FALSE,l10n_ng
+50000005,50000005,Cost of sales 5,account.data_account_type_direct_costs,FALSE,l10n_ng
+50000006,50000006,Other Cost of Sales,account.data_account_type_direct_costs,FALSE,l10n_ng
+60010011,60010011,Distribution Vehicles Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60010012,60010012,Distribution Salaries and Wages,account.data_account_type_expenses,FALSE,l10n_ng
+60010013,60010013,"Carriage, Freight, Clearing and Shipping",account.data_account_type_expenses,FALSE,l10n_ng
+60010014,60010014,Advertising and Publicity Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60010015,60010015,Exhibitions and Events,account.data_account_type_expenses,FALSE,l10n_ng
+60010016,60010016,Corporate Gifts & PR,account.data_account_type_expenses,FALSE,l10n_ng
+60010017,60010017,Sample Product and Promotion Gifts,account.data_account_type_expenses,FALSE,l10n_ng
+60010018,60010018,Sales Comnmission,account.data_account_type_expenses,FALSE,l10n_ng
+60010019,60010019,Discount Allowed,account.data_account_type_expenses,FALSE,l10n_ng
+60020011,60020011,Salaries & Wages,account.data_account_type_expenses,FALSE,l10n_ng
+60020012,60020012,Other Staff Allowances,account.data_account_type_expenses,FALSE,l10n_ng
+60020013,60020013,Staff Dev.&Training,account.data_account_type_expenses,FALSE,l10n_ng
+60020014,60020014,Staff Welfare,account.data_account_type_expenses,FALSE,l10n_ng
+60020015,60020015,Overtime,account.data_account_type_expenses,FALSE,l10n_ng
+60020016,60020016,Staff Benefit/Bonus,account.data_account_type_expenses,FALSE,l10n_ng
+60020017,60020017,Severance Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60020018,60020018,Pension Contr.(Employer),account.data_account_type_expenses,FALSE,l10n_ng
+60020019,60020019,Staff Medical Expenses,account.data_account_type_expenses,FALSE,l10n_ng
+60030011,60030011,Directors Sitting Allowance,account.data_account_type_expenses,FALSE,l10n_ng
+60030012,60030012,Directors Fees,account.data_account_type_expenses,FALSE,l10n_ng
+60030013,60030013,Directors Emoluments,account.data_account_type_expenses,FALSE,l10n_ng
+60030014,60030014,Directors Travelling Allowance,account.data_account_type_expenses,FALSE,l10n_ng
+60030015,60030015,Directors Expenses,account.data_account_type_expenses,FALSE,l10n_ng
+60050011,60050011,Local Transport,account.data_account_type_expenses,FALSE,l10n_ng
+60050012,60050012,Local Travelling,account.data_account_type_expenses,FALSE,l10n_ng
+60050013,60050013,Oversea Travelling,account.data_account_type_expenses,FALSE,l10n_ng
+60050014,60050014,Hotel Accommodation,account.data_account_type_expenses,FALSE,l10n_ng
+60050015,60050015,Entertainment,account.data_account_type_expenses,FALSE,l10n_ng
+60050016,60050016,Other Travel Expenses/Allowances,account.data_account_type_expenses,FALSE,l10n_ng
+60050017,60050017,Car Lease / Vehicle Rental,account.data_account_type_expenses,FALSE,l10n_ng
+60050018,60050018,Equipment Rental,account.data_account_type_expenses,FALSE,l10n_ng
+60050021,60050021,Telephone Expenses,account.data_account_type_expenses,FALSE,l10n_ng
+60050022,60050022,Internet & Website Maintenance Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60050023,60050023,Courier & Postages,account.data_account_type_expenses,FALSE,l10n_ng
+60050024,60050024,Printing & Stationeries,account.data_account_type_expenses,FALSE,l10n_ng
+60050025,60050025,Newspaper & Periodical,account.data_account_type_expenses,FALSE,l10n_ng
+60050026,60050026,Subscription & Other Regist Fees,account.data_account_type_expenses,FALSE,l10n_ng
+60050031,60050031,"Vehicle Reg, Permit & Licences",account.data_account_type_expenses,FALSE,l10n_ng
+60050032,60050032,Fuel & Oil Motor Running Expense,account.data_account_type_expenses,FALSE,l10n_ng
+60050033,60050033,Diesel & Oil - Generator,account.data_account_type_expenses,FALSE,l10n_ng
+60050051,60050051,Security,account.data_account_type_expenses,FALSE,l10n_ng
+60050052,60050052,Cleaning Expenses,account.data_account_type_expenses,FALSE,l10n_ng
+60050053,60050053,Water Rates,account.data_account_type_expenses,FALSE,l10n_ng
+60050054,60050054,Electricity & Power Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60050055,60050055,Rent and Rates,account.data_account_type_expenses,FALSE,l10n_ng
+60050056,60050056,Service Charge Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60050057,60050057,Insurance-Motor Vehicle,account.data_account_type_expenses,FALSE,l10n_ng
+60050058,60050058,Insurance- Building,account.data_account_type_expenses,FALSE,l10n_ng
+60050059,60050059,Insurance - Others Assets,account.data_account_type_expenses,FALSE,l10n_ng
+60050100,60050100,Professional fees,account.data_account_type_expenses,FALSE,l10n_ng
+60050101,60050101,Legal fee,account.data_account_type_expenses,FALSE,l10n_ng
+60050102,60050102,Audit fee,account.data_account_type_expenses,FALSE,l10n_ng
+60050103,60050103,Other Consultancy Fees,account.data_account_type_expenses,FALSE,l10n_ng
+60050104,60050104,Recruitment Cost,account.data_account_type_expenses,FALSE,l10n_ng
+60050105,60050105,Residency & Other Immig Permits,account.data_account_type_expenses,FALSE,l10n_ng
+60050106,60050106,Lease Rental - Finance Lease,account.data_account_type_expenses,FALSE,l10n_ng
+60050200,60050200,Donations,account.data_account_type_expenses,FALSE,l10n_ng
+60050201,60050201,Fines & Penalty,account.data_account_type_expenses,FALSE,l10n_ng
+60050202,60050202,Dividend,account.data_account_type_expenses,FALSE,l10n_ng
+60050203,60050203,Income Tax Provision,account.data_account_type_expenses,FALSE,l10n_ng
+60050204,60050204,Bad Debt Written Off,account.data_account_type_expenses,FALSE,l10n_ng
+60050205,60050205,Bank Charges,account.data_account_type_expenses,FALSE,l10n_ng
+60050206,60050206,Other admin expenses 1,account.data_account_type_expenses,FALSE,l10n_ng
+60050207,60050207,Other admin expenses 2,account.data_account_type_expenses,FALSE,l10n_ng
+60400020,60400020,Loan Interest,account.data_account_type_expenses,FALSE,l10n_ng
+60400030,60400030,Other Loans and Facility Charges,account.data_account_type_expenses,FALSE,l10n_ng
+60400040,60400040,Other finance charges,account.data_account_type_expenses,FALSE,l10n_ng
+60101011,60101011,Software Amortization,account.data_account_type_depreciation,FALSE,l10n_ng
+60101012,60101012,Patents & Trademarks Amortization,account.data_account_type_depreciation,FALSE,l10n_ng
+60101013,60101013,License Amortization,account.data_account_type_depreciation,FALSE,l10n_ng
+60101014,60101014,Copyright Amortization,account.data_account_type_depreciation,FALSE,l10n_ng
+60101015,60101015,Other Amortization 1,account.data_account_type_depreciation,FALSE,l10n_ng
+60101016,60101016,Other Amortization 2,account.data_account_type_depreciation,FALSE,l10n_ng
+60101017,60101017,Other Amortization 3,account.data_account_type_depreciation,FALSE,l10n_ng
+60102011,60102011,Lease payments,account.data_account_type_expenses,FALSE,l10n_ng
+60102012,60102012,Lease payments,account.data_account_type_expenses,FALSE,l10n_ng
+60102013,60102013,Lease payments,account.data_account_type_expenses,FALSE,l10n_ng
+60201011,60201011,Fixtures and Fittings Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60201012,60201012,Land and Buildings Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60201013,60201013,Motor Vehicles Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60201014,60201014,Office Equipment & Computers Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60201015,60201015,"Plant,Machinery & Equipment Depreciation Exp",account.data_account_type_depreciation,FALSE,l10n_ng
+60201016,60201016,Leasehold Improvement Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60201017,60201017,Asset Type 7 Equipment Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60201018,60201018,Asset Type 8 Depreciation Exp,account.data_account_type_depreciation,FALSE,l10n_ng
+60211000,60211000,Impairment of NCA,account.data_account_type_expenses,FALSE,l10n_ng
+60211011,60211011,Impairment of Investment properties,account.data_account_type_expenses,FALSE,l10n_ng
+60211012,60211012,Impairment of Intangible Assets,account.data_account_type_expenses,FALSE,l10n_ng
+60211013,60211013,Impairment of Financial Assets/ Receivables,account.data_account_type_expenses,FALSE,l10n_ng
+60211014,60211014,Other impairment,account.data_account_type_expenses,FALSE,l10n_ng
+49000001,49000001,Profits/Losses on Disposals of Assets,account.data_account_type_other_income,FALSE,l10n_ng
+49000002,49000002,Bank Interest received,account.data_account_type_other_income,FALSE,l10n_ng
+49000003,49000003,Investment Interest Received,account.data_account_type_other_income,FALSE,l10n_ng
+49000004,49000004,Foreign Exchange Gain/(Loss),account.data_account_type_other_income,FALSE,l10n_ng
+49000005,49000005,Discount Received,account.data_account_type_other_income,FALSE,l10n_ng
+49000006,49000006,Other operating income 1,account.data_account_type_other_income,FALSE,l10n_ng
+49000007,49000007,Other operating income 2,account.data_account_type_other_income,FALSE,l10n_ng
+49000008,49000008,Other operating income 3,account.data_account_type_other_income,FALSE,l10n_ng
+50010011,50010011,Revaluation Surplus/Deficit 1,account.data_account_type_equity,FALSE,l10n_ng
+50010012,50010012,Revaluation Surplus/Deficit 2,account.data_account_type_equity,FALSE,l10n_ng
+50010013,50010013,Revaluation Surplus/Deficit 3,account.data_account_type_equity,FALSE,l10n_ng
+50010014,50010014,Revaluation Surplus/Deficit 4,account.data_account_type_equity,FALSE,l10n_ng
+50010015,50010015,Revaluation Surplus/Deficit 5,account.data_account_type_equity,FALSE,l10n_ng
+50020011,50020011,Remeasurement gain or loss 1,account.data_account_type_equity,FALSE,l10n_ng
+50020012,50020012,Remeasurement gain or loss 2,account.data_account_type_equity,FALSE,l10n_ng
+50020013,50020013,Remeasurement gain or loss 3,account.data_account_type_equity,FALSE,l10n_ng
+50020014,50020014,Remeasurement gain or loss 4,account.data_account_type_equity,FALSE,l10n_ng
+50020015,50020015,Remeasurement gain or loss 5,account.data_account_type_equity,FALSE,l10n_ng
+50030011,50030011,Fair value of financial assets 1,account.data_account_type_equity,FALSE,l10n_ng
+50030012,50030012,Fair value of financial assets 2,account.data_account_type_equity,FALSE,l10n_ng
+50030013,50030013,Fair value of financial assets 3,account.data_account_type_equity,FALSE,l10n_ng
+50030014,50030014,Fair value of financial assets 4,account.data_account_type_equity,FALSE,l10n_ng
+50030015,50030015,Fair value of financial assets 5,account.data_account_type_equity,FALSE,l10n_ng
+50050011,50050011,Changes in FV of Cashflow hedging instrument 1,account.data_account_type_equity,FALSE,l10n_ng
+50050012,50050012,Changes in FV of Cashflow hedging instrument 2,account.data_account_type_equity,FALSE,l10n_ng
+50050013,50050013,Changes in FV of Cashflow hedging instrument 3,account.data_account_type_equity,FALSE,l10n_ng
+50050014,50050014,Changes in FV of Cashflow hedging instrument 4,account.data_account_type_equity,FALSE,l10n_ng
+50050015,50050015,Changes in FV of Cashflow hedging instrument 5,account.data_account_type_equity,FALSE,l10n_ng
