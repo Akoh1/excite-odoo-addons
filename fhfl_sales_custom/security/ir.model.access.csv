@@ -6,3 +6,9 @@ access_installment_schedule,fhfl.installment.schedule,model_installment_schedule
 access_crm_investment,fhfl.crm.investment,model_crm_investment,base.group_user,1,1,1,1
 access_appraisal_fee_config,fhfl.appraisal.fee.config,model_appraisal_fee_config,base.group_user,1,1,1,1
 access_investment_reject_wizard,fhfl.investment.reject.wizard,model_investment_reject_wizard,base.group_user,1,1,1,1
+access_investment_condition,fhfl.investment.condition,model_investment_condition,base.group_user,1,1,1,1
+access_loan_schedule,fhfl.loan.schedule,model_loan_schedule,base.group_user,1,1,1,1
+access_loan_journal,fhfl.loan.journal,model_loan_journal,base.group_user,1,1,1,1
+access_help_own,fhfl.help.own,model_help_own,base.group_user,1,1,1,1
+access_help_stage,fhfl.help.stage,model_help_stage,base.group_user,1,1,1,1
+access_installment_scheme,fhfl.installment.scheme,model_installment_scheme,base.group_user,1,1,1,1

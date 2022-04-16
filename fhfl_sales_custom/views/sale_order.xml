@@ -26,6 +26,9 @@
 				<button name="action_submit" type="object"
 						string="Submit" states="draft"
 						class="oe_highlight" groups="sales_team.group_sale_salesman, sales_team.group_sale_salesman_all_leads"/>
+				<!-- <button name="print_offer_letter" type="object"
+						string="Print Offer Letter"
+						class="oe_highlight" groups="sales_team.group_sale_salesman, sales_team.group_sale_salesman_all_leads"/> -->
 				  <button name="action_approve" type="object"
 						string="Approve" states="submit"
 						class="oe_highlight"
@@ -49,32 +52,50 @@
 					<field name="sales_type" />
                 </xpath>
 
-				<!-- <xpath expr="//notebook" position="inside">
+				<xpath expr="//notebook" position="inside">
 					<page string="Installment Details" >
                         <group>
                             <group>
-                                <field name="installment_plan"/>
+                               <!--  <field name="installment_plan"/> -->
                                 <field name="tenure"/>
+                                <field name="start_date"/>
                             </group>
-                            <group>
+                            <!-- <group>
                                 <field name="start_date"/>
 
-                            </group>
+                            </group> -->
                         </group>
-						<button name="calculate_installment"
+						<button name="compute_calculate_installment"
 								string="Compute" class="btn-primary pull-right" type="object"  />
                             <br />
 						<field name="install_schedule_line" readonly="1">
                             <tree string="">
 								<field name="s_n"/>
+								<field name="description" />
                                 <field name="start_date"/>
+                                <field name="end_date"/>
                                 <field name="amount" />
-                                <field name="description" />
+                                <field name="sale_state" invisible="1"/>
 								<field name="state" />
+								<button name="generate_installment_invoice"
+								string="Generate Invoice" class="btn-primary pull-right" type="object" 
+										attrs="{'invisible': ['|', ('invoice_count', '>', 0), ('sale_state', '!=', 'sale')]}" />
+
+								
+			                    <button name="action_view_invoices" type="object"
+			                            class="oe_stat_button" icon="fa-money"
+			                            attrs="{'invisible': [('invoice_count', '=', 0)]}">
+			                            <field name="invoice_count" widget="statinfo" string="Invoice(s)"/>
+			                    </button>
+
+			                   <!--  <button name="send_mail_before_payment_date"
+								string="Test Mail" class="btn-primary pull-right" type="object"  /> -->
+			                 
+                            
                             </tree>
                         </field>
                     </page>
-                </xpath> -->
+                </xpath>
 			</field>
 		</record>
 

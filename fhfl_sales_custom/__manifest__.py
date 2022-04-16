@@ -17,7 +17,7 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale', 'sales_team', 'account', 'stock',
-                'product', 'crm'],
+                'product', 'crm', 'project', 'sale_crm', 'purchase'],
 
     # always loaded
     'data': [
@@ -29,6 +29,13 @@
         'views/product.xml',
         'views/crm.xml',
         'views/res_config.xml',
+        'views/lms.xml',
+        'views/help_own.xml',
+        'views/crm_sale.xml',
+        'views/report_sale_installment.xml',
+        # 'views/purchase.xml',
+        'data/create_sequence_number_in_odoo.xml',
+        'data/cron.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

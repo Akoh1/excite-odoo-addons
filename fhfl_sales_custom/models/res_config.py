@@ -11,6 +11,11 @@ class FhflAppraisalAccountCompany(models.Model):
 
     appraisal_account = fields.Many2one('account.account', readonly=False,
     								string="Account to be used when generating an Appraisal Invoice")
+    lms_journal = fields.Many2one('account.journal', string="LMS Journal", readonly=False)
+    loan_account = fields.Many2one('account.account', readonly=False,
+                                    string="Debit Account to be used when generating a Journal Entry from LMS")
+    disburse_account = fields.Many2one('account.account', readonly=False,
+                                    string="Credit Account to be used when generating a Journal Entry from LMS")
 
 
 class FhflAppraisalAccountConfigSettings(models.TransientModel):
@@ -18,3 +23,8 @@ class FhflAppraisalAccountConfigSettings(models.TransientModel):
 
     appraisal_account = fields.Many2one(related="company_id.appraisal_account", readonly=False,
                                 string="Account to be used when generating an Appraisal Invoice")
+    lms_journal = fields.Many2one(related="company_id.lms_journal", string="LMS Journal", readonly=False)
+    loan_account = fields.Many2one(related="company_id.loan_account", readonly=False,
+                                    string="Debit Account to be used when generating a Journal Entry from LMS")
+    disburse_account = fields.Many2one(related="company_id.disburse_account", readonly=False,
+                                    string="Credit Account to be used when generating a Journal Entry from LMS")

@@ -1,0 +1,12 @@
+<odoo>
+<record id="fhfl_sequence_id" model="ir.sequence">
+   <field name="name">FHFL Journal Entry Sequence</field>
+   <field name="code">fhfl.journal.sequence</field>
+   <field name="active">TRUE</field>
+   <!-- <field name="prefix">OR</field> -->
+   <field name="prefix">JV/%(range_year)s/</field>
+   <field name="padding">5</field>
+  <!--  <field name="number_next">1</field> -->
+   <field name="number_increment">1</field>
+</record>
+</odoo>

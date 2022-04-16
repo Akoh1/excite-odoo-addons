@@ -1,5 +1,29 @@
 <odoo>
   <data>
+    <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_root">
+      <field name="name">Leave Management</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_my_leaves">
+      <field name="name">My Leave</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_holidays.menu_open_department_leave_approve">
+      <field name="name">Leave</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_holidays.hr_holidays_status_menu_configuration">
+      <field name="name">Leave Types</field>
+    </record>
+
+    <record model="ir.ui.menu" id="resource.menu_view_resource_calendar_leaves_search">
+      <field name="name">Resource Leave</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_holidays.hr_leave_menu_my">
+      <field name="name">My Leave Request</field>
+    </record>
+
     <record id="view_timeoff_custom" model= "ir.ui.view">
         <field name="name">timeoff.custom</field>
         <field name="model">hr.leave</field>
@@ -9,12 +33,16 @@
 
             <xpath expr="//field[@name='name']" position="after">
                 <field name="stand_in"/>
+                <field name="attachment_id" widget="many2many_binary" class="oe_inline"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Reason</attribute>
             </xpath>
 
           <xpath expr="//button[@name='action_refuse']" position="after">
                 <button name="action_resume" string="Resume"
                         type="object" class="oe_highlight"
-                        attrs="{'invisible': [('state', 'not in', ['validate', 'resume'])]}"
+                        attrs="{'invisible': [('state', 'not in', ['validate'])]}"
                 />
             </xpath>
             <xpath expr="//button[@name='action_refuse']" position="replace">
@@ -23,5 +51,59 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="timeoff_public_holiday_tree">
+      <field name="name">timeoff.public.holiday.tree</field>
+      <field name="model">public.holiday</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="date"/>
+
+        </tree>
+      </field>
+    </record>
+
+    <record id="timeoff_public_holiday_form" model="ir.ui.view">
+        <field name="name">timeoff.public.holiday.form</field>
+        <field name="model">public.holiday</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                </sheet>
+                <group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="timeoff_public_holiday_window">
+      <field name="name">Public Holidays</field>
+      <field name="res_model">public.holiday</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="Public Holidays" id="timeoff_public_holiday_menu"
+              parent="hr_holidays.menu_hr_holidays_configuration"
+              action="timeoff_public_holiday_window"
+              groups="hr.group_hr_manager"
+              sequence="3"/>
   </data>
 </odoo>

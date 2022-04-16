@@ -44,6 +44,15 @@ class HMO(models.Model):
     # ]
 
 
+# class PublicHoliday(models.Model):
+#     _name = 'public.holiday'
+#     _description = 'Public Holiday'
+#     _inherit = ['mail.thread.cc', 'mail.activity.mixin']
+
+#     name = fields.Char('Description')
+#     date = fields.Date()
+
+
 class HrSalaryGrade(models.Model):
     _name = 'hr.salary.grade'
     _description = 'Salary Grade'
@@ -51,7 +60,7 @@ class HrSalaryGrade(models.Model):
 
     name = fields.Char(string="Subject Name")
     # parameters = fields.One2many('hr.salary.parameter', 'grade_id')
-    gross_salary = fields.Float()
+    gross_salary = fields.Float(string="Wage")
     basic_trans = fields.Float('Basic Transport')
     housing = fields.Float('Housing')
     leave_allowance = fields.Float()
@@ -82,6 +91,12 @@ class Contract(models.Model):
     _inherit = 'hr.contract'
 
     salary_grade = fields.Many2one('hr.salary.grade')
+    manager_status = fields.Selection([
+        ('manager', 'Manager'),
+        ('not_manager', 'Non Manager'),
+
+    ], string='Manager Status', tracking=True,
+        copy=False)
     gross_salary = fields.Float(compute="_compute_salary_params", store=True)
     basic_trans = fields.Float('Basic Transport', compute="_compute_salary_params",
                                store=True)
@@ -116,6 +131,7 @@ class Contract(models.Model):
             rec.th_month = rec.salary_grade.th_month
             rec.other = rec.salary_grade.other
             rec.other_two = rec.salary_grade.other_two
+            rec.wage = rec.salary_grade.gross_salary
 
     @api.onchange('salary_grade')
     def _check_wage_readonly(self):
@@ -147,6 +163,7 @@ class Employee(models.Model):
     ], string='Employment Status', tracking=True,
         copy=False)
     emp_date = fields.Date('Employment Date')
+    start_date = fields.Date()
     prob_days = fields.Integer("Probation Days")
     confirm_date = fields.Date('Suggested Confirmation Date', compute="_compute_confirm_date",
                                store=True)

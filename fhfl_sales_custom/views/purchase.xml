@@ -1,0 +1,31 @@
+<odoo>
+	<record id="view_fhfl_custom_purchase" model= "ir.ui.view">
+			<field name="name">fhfl.custom.purchase.form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+
+
+                <xpath expr="//button[@id='draft_confirm']" position="attributes">
+					<!-- <attribute name="states">cfo_approve</attribute> -->
+					<attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+					<attribute name="states">cfo_approve</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='state']" position="attributes">
+					<attribute name="statusbar_visible">draft,sent,cfo_approve,purchase</attribute>
+                </xpath>
+
+              <xpath expr="//button[@id='draft_confirm']" position="after">
+					<button name="button_cfo_approve" type="object" states="sent" 
+						string="CFO Approve" groups="fhfl_sales_custom.group_purchase_cfo_admin"
+						class="oe_highlight"/>
+              </xpath>
+
+				
+			</field>
+		</record>
+</odoo>

@@ -48,7 +48,17 @@ class FhflAccountPaymentRegister(models.TransientModel):
             _create_payments()
 
         _logger.info("Investment context: %s", self._context.get('investment_id'))
+        _logger.info("Crm Sale context: %s", self._context.get('crm_sale'))
         invest_id = self._context.get('investment_id')
+        crm_sale = self._context.get('crm_sale')
+        if crm_sale:
+            install_schedule = self.env['installment.schedule'].\
+                        search([('id', '=', crm_sale)])
+            if install_schedule:
+                _logger.info("There is installment schedule")
+                install_schedule.write({
+                        'state': 'paid'
+                    })
         if invest_id:
             crm_invest = self.env['crm.investment'].\
                         search([('id', '=', invest_id)])

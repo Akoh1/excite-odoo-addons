@@ -2,6 +2,7 @@
 import logging
 import requests
 import json
+import decimal
 from datetime import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
@@ -18,11 +19,27 @@ AVAILABLE_PRIORITIES = [
 ]
 
 
+# class vendorPartner(models.Model):
+#   _inherit = 'res.partner'
+
+#   vat = fields.Char(string='Tax ID',
+#                     index=True, r
+#                     help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
+
+
 class FhflAppraisalFeeConfig(models.Model):
     _name = 'appraisal.fee.config'
     _description = 'Appraisal Fee'
 
     income_account = fields.Many2one('account.account')
+
+
+class InvestmentConditionsConfig(models.Model):
+    _name = 'investment.condition'
+    _description = 'Condition Precedents'
+
+    name = fields.Char()
+    mandatory = fields.Boolean()
 
 
 class RejectInvestmentWizard(models.Model):
@@ -53,7 +70,7 @@ class RejectInvestmentWizard(models.Model):
             }
             mail_id = self.env['mail.mail'].sudo().create(vals)
             mail_id.sudo().send()
-            record.investment_id.state = 'refuse'
+            record.investment_id.state = '9_refuse'
             var_for_pep = record.refuse_request
             record.investment_id.message_post(
                 body=_("Your Request has been rejected."))
@@ -73,11 +90,13 @@ class FhflInvestment(models.Model):
       return [('user_type_id', '=', bank_cash.id)]
 
     name = fields.Char('Subject')
+    checklist = fields.Many2many('investment.condition')
     priority = fields.Selection(
         AVAILABLE_PRIORITIES, string='Rating', index=True,
         default=AVAILABLE_PRIORITIES[0][0])
     customer = fields.Many2one('res.partner')
     customer_name = fields.Char(related='customer.name')
+    customer_num = fields.Char()
     date = fields.Date(default=datetime.today())
     appraisal_amount = fields.Float()
     invest_type = fields.Selection([
@@ -85,25 +104,31 @@ class FhflInvestment(models.Model):
         ('mortgage', 'Mortgage'),
     ], string='Investment Type', copy=False, index=True, tracking=True)
     state = fields.Selection([
-        ('new', 'New'),
-        ('mcc_one', 'MCC1 Review'),
-        ('appraisal', 'Appraisal Fee'),
-        ('dilligence', 'Due Dilligence'),
-        ('mcc_two', 'MCC 2'),
-        ('board', 'Board Approval'),
-        ('disburse', 'Disbursement'),
-        ('done', 'Done'),
-        ('refuse', 'Refuse'),
-    ], string='Status', copy=False, index=True, tracking=True, default='new')
+        ('1_new', 'New'),
+        ('2_mcc_one', 'MCC1 Review'),
+        ('3_appraisal', 'Appraisal Fee'),
+        ('4_dilligence', 'Due Dilligence'),
+        ('5_mcc_two', 'MCC 2'),
+        ('6_board', 'Board Approval'),
+        ('7_disburse', 'Disbursement'),
+        ('8_done', 'Done'),
+        ('9_refuse', 'Refuse'),
+        # ('10_park', 'Park'),
+    ], string='Status', copy=False, index=True, tracking=True, default='1_new')
     appraisal_fee_status = fields.Selection([
         ('draft', 'Draft'),
         ('not_paid', 'Generated'),
         ('paid', 'Paid'),
     ], string='Appraisal fee status', copy=False, index=True, tracking=True, default='draft')
+    park = fields.Boolean(default=False, readonly=True)
     mcc_one_comment = fields.Text()
+    mcc_one_back_comment = fields.Text('MCC1 – Re-Present')
     appraisal_comment = fields.Text('Comment for Appraisal fee')
+    appraisal_back_comment = fields.Text('Appraisal fee - Re-Present')
     dilligence_comment = fields.Text('Comment for Due Dilligence')
-    mcc_two_comment = fields.Text('Cmment for MCC 2')
+    dilligence_back_comment = fields.Text('Due Dilligence Re-Present')
+    mcc_two_comment = fields.Text('Comment for MCC 2')
+    mcc_two_back_comment = fields.Text('MCC 2 Re-Present')
     board_comment = fields.Text('Comment for Board Approval')
     disburse_comment = fields.Text('Comment for Disbursement')
     application_id = fields.Char(string="Application ID")
@@ -125,21 +150,41 @@ class FhflInvestment(models.Model):
 
     invoice_count = fields.Integer(compute='_compute_invoice_count',
                                    string='# of Invoice')
-    total_appr_amount = fields.Float('Total Approved Amount')
-    first_dis_amount = fields.Float('First Disbursement Amount')
+    total_appr_amount = fields.Float('Total Approved Amount', required=True)
+    # first_dis_amount = fields.Float('First Disbursement Amount')
     application_date = fields.Date()
     effective_date = fields.Date()
     credit_purpose = fields.Char()
-    intrest_rate = fields.Float()
+    intrest_rate = fields.Float('Interest Rate')
     journal_id = fields.Many2one('account.journal', string='Journal')
     loan_account = fields.Many2one('account.account')
     disburse_account = fields.Many2one('account.account', string="Disbursement Account",
                                        domain=domain_bank_cash_account)
-    remain_amount = fields.Float('Remaining Amount')
+    # remain_amount = fields.Float('Remaining Amount', compute="_compute_rem_amount")
     journal_entry = fields.Many2one('account.move')
     files_url = fields.Char()
     company_website = fields.Char()
+    application_no = fields.Char('Loan ID')
     # account_number = fields.Char()
+    project_id = fields.Many2one('project.project', string='Project')
+    loan_id = fields.Char()
+    # prev_data = fields.One2many('crm.investment', string="Previous Records")
+
+    def action_park(self):
+      _logger.info("Park")
+      for rec in self:
+        rec.park = True
+
+    def action_unpark(self):
+      _logger.info("UnPark")
+      for rec in self:
+        rec.park = False
+
+    # @api.depends('total_appr_amount', 'first_dis_amount')
+    # def _compute_rem_amount(self):
+    #   _logger.info("Calculate Remaining Amount")
+    #   for rec in self:
+    #     rec.remain_amount = rec.total_appr_amount - rec.first_dis_amount
 
     def call_popup_reject_menu(self):
         wizard = self.env['investment.reject.wizard'].sudo().create(
@@ -156,12 +201,39 @@ class FhflInvestment(models.Model):
             'target': 'new',
             "context": {'record': self}
         }
+    def _check_lms_customer(self):
+      self.ensure_one()
+      test_ip = '51.145.88.82'
+      test_port = '8080'
+      url = 'http://%s:%s/neptune/rest/customerExist' % (test_ip, test_port)
+
+      headers = {
+          "content-type": "application/json"
+      }
+
+      data = {
+        'user_id': self.customer.id,
+      }
+
+      _logger.info("LMS Data: %s", data)
+      datas = json.dumps(data)
+      # datas = json.loads(data)
+      # req = requests.post(url, data=datas)
+      try:
+        response = requests.post(url, data=datas, headers=headers)
+      except requests.ConnectionError as e:
+          raise UserError(_("Connection failure : %s" % str(e)))
+      _logger.info("LMS Push Data receiving......")
+      j = json.loads(response.text)
+      # j = response.text
+      _logger.info("LMS check user: %s", j)
+      return j
 
     def _lms_create_customer(self):
       self.ensure_one()
       test_ip = '51.145.88.82'
       test_port = '8080'
-      url = 'http://%s:%s/neptune/rest/createCustomer' % (test_ip, test_port)
+      url = 'http://%s:%s/neptune/rest/createNewCustomer' % (test_ip, test_port)
       headers = {
           "content-type": "application/json"
       }
@@ -169,21 +241,11 @@ class FhflInvestment(models.Model):
       #   (test_ip, test_port)
 
       data = {
-        'organisationName': self.company_name or '',
-        'registrationNumber': self.application_id,
-        # 'registrationDate': self.date.strftime("%Y-%m-%d"),
-        'FirstName': self.customer_name,
-        'CustomerName': self.customer_name,
-        # 'Tin': self.tin_or_vax_number or '',
-        # 'EffectiveStartDate': self.effective_date,
-        # 'AddressCity': self.customer.city or '',
-        # 'AddressState': self.customer.state_id.name or '',
-        # 'AddressLine1': self.customer.street or '',
-        # 'PhoneNumber': self.customer.phone or '',
-        # 'IdentificationNumber': self.rc_number or '',
-        'UserId': str(self.customer.id),
-        # 'AccountNumber': self.customer.bank_ids[:1].acc_number or '',
-        # 'AccountName': self.customer.bank_ids[:1].acc_holder_name or '',
+        'name': self.customer_name,
+        'email': self.customer.email,
+        'mobile': self.customer.mobile,
+        'phone': self.customer.phone,
+        'user_id': self.customer.id,
       }
 
       _logger.info("LMS Push Data: %s", data)
@@ -197,85 +259,181 @@ class FhflInvestment(models.Model):
       _logger.info("LMS Push Data receiving......")
       j = json.loads(response.text)
       # j = response.text
+      if j['customerNo'] is not None:
+        self.write({
+            'customer_num': j['customerNo']
+          })
+        # self.customer_num = j['customerNo']
       _logger.info("LMS Recieve data: %s", j)
       return j
 
-    def push_lms(self):
-      _logger.info("Push to LMS")
-      # raise UserError(_("This feature is not yet available"))
-      for rec in self:
-        rec._lms_create_customer()
+    def _lms_credit_application(self):
+      self.ensure_one()
+      test_ip = '51.145.88.82'
+      test_port = '8080'
+      url = 'http://%s:%s/neptune/rest/createCreditApplication' % (test_ip, test_port)
+      headers = {
+          "content-type": "application/json"
+      }
+      # url = 'http://%s:%s/FamilyHomes/services/FamilyHomesPort?WSDL' %\
+      #   (test_ip, test_port)
+
+      data = {
+        'totalApprovedAmount': float(self.total_appr_amount),
+        # 'firstDisbursementAmount': self.first_dis_amount,
+        # 'totalDisbursedAmount': 
+        'applicationDate': self.date.strftime('%Y-%m-%d') or None,
+        # 'effectiveDate': self.effective_date.strftime('%Y-%m-%d') or None,
+        'creditPurpose': self.credit_purpose,
+        'application_id': self.application_id,
+        'interestRate': self.intrest_rate,
+        'user_id': self.customer.id
+      }
+
+      _logger.info("LMS Credit Data: %s", data)
+      datas = json.dumps(data)
+      # datas = json.loads(data)
+      # req = requests.post(url, data=datas)
+      try:
+        response = requests.post(url, data=datas, headers=headers)
+      except requests.ConnectionError as e:
+          raise UserError(_("Connection failure : %s" % str(e)))
+      _logger.info("LMS Push Credit Data receiving......")
+      j = json.loads(response.text)
+      _logger.info("LMS Recieve Credit data: %s", j)
+      if j['applicationNo'] is None:
+        raise UserError(_("Could not generate Credit Application"))
+      
+      # self.application_no = j['applicationNo']
+      self.write({
+          'state': '7_disburse',
+          'application_no': j['applicationNo']
+        })
+
+      # j = response.text
+      
+      return j
 
     def first_disbursement(self):
-      _logger.info("First Disbursement")
-      currency_id = self.env.ref('base.main_company').currency_id
+      checklist_model = self.env['investment.condition'].\
+        search([('mandatory', '=', True)])
+      checklists = [i.id for i in checklist_model]
+      _logger.info("Mandatory checklists: %s", checklist_model)
+
+      checked_list = []
+      for rec in self.checklist:
+        # for checks in rec.checklist:
+        _logger.info("Checked checklist: %s", rec)
+        checked_list.append(rec)
+      
+      get_checks = [i.id for i in checklist_model if i in checked_list]
+      _logger.info("Checklist that are mandatory in model: %s", get_checks)
+
+      if not checklists == get_checks:
+        raise UserError(_("Mandatory checklist set in configuration "
+                          "must be selected here!"))
+
       for rec in self:
-        if not rec.journal_id:
-          raise UserError(_("Enter a journal to proceed"))
-        if not rec.loan_account:
-          raise UserError(_("Enter a loan account to proceed"))
-        if not rec.disburse_account:
-          raise UserError(_("Enter a Disbursement account to proceed"))
-        if not rec.total_appr_amount:
-          raise UserError(_("Enter a Total approved amount to proceed"))
-        # if not rec.disburse_comment:
-        #   raise UserError(_("Please fill Comment for Disbursement!"))
+        check_customer = rec._check_lms_customer()
+        # Check if Customer exists
+        if check_customer['customerNo'] == None:
+          _logger.info("No customer")
+          # Create customer if None exists
+          create_customer = rec._lms_create_customer()
+          if create_customer['customerNo'] is not None:
+            _logger.info("Create credit application")
+            rec._lms_credit_application()
 
-        entry_vals = {
-            # 'ref': self.application_id or '',
-            'move_type': 'entry',
-            'narration': rec.board_comment,
-            'currency_id': currency_id.id,
-            'user_id': self.env.user.id,
-            # 'invoice_user_id': self.env.user.id,
-            # 'team_id': self.team_id.id,
-            'partner_id': rec.customer.id,
-            'partner_bank_id': self.env.user.company_id.partner_id.bank_ids[:1].id,
-            'journal_id': rec.journal_id.id,  # company comes from the journal
+        else:
+          _logger.info("Customer exists")
+          rec._lms_credit_application()
+
+    def generate_project(self):
+      _logger.info("Generate Project")
+      for rec in self:
+        project = self.env['project.project'].\
+          create({
+              'name': rec.application_no,
+              'investment_id': rec.id,
+            })
+        _logger.info("project Investment id: %s", project.investment_id)
+        rec.project_id = project.id
+        rec.state = '8_done'
+
+    # def first_disbursement(self):
+    #   _logger.info("First Disbursement")
+    #   currency_id = self.env.ref('base.main_company').currency_id
+    #   for rec in self:
+    #     if not rec.journal_id:
+    #       raise UserError(_("Enter a journal to proceed"))
+    #     if not rec.loan_account:
+    #       raise UserError(_("Enter a loan account to proceed"))
+    #     if not rec.disburse_account:
+    #       raise UserError(_("Enter a Disbursement account to proceed"))
+    #     if not rec.total_appr_amount:
+    #       raise UserError(_("Enter a Total approved amount to proceed"))
+    #     # if not rec.disburse_comment:
+    #     #   raise UserError(_("Please fill Comment for Disbursement!"))
+
+    #     entry_vals = {
+    #         # 'ref': self.application_id or '',
+    #         'move_type': 'entry',
+    #         'narration': rec.board_comment,
+    #         'currency_id': currency_id.id,
+    #         'user_id': self.env.user.id,
+    #         # 'invoice_user_id': self.env.user.id,
+    #         # 'team_id': self.team_id.id,
+    #         'partner_id': rec.customer.id,
+    #         'partner_bank_id': self.env.user.company_id.partner_id.bank_ids[:1].id,
+    #         'journal_id': rec.journal_id.id,  # company comes from the journal
             
-            'company_id': self.env.user.company_id.id,
+    #         'company_id': self.env.user.company_id.id,
 
-            'line_ids': [(0, 0, {
-                # 'move_id': moves.id,
-                'account_id': rec.loan_account.id,
-                'partner_id': rec.customer.id,
-                'name': 'Loan',
-                'debit': rec.total_appr_amount
-              }),
-              (0, 0, {
-                # 'move_id': moves.id,
-                'account_id': rec.disburse_account.id,
-                'partner_id': rec.customer.id,
-                'name': 'Disbursement',
-                'credit': rec.total_appr_amount
-            })],
+    #         'line_ids': [(0, 0, {
+    #             # 'move_id': moves.id,
+    #             'account_id': rec.loan_account.id,
+    #             'partner_id': rec.customer.id,
+    #             'name': 'Loan',
+    #             'debit': rec.total_appr_amount
+    #           }),
+    #           (0, 0, {
+    #             # 'move_id': moves.id,
+    #             'account_id': rec.disburse_account.id,
+    #             'partner_id': rec.customer.id,
+    #             'name': 'Disbursement',
+    #             'credit': rec.total_appr_amount
+    #         })],
           
-        }
+    #     }
 
         
-        moves = self.env['account.move'].with_context(default_move_type='entry').create(entry_vals)
-        if moves:
-          _logger.info("Journal entry Created: %s", moves)
-          if moves.line_ids:
-            _logger.info("Journal lines created:")
+    #     moves = self.env['account.move'].with_context(default_move_type='entry').create(entry_vals)
+    #     if moves:
+    #       _logger.info("Journal entry Created: %s", moves)
+    #       if moves.line_ids:
+    #         _logger.info("Journal lines created:")
 
-          rec.journal_entry = moves
-          rec.state = 'disburse'
+    #       rec.journal_entry = moves
+    #       rec.state = '7_disburse'
+
+    def waive_appraisal(self):
+      _logger.info("Waive Appraisal")
+      self.write({'state': '4_dilligence'})
 
     def proceed_due_dilligence(self):
       _logger.info("Due Dilligence")
       for rec in self:
-        rec.state = 'dilligence'
+        rec.state = '4_dilligence'
 
     def proceed_mcc_two(self):
       _logger.info("MCC 2")
       for rec in self:
-        rec.state = 'mcc_two'
+        rec.state = '5_mcc_two'
 
     def proceed_board_approval(self):
       _logger.info("Board Approval")
       for rec in self:
-        rec.state = 'board'
+        rec.state = '6_board'
 
     @api.depends('invoice_ids')
     def _compute_invoice_count(self):
@@ -351,17 +509,41 @@ class FhflInvestment(models.Model):
         }
         return invoice_vals
 
+    def action_back(self):
+      _logger.info("Back to prev state")
+      for rec in self:
+        if rec.state == '3_appraisal':
+          if not rec.mcc_one_back_comment:
+            raise UserError(_("Please fill MCC1 Re-Present Comment"))
+          rec.state = '2_mcc_one'
+
+        if rec.state == '4_dilligence':
+          if not rec.appraisal_back_comment:
+            raise UserError(_("Please fill Appraisal Fee Re-Present Comment"))
+          rec.state = '3_appraisal'
+          rec.appraisal_fee_status = 'draft'
+
+        if rec.state == '5_mcc_two':
+          if not rec.dilligence_back_comment:
+            raise UserError(_("Please fill Due Dilligence Re-Present Comment"))
+          rec.state = '4_dilligence'
+
+        if rec.state == '6_board':
+          if not rec.mcc_two_back_comment:
+            raise UserError(_("Please fill MCC2 Re-Present Comment"))
+          rec.state = '5_mcc_two'
+
     def proceed_mcc_one(self):
       _logger.info("MCC1 Review")
       for rec in self:
-        rec.state = 'mcc_one'
+        rec.state = '2_mcc_one'
 
     def process_appraisal_fee(self):
       _logger.info("Process Appraisal fee")
       for rec in self:
         # if not rec.appraisal_comment:
         #   raise UserError(_("Please fill Comment for Appraisal Fee!"))
-        rec.state = 'appraisal'
+        rec.state = '3_appraisal'
 
     def _add_invoice(self, moves):
       _logger.info("Adding invoice to Investment")
@@ -407,17 +589,14 @@ class FhflInvestment(models.Model):
         self._appraisal_fee_inv_generated()
       return moves
 
-
-# class FhflPartner(models.Model):
-#     _inherit = 'res.partner'
-
-#     property_account_receivable_id = fields.Many2one('account.account', company_dependent=True,
-#                                                      string="Account Receivable",
-#                                                      domain="[('internal_type', '=', 'receivable'), ('deprecated', '=', False), ('company_id', '=', current_company_id)]",
-#                                                      help="This account will be used instead of the default one as the receivable account for the current partner",
-#                                                      required=False)
-#     property_account_payable_id = fields.Many2one('account.account', company_dependent=True,
-#                                                   string="Account Payable",
-#                                                   domain="[('internal_type', '=', 'payable'), ('deprecated', '=', False), ('company_id', '=', current_company_id)]",
-#                                                   help="This account will be used instead of the default one as the payable account for the current partner",
-#                                                   required=False)
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     res = super(FhflInvestment, self).create(vals_list)
+    #     _logger.info("LMS Journal values: %s", vals_list)
+    #     journal_id = self.env.company.lms_journal
+    #     res.journal_id = journal_id.id
+    #     _logger.info('company journal: %s', journal_id)
+    #     res.create_journal_entry()
+    #     # for vals in vals_list:
+    #     #     vals['journal_id'] = journal_id.id or None
+    #     return res

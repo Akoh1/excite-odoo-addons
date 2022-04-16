@@ -1,0 +1,112 @@
+<odoo>
+	<!-- <menuitem id="menu_finance_entries" name="Accounting" sequence="4" groups="account.group_account_readonly">
+            <menuitem id="menu_finance_entries_accounting_miscellaneous" name="Miscellaneous" sequence="1">
+                <menuitem id="menu_action_move_journal_line_form" action="action_move_journal_line" groups="account.group_account_readonly" sequence="1"/>
+                <menuitem id="menu_action_account_moves_all" action="action_account_moves_all" groups="base.group_no_one" sequence="10"/>
+            </menuitem> -->
+
+   <!-- <record model="ir.ui.view" id="fhfl_lms_schedule">
+      <field name="name">fhfl.lms.schedule.tree</field>
+      <field name="model">lms.schedule</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="install_num"/>
+        <field name="due_date"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_lms_schedule_form" model="ir.ui.view">
+        <field name="name">fhfl.lms.schedule.form</field>
+        <field name="model">lms.schedule</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+             
+                <sheet>
+                 
+                    <group>
+                        <group>
+                            <field name="install_num"/>
+        					<field name="due_date"/>
+
+                            
+                        </group>
+                        
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record> -->
+
+    <record model="ir.ui.view" id="fhfl_loan_journal_tree">
+      <field name="name">fhfl.loan.journal.tree</field>
+      <field name="model">loan.journal</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="journal_id"/>
+        <field name="transaction_date"/>
+        <field name="value_date"/>
+        <field name="account_num"/>
+
+        <field name="transaction_amount"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_loan_journal_form" model="ir.ui.view">
+        <field name="name">fhfl.loan.journal.form</field>
+        <field name="model">loan.journal</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+             
+                <sheet>
+                 
+                    <group>
+                        <group>
+                            <field name="journal_id"/>
+                            <field name="transaction_date"/>
+        					<field name="value_date"/>
+                            <field name="account_num"/>
+                            <field name="transaction_amount"/>
+                            <field name="contra_acct_num"/>
+                            <field name="product_type"/>
+                            <field name="account_title"/>
+                        </group>
+                        
+                        <group>
+                            <field name="transaction_type"/>
+                            <field name="transaction_ref"/>
+                            <field name="loan_status"/>
+                            <field name="currency"/>
+                            <field name="transaction_timestamp"/>
+                          <!--   <field name="contra_acct_num"/> -->
+                            <field name="status"/>
+                            <field name="customer_id"/>
+                            <field name="application_id"/>
+                           <!--  <field name="company_id"/> -->
+                        </group>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fhfl_loan_journal_window">
+      <field name="name">LMS Disbursement/Repayment</field>
+      <field name="res_model">loan.journal</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_accounting_lms_section" name="LMS" sequence="1" parent="account.menu_finance_entries">
+                <menuitem id="menu_action_lms_journal" name="Loan Disbursement/Repayment" 
+                	action="fhfl_loan_journal_window" 
+                	sequence="1"/>
+                
+            </menuitem> 
+</odoo>

@@ -6,15 +6,28 @@ from odoo.exceptions import ValidationError, UserError
 
 _logger = logging.getLogger(__name__)
 
+
+class PublicHoliday(models.Model):
+    _name = 'public.holiday'
+    _description = 'Public Holiday'
+    _inherit = ['mail.thread.cc', 'mail.activity.mixin']
+
+    name = fields.Char('Description')
+    date = fields.Date()
+
+
 class TimeOffCustom(models.Model):
     _inherit = 'hr.leave'
 
-    stand_in = fields.Many2one('hr.employee')
+    stand_in = fields.Many2one('hr.employee', required=True)
     state = fields.Selection(selection_add=[('validate',), ('resume', 'Resumed')],
                                 # ondelete={'resume': 'set default'}
                              )
     resume_date = fields.Date()
     resume_days = fields.Float()
+    attachment_id = fields.Many2many('ir.attachment', 
+                                    string="Attach Hand Over Notes", 
+                                    required=True)
 
     def action_resume(self):
         today = datetime.date.today()
@@ -68,17 +81,47 @@ class TimeOffCustom(models.Model):
             rec.state = 'resume'
         _logger.info("Resume")
 
+    def _calculate_public_holiday(self):
+        self.ensure_one()
+        _logger.info("Calculate public")
+        public_hols = self.env['public.holiday'].search([])
+        public_dates = public_hols.mapped('date')
+        _logger.info("Public dates: %s", public_dates)
+        # if self.date_from and self.date_to:
+        _logger.info("Hol Date from: %s", self.date_from.date())
+        get_public_hols = [i for i in public_dates if self.date_from.date() <= i <= self.date_to.date()]
+        _logger.info("get pubs hols: %s", get_public_hols)
+        return len(get_public_hols)
+
     @api.depends('date_from', 'date_to', 'employee_id', 'resume_date')
     def _compute_number_of_days(self):
         # res = super(TimeOffCustom, self)._compute_number_of_days()
         # return res
         today = datetime.date.today()
+
+        # public_hols = self.env['public.holiday'].search([])
+        # public_dates = public_hols.mapped('date')
+        # _logger.info("Public dates: %s", public_dates)
+
         for holiday in self:
+            # get_public_hols = [i for i in public_dates if holiday.date_from.date() < i < holiday.date_to.date()]
+            # _logger.info("get pubs hols: %s", get_public_hols)
+            # count_pub = 0
+            # if holiday.date_from and holiday.date_to:
+            #     for pub in public_dates:
+            #         if holiday.date_from.date() < pub < holiday.date_to.date():
+            #             count_pub+=1
+
             if not holiday.resume_date:
 
                 if holiday.date_from and holiday.date_to:
+                    public_hols = holiday._calculate_public_holiday()
+                    _logger.info("Public Hols: %s", public_hols)
+                    # _logger.info("Hol Date from: %s", holiday.date_from.date())
+                    # get_public_hols = [i for i in public_dates if holiday.date_from.date() < i < holiday.date_to.date()]
+                    # _logger.info("get pubs hols: %s", get_public_hols)
                     holiday.number_of_days = \
-                    holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)['days']
+                    holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)['days'] - public_hols
                 # elif holiday.resume_date:
                 #     holiday.number_of_days = holiday.resume_days
                     # holiday.request_date_to = holiday.resume_date

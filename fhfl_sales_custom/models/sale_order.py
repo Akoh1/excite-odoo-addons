@@ -93,14 +93,217 @@ class SalesOrderInstallmentSchedule(models.Model):
 
     sale_order_id = fields.Many2one('sale.order')
     s_n = fields.Integer(string='S/N')
-    start_date = fields.Date('Date')
+    start_date = fields.Date('Start Date')
+    end_date = fields.Date('End Date')
     amount = fields.Float()
     description = fields.Char()
     state = fields.Selection([
-        ('draft', 'Draft'),
+        ('unpaid', 'Unpaid'),
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
         # ('installment', 'Installment'),
         # ('mortgage', 'Mortgage'),
-    ], string='Status', copy=False, index=True, default='draft')
+    ], string='Status', copy=False, index=True, default='unpaid')
+    invoice_ids = fields.Many2one('account.move',
+                                   string='Invoices', copy=False, readonly=True)
+
+    invoice_count = fields.Integer(compute='_compute_invoice_count',
+                                   string='Invoice')
+    sale_state = fields.Selection(related='sale_order_id.state')
+
+    @api.depends('invoice_ids')
+    def _compute_invoice_count(self):
+        for trans in self:
+            trans.invoice_count = len(trans.invoice_ids)
+
+    def action_view_invoices(self):
+        action = {
+            'name': _('Invoice(s)'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.move',
+            'target': 'current',
+        }
+        invoice_ids = self.invoice_ids.id
+        if invoice_ids:
+            action['res_id'] = invoice_ids
+            action['view_mode'] = 'form'
+        # else:
+        #     action['view_mode'] = 'tree,form'
+        #     action['domain'] = [('id', 'in', sale_order_ids)]
+        return action
+
+    @api.model
+    def _send_mail_before_payment_date(self):
+        """
+        This Function is called as a cron job to send mails to various
+        groups some specified time before paymenr.
+
+        """
+        install_model = self.env['installment.schedule']. \
+            search([])
+        employees = self.env['hr.employee']. \
+            search([])
+        sales_mgt_filter = employees.filtered(lambda l: l.user_id.id and
+                                        self.env.ref("sales_team.group_sale_manager").id in l.user_id.groups_id.ids)
+
+        _logger.info("Sales Mgt users: %s", sales_mgt_filter)
+        sales_mgt_email = [e.work_email for e in sales_mgt_filter]
+     
+        _logger.info("Company: %s", self.env.user.company_id.name)
+        _logger.info("Sales manager emails: %s", sales_mgt_email )
+
+        # installment_model = self.env[]
+
+        # for rec in self.filtered(lambda l: l.end_date is not False and l.invoice_ids.id):
+        for rec in install_model.filtered(lambda l: l.end_date is not False):
+
+            two_weeks_days = datetime.timedelta(days=14)
+            two_weeks = rec.end_date - two_weeks_days
+            _logger.info("2 weeks: %s", two_weeks)
+            today = datetime.date.today()
+
+            if today == two_weeks:
+
+                body = "<p>Dear Sales Managers,<br/><br/> "
+                body += "This is to remind you pending payment of <br/> "
+                body += "an installment plan for sale order %s <br/> " % (rec.sale_order_id.name)
+                body += "coming up on %s <br/> " % (rec.end_date)
+                body += "%s</p>" % (self.env.user.company_id.name)
+
+                vals = {
+                    'subject': 'Payment Reminder',
+                    'body_html': body,
+                    'email_to': ",".join(sales_mgt_email),
+                    # 'email_to': ";".join(map(lambda x: x, receipt_list)),
+                    # 'email_cc': [emp.work_email for emp in employees],
+                    'auto_delete': False,
+                    'email_from': self.env.user.company_id.email,
+                }
+                
+                _logger.info("Sent Reminder mail successfully")
+                mail_id = self.env['mail.mail'].sudo().create(vals)
+                mail_id.sudo().send()
+
+            one_day_days = datetime.timedelta(days=1)
+            one_day = rec.end_date - one_day_days
+
+            if today == one_day:
+                body = "<p>Dear %s,<br/><br/> " % (rec.sale_order_id.partner_id.name)
+                body += "This is to remind you pending payment of <br/> "
+                body += "an installment plan for sale order %s <br/> " % (rec.sale_order_id.name)
+                body += "coming up on %s <br/> " % (rec.end_date)
+                body += "%s</p>" % (self.env.user.company_id.name)
+
+                vals = {
+                    'subject': 'Payment Reminder',
+                    'body_html': body,
+                    'email_to': rec.sale_order_id.partner_id.email,
+                    # 'email_to': ";".join(map(lambda x: x, receipt_list)),
+                    # 'email_cc': [emp.work_email for emp in employees],
+                    'auto_delete': False,
+                    'email_from': self.env.user.company_id.email,
+                }
+                
+                _logger.info("Sent Reminder mail successfully")
+                mail_id = self.env['mail.mail'].sudo().create(vals)
+                mail_id.sudo().send()
+            
+
+        _logger.info("Sent email for confirmation")
+
+    def _prepare_invoice_lines(self):
+      _logger.info("Preparing Lines")
+      self.ensure_one()
+      appraisal_acct = self.env.user.company_id.appraisal_account
+      inv_lines = {
+          'name': self.description,
+          # 'account_id': appraisal_acct.id,
+            # 'quantity': 1,
+          'price_unit': self.amount,
+        }
+      _logger.info("Lines: %s", inv_lines)
+      return inv_lines
+
+    def _prepare_invoice(self):
+      
+        self.ensure_one()
+        
+        journal = self.env['account.move'].with_context(default_move_type='out_invoice')._get_default_journal()
+        currency_id = self.env.ref('base.main_company').currency_id
+        _logger.info("Currency: %s", currency_id)
+        if not journal:
+            raise UserError(_('Please define an accounting sales journal for the company %s (%s).') % (
+            self.env.user.company_id.name, self.env.user.company_id.id))
+        
+        invoice_vals = {
+            'ref': self.description or '',
+            'move_type': 'out_invoice',
+            # 'narration': self.appraisal_comment,
+            'currency_id': currency_id.id,
+            'user_id': self.env.user.id,
+            'invoice_user_id': self.env.user.id,
+            # 'team_id': self.team_id.id,
+            'partner_id': self.sale_order_id.partner_id.id,
+            'partner_bank_id': self.env.user.company_id.partner_id.bank_ids[:1].id,
+            'journal_id': journal.id,  # company comes from the journal
+            'invoice_origin': self.sale_order_id.name,
+            'invoice_date': self.end_date,
+            # 'invoice_payment_term_id': self.payment_term_id.id,
+            # 'payment_reference': self.application_id,
+            # 'invoice_line_ids': [[0, 0, {
+            #     # 'product_id': 15,
+            #     # 'display_type': 'line_section',
+            #     'name': 'Appraisal Fee',
+            #     'account_id': appraisal_acct.id,
+            #     'quantity': 1.0,
+            #     'price_unit': self.appraisal_amount,
+            #   }]],
+            'invoice_line_ids': [[0,0, self._prepare_invoice_lines()]],
+            'company_id': self.env.user.company_id.id,
+            'crm_sale': self.id
+        }
+        return invoice_vals
+
+    def _add_invoice(self, moves):
+      _logger.info("Adding invoice to Investment")
+      for rec in self:
+        rec.invoice_ids = moves.id
+
+    def _invoice_generated(self):
+      self.write({
+          'state': 'pending'
+        })
+
+    def generate_installment_invoice(self):
+        _logger.info("Generate Installment Invoice")
+        inv_vals = []
+        inv_vals_lines = []
+      # inv_vals_list = None
+        for rec in self:
+        
+            inv_vals_list = rec._prepare_invoice()
+            # inv_vals_lines.append((0, 0, rec._prepare_invoice_lines()))
+            # inv_vals_list['invoice_line_ids'] += inv_vals_lines
+            inv_vals.append(inv_vals_list)
+
+            _logger.info("Inv vals: %s", inv_vals)
+            # _logger.info("Inv vals: %s", inv_vals_list)
+
+        moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(inv_vals_list)
+        if moves:
+            _logger.info("Moves Created")
+
+            if moves.invoice_line_ids:
+                _logger.info("Moves Line created")
+        
+                for lines in moves.invoice_line_ids:
+                    _logger.info("Moves line just created id: %s", lines.id)
+                    _logger.info("Moves line just created: %s", lines.name)
+            else:
+                _logger.info("Move line was not created")
+            self._add_invoice(moves)
+            self._invoice_generated()
+        return moves
 
 
 class SalesOrderInstallment(models.Model):
@@ -128,31 +331,88 @@ class fhflSalesOrder(models.Model):
         ('installment', 'Installment'),
         ('mortgage', 'Mortgage'),
         ], string='Sales Order Type', copy=False, index=True, tracking=True)
-    installment_plan = fields.Many2one('sale.order.installment')
-    tenure = fields.Integer(related='installment_plan.tenure', string='Tenure(in months)')
-    start_date = fields.Date()
+    # installment_plan = fields.Many2one('sale.order.installment')
+    tenure = fields.Integer(string='Number of Installments')
+    # check_install = fields.Boolean(default=False, compute='_compute_calculate_installment')
+    install_months = fields.Integer('Installment Months', related='opportunity_id.num_months',
+                                    readonly=False)
+    start_date = fields.Date(related='opportunity_id.start_date',
+                             readonly=False)
+    # crm_sale_lead = fields.Many2one('crm.lead')
+    opportunity_id = fields.Many2one(
+        'crm.lead', string='Investment Sale', check_company=True, readonly=True)
+    # opportunity_id = fields.Many2one(
+    #     'crm.lead', string='Opportunity', check_company=True,
+    #     domain="[('type', '=', 'opportunity'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     
-    def calculate_installment(self):
+    # @api.depends('opportunity_id', 'install_months')
+    def compute_calculate_installment(self):
         _logger.info('Calculate Installment')
+        period = 0
         installs = []
         for rec in self:
-            if rec.start_date:
-                for i in range(rec.tenure):
-                    period = i
-                    date = rec.start_date
-                    description = 'Down Payment'
-                    amount = rec.amount_total / rec.tenure
-                    if period > 0:
-                        description = '%s Installment' % period
-                        date = rec.start_date + relativedelta(months=period)
-                        last_date = calendar.monthrange(date.year, date.month)[1]
-                        date = date.replace(day=last_date)
-                    _logger.info("Periods: %s", period)
-                    _logger.info("Date: %s", date)
-                    _logger.info("Description: %s", description)
-                    _logger.info("Amount: %s", amount)
+
+            if rec.tenure or rec.amount_total:
+                rec.install_schedule_line = [(5,0,0)]
+                if rec.start_date:
+                    
+                    # period = 0
+                    for i in range(rec.tenure):
+                        _logger.info("I: %s", i)
+                        _logger.info("Periods: %s", period)
+                        date = rec.start_date
+                        
+                        end_date = date + relativedelta(months=period)
+                        days_in_month = calendar. \
+                            monthrange(end_date.year,
+                                       end_date.month)[1]
+                        end_date = end_date + datetime.timedelta(days=days_in_month)
+                        
+
+                        _logger.info("First Start Date: %s", date)
+                        _logger.info("First End Date: %s", end_date)
+
+                        # end_date = date + relativedelta(months=period)
+                        # # # end_date = date.replace(day = calendar.monthrange(date.year, date.month)[1])
+                        # last_date = calendar.monthrange(end_date.year, end_date.month)[1]
+                        # end_date = end_date.replace(day=last_date)
+
+                        # next_date = end_date + datetime.timedelta(days=1)
+                        # _logger.info("Next start Date: %s", next_date)
+                        description = rec.opportunity_id.product_id.get_product_multiline_description_sale()
+                        amount = rec.amount_total / rec.tenure
+                        if i > 0:
+                            period+=1
+                            date = end_date
+                            _logger.info("Loop Next start Date: %s", date)
+                            days_in_month = calendar. \
+                                monthrange(date.year,
+                                           date.month)[1]
+                            end_date = date + datetime.timedelta(days=days_in_month)
+                            _logger.info("Loop End Date: %s", end_date)
+
+                            # next_date = end_date + datetime.timedelta(days=1)
+                            # date = next_date
+                            # end_date = date.replace(day = calendar.monthrange(date.year, date.month)[1])    
+                        # _logger.info("Periods: %s", period)
+                        # _logger.info("Start Date: %s", rec.opportunity_id.start_date)
+                        # _logger.info("End Date: %s", rec.opportunity_id.end_date)
+                        # _logger.info("Description: %s", description)
+                        # _logger.info("Amount: %s", amount)
+                        rec.install_schedule_line = [(0,0, {
+                                's_n': period+1,
+                                'start_date': date,
+                                'end_date': end_date,
+                                'amount': amount,
+                                'description': description,
+                                'state': 'unpaid'
+                            })]
+                        # rec.check_install = True
+                else:
+                    raise UserError(_("No Start Date to calculate installment"))
             else:
-                raise UserError(_("No Start Date to calculate installment"))
+                    raise UserError(_("No duration or Amount"))
+
 
     def action_submit(self):
         _logger.info("Move to Submit state")
@@ -253,3 +513,25 @@ class fhflSalesOrder(models.Model):
         #     'company_id': self.company_id.id,
         # }
         return res
+
+    def print_offer_letter(self):
+       data = {
+       # 'from_date': self.from_date,
+       # 'to_date': self.to_date
+       }
+       # docids = self.env['sale.order'].search([]).ids
+       return self.env.ref('fhfl_sales_custom.action_sales_installment').report_action(None, data=data)
+
+class StudentCard(models.AbstractModel):
+    _name = 'report.report_sales_installment'
+
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        docs = self.env['sale.order'].browse(docids)
+        return {
+              'doc_ids': docids,
+              'doc_model': 'sale.order',
+              'docs': docs,
+              'data': data,
+              # 'get_something': self.get_something,
+        }

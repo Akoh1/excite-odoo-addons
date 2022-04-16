@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="crm.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@data-key='crm']" position="inside">
-                	<h2>Appraisal Account</h2>
+                	<h2>LMS Account Settings</h2>
                     <!-- <div class="col-12 col-lg-6 o_setting_box" >
                             <div class="o_setting_right_pane">
                                 <label for="appraisal_account"/>
@@ -25,7 +25,7 @@
                         </div> -->
 
                         <div class="row mt16 o_settings_container" name="appraisal_account_setting_container">
-	                        <div class="col-12 col-lg-6 o_setting_box" >
+	                        <div class="col-6 col-lg-6 o_setting_box" >
 	                            <div class="o_setting_right_pane">
 	                                <label for="appraisal_account"/>
 	                                <span class="fa fa-lg fa-building-o" />
@@ -41,7 +41,65 @@
 	                                </div>
 	                            </div>
 	                        </div>
+
+                            <div class="col-6 col-lg-6 o_setting_box" >
+                                <div class="o_setting_right_pane">
+                                    <label for="lms_journal"/>
+                                    <span class="fa fa-lg fa-building-o" />
+                                   <!--  <div class="row">
+                                        <div class="text-muted col-lg-8">
+                                            Account to be used when generating an Appraisal Invoice
+                                        </div>
+                                    </div> -->
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="lms_journal" class="o_light_label"  />
+                                            <div class="text-muted">
+                                                Journal Entry to be selected for LMS
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 	                    </div>
+
+                        <div class="row mt16 o_settings_container" name="account_setting_container">
+                            <div class="col-6 col-lg-6 o_setting_box" >
+                                <div class="o_setting_right_pane">
+                                    <label for="loan_account"/>
+                                    <span class="fa fa-lg fa-building-o" />
+                                   <!--  <div class="row">
+                                        <div class="text-muted col-lg-8">
+                                            Account to be used when generating an Appraisal Invoice
+                                        </div>
+                                    </div> -->
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="loan_account" class="o_light_label"  />
+                                            <div class="text-muted">
+                                                Debit Account to be used when generating a Journal Entry from LMS
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-lg-6 o_setting_box" >
+                                <div class="o_setting_right_pane">
+                                    <label for="disburse_account"/>
+                                    <span class="fa fa-lg fa-building-o" />
+                                   
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="disburse_account" class="o_light_label"  />
+                                            <div class="text-muted">
+                                                Credit Account to be used when generating a Journal Entry from LMS
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                 </xpath>
 

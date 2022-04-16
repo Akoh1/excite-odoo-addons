@@ -143,54 +143,76 @@
         <field name="arch" type="xml">
             <form>
               <header>
+                <button name="action_park" type="object"
+                        string="Park" attrs="{'invisible': [('park', '=', True)]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_investment_admin"/>
+
+                <button name="action_unpark" type="object"
+                        string="UnPark" attrs="{'invisible': [('park', '!=', True)]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_investment_admin"/>
+
                 <button name="proceed_mcc_one" type="object"
-                        string="Proceed to MCC1 Review" states="new"
+                        string="Proceed to MCC1 Review" states="1_new"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_mcc_one,fhfl_sales_custom.group_investment_admin"/>
+                <button name="action_back" type="object"
+                        string="Back" attrs="{'invisible': [('state', 'not in', ['3_appraisal', '4_dilligence', '5_mcc_two', '6_board'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_mcc_one,fhfl_sales_custom.group_investment_admin"/>
                 <button name="call_popup_reject_menu" type="object"
                         string="Refuse"
-                       class="btn-primary" attrs="{'invisible': [('state', 'in', ['refuse'])]}"/>
+                       class="btn-primary" attrs="{'invisible': [('state', 'in', ['9_refuse'])]}"/>
                 <button name="process_appraisal_fee" type="object"
-                        string="Process Appraisal Fee" states="mcc_one"
+                        string="Process Appraisal Fee" states="2_mcc_one"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_appraisal_fee,fhfl_sales_custom.group_investment_admin"/>
                  <button name="generate_appraisal_fee" type="object"
                         string="Generate Appraisal Fee" 
-                        attrs="{'invisible': ['|', ('state', 'not in', ['appraisal']),
+                        attrs="{'invisible': ['|', ('state', 'not in', ['3_appraisal']),
                                 ('appraisal_fee_status', 'not in', ['draft'])]}"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_appraisal_fee,fhfl_sales_custom.group_investment_admin"/>
+                <button name="waive_appraisal" type="object"
+                        string="Waive Appraisal" 
+                        attrs="{'invisible': ['|', ('state', 'not in', ['3_appraisal']),
+                                ('appraisal_fee_status', 'in', ['not_paid', 'paid'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_appraisal_fee,fhfl_sales_custom.group_investment_admin"/>
                   <button name="proceed_due_dilligence" type="object"
                         string="Proceed to Due Diligence" 
-                        attrs="{'invisible': ['|', ('state', 'not in', ['appraisal']),
+                        attrs="{'invisible': ['|', ('state', 'not in', ['3_appraisal']),
                                 ('appraisal_fee_status', 'not in', ['paid'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_dilligence,fhfl_sales_custom.group_investment_admin"/>
                 <button name="proceed_mcc_two" type="object"
                         string="Proceed to MCC2 Review" 
-                        attrs="{'invisible': [('state', 'not in', ['dilligence'])]}"
+                        attrs="{'invisible': [('state', 'not in', ['4_dilligence'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_mcc_two,fhfl_sales_custom.group_investment_admin"/>
                 <button name="proceed_board_approval" type="object"
                         string="Proceed to Board Approval" 
-                        attrs="{'invisible': [('state', 'not in', ['mcc_two'])]}"
+                        attrs="{'invisible': [('state', 'not in', ['5_mcc_two'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_board_approval,fhfl_sales_custom.group_investment_admin"/>
 
                 <button name="first_disbursement" type="object"
-                        string="First Disbursement" 
-                        attrs="{'invisible': [('state', 'not in', ['board'])]}"
+                        string="Push to LMS" 
+                        attrs="{'invisible': [('state', 'not in', ['6_board'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_disburse,fhfl_sales_custom.group_investment_admin"/>
-                <button name="push_lms" type="object"
-                        string="Push to LMS" 
-                        attrs="{'invisible': [('state', 'not in', ['disburse'])]}"
+                <button name="generate_project" type="object"
+                        string="Generate Project" 
+                        attrs="{'invisible': [('state', 'not in', ['7_disburse'])]}"
                        class="btn-primary"
                        groups="fhfl_sales_custom.group_investment_admin"/>
                <!--  <button name="generate_appraisal_fee" type="object"
                         string="Generate Appraisal Fee" attrs="{'invisible': ['|', ('state', 'not in', ['appraisal']), ('appraisal_fee_status', 'not in', ['paid', 'not_paid'])]}"
                        class="btn-primary"/> -->
-                <field name="state" widget="statusbar" statusbar_visible="new,mcc_one,appraisal,dilligence,mcc_two,board,disburse,done" />
+                <!-- <field name="state" widget="statusbar" statusbar_visible="new,mcc_one,appraisal,dilligence,mcc_two,board,disburse,done" /> -->
+                <field name="state" widget="statusbar" 
+                    statusbar_visible="1_new,2_mcc_one,3_appraisal,4_dilligence,5_mcc_two,6_board,7_disburse,8_done" />
               </header>
                 <sheet>
                   <div class="oe_button_box" name="button_box">
@@ -204,32 +226,48 @@
                   <div class="oe_title">
                     <label for="name" class="oe_edit_only"/>
                     <h1><field name="name"/></h1>
+                   
+                  </div>
+                  <div>
+                    <!-- <label for="park"/> -->
+                    <h3><label for="park"/><field name="park"/></h3>
                   </div>
                     <!-- <group> -->
                         <group>
                           <!-- <field name="appraisal_fee_status"/>
                             <field name="customer"/>
                             <field name="customer_name"/> -->
-                            <group string="Comment" attrs="{'invisible': [('state', 'not in', ['mcc_one', 'appraisal', 'dilligence', 'mcc_two', 'board', 'disburse', 'done'])]}">
+                            <group string="Comment" attrs="{'invisible': [('state', 'not in', ['2_mcc_one', '3_appraisal', '4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])]}">
                               <field name="mcc_one_comment" 
-                                  attrs="{'invisible': [('state', 'not in', ['mcc_one', 'appraisal', 'dilligence', 'mcc_two', 'board', 'disburse', 'done'])],
-                                          'required': [('state', 'in', 'mcc_one')]}"/>
+                                  attrs="{'invisible': [('state', 'not in', ['2_mcc_one', '3_appraisal', '4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])],
+                                          'required': [('state', 'in', '2_mcc_one')]}"/>
+                              <field name="mcc_one_back_comment" 
+                                  attrs="{'invisible': [('state', 'not in', ['2_mcc_one', '3_appraisal', '4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])]}"/>
+
                               <field name="appraisal_comment" 
-                                    attrs="{'invisible': [('state', 'not in', ['appraisal', 'dilligence', 'mcc_two', 'board', 'disburse', 'done'])],
-                                            'required': [('state', 'in', 'appraisal')]}"/>
+                                    attrs="{'invisible': [('state', 'not in', ['3_appraisal', '4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])],
+                                            'required': [('state', 'in', '3_appraisal')]}"/>
+                              <field name="appraisal_back_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['3_appraisal', '4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])]}"/>
+
                               <field name="dilligence_comment" 
-                                    attrs="{'invisible': [('state', 'not in', ['dilligence', 'mcc_two', 'board', 'disburse', 'done'])],
-                                            'required': [('state', 'in', 'dilligence')]}"/>
+                                    attrs="{'invisible': [('state', 'not in', ['4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])],
+                                            'required': [('state', 'in', '4_dilligence')]}"/>
+                            <field name="dilligence_back_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])]}"/>
                               
                               <field name="mcc_two_comment" 
-                                    attrs="{'invisible': [('state', 'not in', ['mcc_two', 'board', 'disburse', 'done'])],
-                                            'required': [('state', 'in', 'mcc_two')]}"/>
+                                    attrs="{'invisible': [('state', 'not in', ['5_mcc_two', '6_board', '7_disburse', '8_done'])],
+                                            'required': [('state', 'in', '5_mcc_two')]}"/>
+                              <field name="mcc_two_back_comment" 
+                                    attrs="{'invisible': [('state', 'not in', ['5_mcc_two', '6_board', '7_disburse', '8_done'])]}"/>
+
                               <field name="board_comment" 
-                                    attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])],
-                                            'required': [('state', 'in', 'board')]}"/>
+                                    attrs="{'invisible': [('state', 'not in', ['6_board', '7_disburse', '8_done'])],
+                                            'required': [('state', 'in', '6_board')]}"/>
                               <field name="disburse_comment" 
-                                    attrs="{'invisible': [('state', 'not in', ['disburse', 'done'])],
-                                            'required': [('state', 'in', 'disburse')]}"/>
+                                    attrs="{'invisible': [('state', 'not in', ['7_disburse', '8_done'])],
+                                            'required': [('state', 'in', '7_disburse')]}"/>
                             </group>
                             
                             <group>
@@ -237,7 +275,7 @@
                               <field name="priority" widget="priority"/>
                             <field name="customer"/>
                             <field name="customer_name"/>
-                            <field name="appraisal_amount" attrs="{'invisible': [('state', 'not in', ['appraisal'])],}"/>
+                            <field name="appraisal_amount" attrs="{'invisible': [('state', 'not in', ['2_mcc_one', '3_appraisal', '4_dilligence', '5_mcc_two', '6_board', '7_disburse', '8_done'])]}"/>
                               <field name="company_name"/>
                               <field name="company_email"/>
                               <field name="company_phone"/>
@@ -250,6 +288,9 @@
                               <field name="director_nins"/>
                             </group>
                             
+                            <group string="Checklist" attrs="{'invisible': [('state', 'not in', ['6_board', '7_disburse', '8_done'])]}">
+                              <field name="checklist" widget='many2many_checkboxes'/>
+                            </group>
                         </group>
                         <group>
                             <group>
@@ -265,22 +306,28 @@
                               <field name="files_url" widget="url"/>
                             </group>
                             
-                            <group string="Loan Information" attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])]}">
+                            <group string="Loan Information" attrs="{'invisible': [('state', 'not in', ['6_board', '7_disburse', '8_done'])]}">
                               <field name="total_appr_amount"/>
-                              <field name="first_dis_amount"/>
+                             <!--  <field name="first_dis_amount"/>
+                              <field name="remain_amount"/> -->
                               <field name="application_date"/>
                               <field name="effective_date"/>
                               <field name="credit_purpose"/>
                               <field name="intrest_rate"/>
+                               <field name="customer_num" invisible="1"/>
+                              <field name="application_no" invisible="1"/>
+                             <!--  <field name="customer_num" attrs="{'invisible': [('state', 'not in', ['7_disburse', '8_done'])]}"/> -->
+                              <field name="application_no" attrs="{'invisible': [('state', 'not in', ['7_disburse', '8_done'])]}"/>
+                              <field name="project_id" attrs="{'invisible': [('state', 'not in', ['8_done'])]}"/>
                             </group> 
 
-                            <group string="Accounting Information" attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])]}">
+                           <!--  <group string="Accounting Information" attrs="{'invisible': [('state', 'not in', ['board', 'disburse', 'done'])]}">
                               <field name="journal_id"/>
                               <field name="loan_account"/>
                               <field name="disburse_account"/>
                               <field name="remain_amount"/>
                               <field name="journal_entry"/>
-                            </group> 
+                            </group>  -->
                         </group>
                 <!--     </group> -->
 
@@ -300,7 +347,7 @@
       <field name="view_mode">kanban,form,tree</field>
     </record>
 
-    <menuitem name="Investments" id="fhfl_crm_investment_menu"
+    <menuitem name="Investments: Affordable Housing" id="fhfl_crm_investment_menu"
               parent="crm.crm_menu_sales"
               action="fhfl_sales_custom.fhfl_crm_investment_window"
               sequence="1"/>
@@ -351,4 +398,66 @@
               parent="crm.crm_menu_config"
               action="fhfl_sales_custom.fhfl_crm_appraisal_fee_config_window"
               sequence="1"/> -->
+
+    <record model="ir.ui.view" id="fhfl_investment_condition_config_tree">
+      <field name="name">fhfl.investment.condition.config.tree</field>
+      <field name="model">investment.condition</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="mandatory"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_investment_condition_form" model="ir.ui.view">
+        <field name="name">fhfl.investment.condition.form</field>
+        <field name="model">investment.condition</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+             
+                <sheet>
+                 
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="mandatory"/>
+                            
+                        </group>
+                        
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fhfl_investment_condition_config_window">
+      <field name="name">Condition Precedents</field>
+      <field name="res_model">investment.condition</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Condition Precedents" id="fhfl_investment_condition_config_menu"
+              parent="crm.crm_menu_config"
+              groups="fhfl_sales_custom.group_investment_admin"
+              action="fhfl_sales_custom.fhfl_investment_condition_config_window"
+              sequence="1"/>
+
+
+    <record id="fhfl_sales_custom_vendor_partner" model= "ir.ui.view">
+            <field name="name">fhfl.custom.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="attrs">{'required': 1}</attribute>
+                </xpath>
+
+            </field>
+        </record> 
+
 </odoo>

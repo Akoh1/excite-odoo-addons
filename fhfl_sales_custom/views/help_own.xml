@@ -1,0 +1,284 @@
+<odoo>
+	<record id="help_stage_tree" model="ir.ui.view">
+        <field name="name">help.stage.tree</field>
+        <field name="model">help.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Stages" multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="name" readonly="1"/>
+                <field name="is_won"/>
+              
+            </tree>
+        </field>
+    </record>
+
+    <record id="help_stage_form" model="ir.ui.view">
+        <field name="name">help.stage.form</field>
+        <field name="model">help.stage</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_won"/>
+                            <field name="fold"/>
+                           
+                        </group>
+                       
+                    </group>
+                 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="help_stage_action" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">help.stage</field>
+        <field name="view_id" ref="fhfl_sales_custom.help_stage_tree"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your Help To Own pipeline
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_help_own_config_lead"
+        name="Help To Own"
+        parent="crm.crm_menu_config"
+        sequence="14"
+        groups="sales_team.group_sale_manager"/>
+    <menuitem
+        id="menu_help_own_stage_act"
+        name="Stages"
+        sequence="0"
+        parent="menu_help_own_config_lead"
+        groups="base.group_no_one"
+        action="help_stage_action"/>
+
+    <record id="crm.menu_crm_config_lead" model="ir.ui.menu">
+        <field name="name">Sales</field>
+    </record>
+
+
+    <record id="help_own_kanban_view" model="ir.ui.view">
+            <field name="name">help.own.kanban</field>
+            <field name="model">help.own</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" 
+                    archivable="false" sample="1">
+                    <field name="stage_id" ptions='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                    <field name="name"/>
+                    <field name="full_name"/>
+                    <field name="current_address"/>
+                    <field name="ownership_type"/>
+                   <!--  <field name="color"/>
+                    <field name="priority"/>
+                    <field name="expected_revenue"/>
+                    <field name="kanban_state"/>
+                    <field name="activity_date_deadline"/>
+                    <field name="user_email"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="activity_summary"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <field name="activity_state" />
+                    <field name="activity_ids" /> -->
+                   <!--  <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="expected_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/> -->
+                     <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                               <!--  <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div> -->
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong><field name="full_name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong><field name="current_address"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                       <field name="ownership_type"/>
+                                    </div>
+                                    <!-- <div>
+                                        <span t-if="record.partner_id.value" t-esc="record.partner_id.value"></span>
+                                    </div>
+ -->                                   <!--  <div>
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    </div> -->
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <!-- <field name="priority" widget="priority" groups="base.group_user"/> -->
+                                           <!--  <field name="activity_ids" widget="kanban_activity"/> -->
+                                        </div>
+                                       <!--  <div class="oe_kanban_bottom_right">
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="crm_help_own_form" model="ir.ui.view">
+            <field name="name">crm.help.own.form</field>
+            <field name="model">help.own</field>
+            <field name="arch" type="xml">
+                <form class="o_lead_opportunity_form" js_class="crm_form">
+                    <header>
+                  
+                        <field name="stage_id" widget="statusbar"
+                            options="{'clickable': '1', 'fold_field': 'fold'}"
+                           />
+                    </header>
+                   <!--  <div class="text-center alert alert-primary oe_edit_only" role="alert" attrs="{'invisible': ['|', ('ribbon_message', '=', False), ('ribbon_message', '=', '')]}">
+                        <field name="ribbon_message"/>
+                    </div> -->
+                    <sheet>
+                        <group>
+                        	<group>
+                        		<field name="name"/>
+                        		<field name="full_name"/>
+                        		<field name="desired_home"/>
+                        		<field name="company_name"/>
+                        		<field name="company_address"/>
+                        		<field name="company_state"/>
+                        		<field name="company_lga"/>
+                        		<field name="occupation"/>
+                        		<field name="income"/>
+                        	</group>
+
+                        	<group>
+                        		<field name="marital_status"/>
+                        		<field name="no_of_dependants"/>
+                        		<field name="current_address"/>
+                        		<field name="current_state"/>
+                        		<field name="ownership_type"/>
+                        		<field name="years_of_residence"/>
+                        		<field name="date_of_birth"/>
+                        		<field name="sector"/>
+                        		<field name="first_time_buyer"/>
+                        		<field name="payment_method"/>
+                        	</group>
+                        </group>
+
+                        <!-- <group>
+                            <div>
+                                <table class="table table-sm o_main_table">
+                           
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                
+                            </tbody>
+                         </table>
+                            </div>
+                        </group> -->
+                       
+<!-- 
+                        <notebook>
+                           
+                            <page name="extra" string="Extra Info" attrs="{'invisible': [('type', '=', 'opportunity')]}">
+                                <group>
+                                    <group string="Email" groups="base.group_no_one">
+                                        <field name="message_bounce" readonly="1"/>
+                                    </group>
+                                    <group string="Tracking" name="categorization">
+                                        <field name="company_id"
+                                            groups="base.group_multi_company"
+                                            options="{'no_create': True}"/>
+                                        <field name="campaign_id" />
+                                        <field name="medium_id"/>
+                                        <field name="source_id"/>
+                                        <field name="referred"/>
+                                    </group>
+                                    <group string="Analysis">
+                                        <field name="date_open"/>
+                                        <field name="date_closed"/>
+                                    </group>
+                                </group>
+                            </page>
+                            
+                        </notebook> -->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_help_own_pipeline">
+            <field name="name">Help To Own</field>
+            <field name="res_model">help.own</field>
+            <field name="view_mode">kanban,form,graph,pivot,tree,activity</field>
+       <!--      <field name="domain">[('type','=','opportunity')]</field> -->
+           <!--  <field name="context">{
+                    'default_type': 'opportunity',
+                    'search_default_assigned_to_me': 1
+            }</field> -->
+           <!--  <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/> -->
+        </record>
+
+        <record id="crm_help_own_view_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="help_own_kanban_view"/>
+            <field name="act_window_id" ref="crm_help_own_pipeline"/>
+        </record>
+
+        <menuitem
+        id="menu_help_own"
+        name="Investment: Help To Own"
+        parent="crm.crm_menu_sales"
+        sequence="2"
+        action="crm_help_own_pipeline"/>
+</odoo>

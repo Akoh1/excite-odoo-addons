@@ -111,6 +111,7 @@
           <xpath expr="//field[@name='structure_type_id']" position="after">
               <field name="salary_grade"/>
               <field name="check_wage_readonly" invisible="1"/>
+              <field name="manager_status" widget="radio"/>
 
           </xpath>
             <xpath expr="//group[@name='main_info']" position="after">
@@ -160,12 +161,19 @@
 
           </xpath>
 
+          <xpath expr="//widget[@name='web_ribbon']" position="after">
+              <widget name="web_ribbon" title="Confirmed" 
+                attrs="{'invisible': ['|', ('confirm_status', 'not in', ['confirm']), ('active', '=', False)]}"/>
+
+          </xpath>
+
             <xpath expr="//page[@name='hr_settings']" position="inside">
                 <group>
                     <group string="Employment Confirmation Status" name="confirm_status">
 <!--                        <field name="user_id" string="Related User" domain="[('share', '=', False)]"/>-->
                         <field name="emp_status"/>
                         <field name="emp_date"/>
+                        <field name="start_date"/>
                         <field name="prob_days"/>
                         <field name="confirm_date"/>
                         <field name="confirm_status"/>

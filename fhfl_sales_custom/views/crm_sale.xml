@@ -1,0 +1,329 @@
+<odoo>
+	<record model="ir.ui.menu" id="crm.menu_crm_opportunities">
+      <field name="name">Sales</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm.crm_lead_action_pipeline">
+      <field name="name">Sales</field>
+    </record>
+
+    <record id="fhfl_sales_crm_lead__oppor_form" model= "ir.ui.view">
+			<field name="name">fhfl.sales.crm.lead.oppor.inherited.crm</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+			<field name="arch" type="xml">
+
+				<!-- <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sales_type"/>
+                    <field name="is_final"/>
+                </xpath>  -->
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="replace">
+                    <button string="New Quotation" name="action_sale_quotations_new" type="object" class="oe_highlight" attrs="{'invisible': [('is_final', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="after">
+                    <field name="is_final" invisible="1"/>
+                </xpath>
+
+                
+			</field>
+		</record>
+
+    <record id="fhfl_sales_crm_lead_form" model= "ir.ui.view">
+			<field name="name">fhfl.crm.lead.form</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+			<field name="arch" type="xml">
+
+				<!-- <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="invest_type"/>
+                </xpath> -->
+                <xpath expr="//h2[hasclass('no-gutters')]" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='lead_partner']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='opportunity_partner']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='lead_info']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='lead_priority']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='opportunity_info']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+               
+               <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='tag_ids']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+               <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+               <xpath expr="//field[@name='team_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+               <!-- <xpath expr="//field[@name='team_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath> -->
+                <!-- <xpath expr="//button[@name='action_sale_quotations_new']" position="replace">
+                    <button string="New Quotation" name="action_sale_quotations_new" type="object" class="oe_highlight" attrs="{'invisible': [('is_final', '=', False)]}"/>
+                </xpath> -->
+
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="full_name"/>
+                    <field name="desired_home"/>
+                    <field name="company_name"/>
+                    <field name="company_address"/>
+                    <field name="company_state"/>
+                    <field name="company_lga"/>
+                    <field name="occupation"/>
+                    <field name="income"/>
+                </xpath> 
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="marital_status"/>
+                    <field name="no_of_dependants"/>
+                    <field name="current_address"/>
+                    <field name="current_state"/>
+                    <field name="ownership_type"/>
+                    <field name="years_of_residence"/>
+                    <field name="date_of_birth"/>
+                    <field name="sector"/>
+                    <field name="first_time_buyer"/>
+                    <field name="payment_method"/>
+                    <field name="sales_type"/>
+                    <field name="is_final"/>
+                </xpath> 
+
+                <xpath expr="//page[@name='lead']" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                   <page name="contract_terms" string="Contract Terms" attrs="{'invisible': [('sales_type', '!=', 'installment')]}">
+                                <group>
+                                    
+                                    <group>
+                                        
+                                        <field name="installment_scheme" />
+                                        <field name="num_months"/>
+                                       
+                                    </group>
+                                    <group>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                    </group>
+                                </group>
+                            </page>
+                </xpath> 
+
+			</field>
+		</record>
+
+        
+		<!-- <record id="help_stage_action" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">help.stage</field>
+        <field name="view_id" ref="fhfl_sales_custom.help_stage_tree"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your Help To Own pipeline
+          </p>
+        </field>
+    </record> -->
+
+    <!-- <menuitem
+        id="menu_help_own_config_lead"
+        name="Help To Own"
+        parent="crm.crm_menu_config"
+        sequence="14"
+        groups="sales_team.group_sale_manager"/>
+    <menuitem
+        id="menu_help_own_stage_act"
+        name="Stages"
+        sequence="0"
+        parent="menu_help_own_config_lead"
+        groups="base.group_no_one"
+        action="help_stage_action"/>
+
+    <record id="crm.menu_crm_config_lead" model="ir.ui.menu">
+        <field name="name">Sales</field>
+    </record> -->
+
+
+    <record id="fhfl_crm_sale_kanban_view" model="ir.ui.view">
+            <field name="name">fhfl.crm.sale.kanban</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" 
+                    archivable="false" sample="1">
+                    <field name="stage_id" ptions='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                    <field name="name"/>
+                    <field name="full_name"/>
+                    <field name="current_address"/>
+                    <field name="ownership_type"/>
+                    <!--  <field name="active"/>
+                    <field name="activity_state" />
+                    <field name="activity_ids" /> -->
+                   <!--  <field name="color"/>
+                    <field name="priority"/>
+                    <field name="expected_revenue"/>
+                    <field name="kanban_state"/>
+                    <field name="activity_date_deadline"/>
+                    <field name="user_email"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="activity_summary"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <field name="activity_state" />
+                    <field name="activity_ids" /> -->
+                   <!--  <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="expected_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/> -->
+                     <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                               <!--  <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div> -->
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong><field name="full_name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong><field name="current_address"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                       <field name="ownership_type"/>
+                                    </div>
+                                    <!-- <div>
+                                        <span t-if="record.partner_id.value" t-esc="record.partner_id.value"></span>
+                                    </div>
+ -->                                   <!--  <div>
+                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    </div> -->
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <!-- <field name="priority" widget="priority" groups="base.group_user"/> -->
+                                           <!--  <field name="activity_ids" widget="kanban_activity"/> -->
+                                        </div>
+                                       <!--  <div class="oe_kanban_bottom_right">
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="fhfl_crm_sale_pipeline">
+            <field name="name">Sales</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,form,graph,pivot,tree,activity</field>
+           <!--  <field name="domain">[('type','=','opportunity')]</field> -->
+           <!--  <field name="context">{
+                    'default_type': 'opportunity',
+                    'search_default_assigned_to_me': 1
+            }</field> -->
+           <!--  <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/> -->
+        </record>
+
+        <record id="fhfl_crm_sale_view_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="fhfl_crm_sale_kanban_view"/>
+            <field name="act_window_id" ref="fhfl_crm_sale_pipeline"/>
+        </record>
+
+    <record id="crm.menu_crm_opportunities" model="ir.ui.menu">
+            <field name="action" ref="fhfl_crm_sale_pipeline"/>
+        </record>
+
+        <record id="crm.crm_menu_root" model="ir.ui.menu">
+            <field name="action" ref="fhfl_crm_sale_pipeline"/>
+        </record>
+
+
+    <record model="ir.ui.view" id="fhfl_installment_scheme_tree">
+      <field name="name">fhfl.installment.scheme.tree</field>
+      <field name="model">installment.scheme</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="num_months"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_installment_scheme_form" model="ir.ui.view">
+        <field name="name">fhfl.installment.scheme.form</field>
+        <field name="model">installment.scheme</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+             
+                <sheet>
+                 
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="num_months"/>
+                            
+                        </group>
+                        
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fhfl_installment_scheme_window">
+      <field name="name">Installment Scheme</field>
+      <field name="res_model">installment.scheme</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Installment Scheme" id="fhfl_installment_scheme_menu"
+              parent="crm.crm_menu_config"
+              groups="fhfl_sales_custom.group_investment_admin"
+              action="fhfl_sales_custom.fhfl_installment_scheme_window"
+              sequence="1"/>
+
+</odoo>

@@ -1,0 +1,52 @@
+<odoo>
+	<record id="action_sales_installment" model="ir.actions.report">
+	   <field name="name">Offer Letter</field>
+	   <field name="model">sale.order</field>
+	   <field name="report_type">qweb-pdf</field>
+	   <field name="report_name">fhfl_sales_custom.report_sales_installment</field>
+	   <field name="report_file">fhfl_sales_custom.report_sales_installment</field>
+	   <field name="print_report_name">'Offer Letter - %s' % (object.name)</field>
+	   <field name="binding_model_id" ref="model_sale_order"/>
+	</record>
+
+	<template id="report_sales_installment">
+	    <t t-call="web.html_container">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="web.external_layout">
+	                <div class="page">
+	                    <h2>Offer Letter</h2>
+	                    <p>Dear <span t-field="o.partner_id.name"/>, Here are you installment deatils as follows</p>
+
+	                    <h3>Installment Details</h3>
+	                    <table class="table table-sm o_main_table">
+			                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+			                <thead style="display: table-row-group">
+			                	<tr>
+			                		<th>S/N</th>
+			                		<th>Description</th>
+			                		<th>Start Date</th>
+			                		<th>End Date</th>
+			                		<th>Amount</th>
+			                		<th>Status</th>
+			                	</tr>
+			                </thead>
+
+			                <tbody>
+			                	<t t-foreach='o.install_schedule_line' t-as='line'>
+				                	<tr>
+				                		<td><span t-esc="line.s_n"/></td>
+				                		<td><span t-esc="line.description"/></td>
+				                		<td><span t-esc="line.start_date"/></td>
+				                		<td><span t-esc="line.end_date"/></td>
+				                		<td><span t-esc="line.amount"/></td>
+				                		<td><span t-esc="line.state"/></td>
+				                	</tr>
+			                	</t>
+			                </tbody>
+			             </table>
+	                </div>
+	            </t>
+	        </t>
+	    </t>
+	</template>
+</odoo>
