@@ -522,6 +522,13 @@ class fhflSalesOrder(models.Model):
        # docids = self.env['sale.order'].search([]).ids
        return self.env.ref('fhfl_sales_custom.action_sales_installment').report_action(None, data=data)
 
+
+class FhflSaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    estate_id = fields.Many2one(related='product_id.estate_id', store=True)
+
+
 class StudentCard(models.AbstractModel):
     _name = 'report.report_sales_installment'
 

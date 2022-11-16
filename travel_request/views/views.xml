@@ -1,0 +1,156 @@
+<odoo>
+
+    <record model="ir.ui.view" id="travel_request_view_tree">
+      <field name="name">travel.request.tree</field>
+      <field name="model">travel.request</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="employee_id"/>
+        <field name="request_date"/>
+        <field name="travel_mode"/>
+        <field name="state"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="travel_request_view_form" model="ir.ui.view">
+        <field name="name">travel.request.form</field>
+        <field name="model">travel.request</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object"
+                        string="Submit" states="draft"
+                       class="btn-primary"
+                       />
+
+                    <button name="action_approve_one" type="object"
+                        string="Approve"
+                        attrs="{'invisible': ['|', ('state', '!=', 'submit'),('check_manager', '=', False)]}"
+                       class="btn-primary"
+                       />
+
+                    <button name="action_approve_two" type="object"
+                        string="Approve"
+                        attrs="{'invisible': ['|', ('state', '!=', '1_approve'),('check_hr_manager', '=', False)]}"
+                       class="btn-primary"
+                       />
+
+                    <button name="action_cfo_approve" type="object"
+                        string="CFO Approve"
+                        states="2_approve"
+                       class="btn-primary"
+                       groups="fhfl_sales_custom.group_purchase_cfo_admin"
+                       />
+
+                    <button name="action_pay" type="object"
+                        string="Pay"
+                        states="cfo_approve"
+                       class="btn-primary"
+                       groups="account.group_account_user,account.group_account_manager,fhfl_sales_custom.group_accounting_admin"
+                       />
+
+                    <button name="action_reject" type="object"
+                        string="Reject"
+                        attrs="{'invisible': ['|', '|', ('state', 'not in', ['submit', '1_approve']), ('check_manager', '=', False), ('check_hr_manager', '=', False)]}"
+                       class="btn-primary"
+                       
+                       />
+
+                       <button name="action_modify" type="object"
+                        string="Modify"
+                        attrs="{'invisible': ['|', ('state', '!=', '1_approve'),('check_hr_manager', '=', False)]}"
+                       class="btn-primary"
+                      
+                       />
+
+                    <field name="state" widget="statusbar" 
+                    statusbar_visible="draft,submit,1_approve,2_approve,cfo_approve,paid" />
+                </header>
+             
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                            <button name="action_view_moves" type="object"
+                                    class="oe_stat_button" icon="fa-money"
+                                    attrs="{'invisible': [('move_count', '=', 0)]}">
+                                <field name="move_count" widget="statinfo" string="Journal Entry(s)"/>
+                            </button>
+                  </div>
+                 
+                    <group>
+                        <group >
+                            <field name="name"/>
+                            <field name="employee_id"/>
+                            <field name="job_position"/>
+                            <field name="department_id"/>
+                            <field name="manager"/>
+                            <!-- <field name="check_manager"/> -->
+                            <field name="request_date"/>
+                        </group>
+
+                        <group string="Allowance Details">
+                            <field name="num_days"/>
+                            <field name="amount"/>
+                            
+                            <field name="cash_accommodate"/>
+                            <field name="station_amount"/>
+                            <field name="total"/>
+                            <field name="journal_id" attrs="{'required': [('state', 'in', ['cfo_approve', 'paid'])]}"/>
+                            <field name="staff_account" attrs="{'required': [('state', 'in', ['cfo_approve', 'paid'])]}"/>
+                        </group>
+                        
+                    </group>
+
+                    <group>
+                        <group string="Travel Plan">
+                            <field name="take_off"/>
+                            <field name="destination"/>
+                            
+                            <field name="departure_date"/>
+                            <field name="arrival_date"/>
+                            <field name="travel_mode"/>
+                        </group>
+
+                        <group string="Reason for Travel">
+                            <field name="reason"/>
+                            <field name="duration"/>
+                            <field name="check_manager" invisible="1"/>
+                            <field name="check_hr_manager" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+              <!--   <group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </group> -->
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="travel_request_window">
+      <field name="name">Travel Request</field>
+      <field name="res_model">travel.request</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Travel Request" id="travel_request_menu"
+              parent="hr.menu_human_resources_configuration"
+              action="travel_request_window"
+              sequence="1"/>
+
+
+
+</odoo>

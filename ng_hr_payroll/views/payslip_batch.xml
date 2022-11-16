@@ -11,11 +11,25 @@
 				<button name="action_submit" type="object"
 						string="Submit" states="verify"
 						class="oe_highlight" groups="hr.group_hr_manager, hr_payroll.group_hr_payroll_manager"/>
+				<button name="action_approve_hr" type="object"
+						string="HR Approve" states="submit"
+						class="oe_highlight" groups="ng_hr_payroll.ng_head_hr"/>
+				<button name="action_reject" type="object"
+						string="HR Reject" states="submit"
+						class="oe_highlight" groups="ng_hr_payroll.ng_head_hr"/>
+
+				<button name="action_approve_cfo" type="object"
+						string="CFO Approve" states="approved_hr"
+						class="oe_highlight" groups="ng_hr_payroll.ng_cfo"/>
+				<button name="action_reject" type="object"
+						string="CFO Reject" states="approved_hr"
+						class="oe_highlight" groups="ng_hr_payroll.ng_cfo"/>
+
 				  <button name="action_approve" type="object"
-						string="MD Approve" states="submit"
+						string="MD Approve" states="approve_cfo"
 						class="oe_highlight" groups="ng_hr_payroll.managing_director"/>
 				  <button name="action_reject" type="object"
-						string="MD Reject" states="submit"
+						string="MD Reject" states="approve_cfo"
 						class="oe_highlight" groups="ng_hr_payroll.managing_director"/>
 			  </xpath>
 

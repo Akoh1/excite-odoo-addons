@@ -12,3 +12,5 @@ access_loan_journal,fhfl.loan.journal,model_loan_journal,base.group_user,1,1,1,1
 access_help_own,fhfl.help.own,model_help_own,base.group_user,1,1,1,1
 access_help_stage,fhfl.help.stage,model_help_stage,base.group_user,1,1,1,1
 access_installment_scheme,fhfl.installment.scheme,model_installment_scheme,base.group_user,1,1,1,1
+access_asset_location,fhfl.asset.location,model_asset_location,base.group_user,1,1,1,1
+access_property_type,fhfl.property.type,model_property_type,base.group_user,1,1,1,1

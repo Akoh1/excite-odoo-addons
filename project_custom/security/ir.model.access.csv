@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_milestone,fhfl.project.milestone,model_project_milestone,base.group_user,1,1,1,1
+access_milestone_payment,fhfl.milestone.payment,model_milestone_payment,base.group_user,1,1,1,1

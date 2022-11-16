@@ -96,6 +96,9 @@
                         </field>
                     </page>
                 </xpath>
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/tree/field[@name='name']" position="after">
+                	<field name="estate_id" optional="show"/>
+                </xpath>
 			</field>
 		</record>
 

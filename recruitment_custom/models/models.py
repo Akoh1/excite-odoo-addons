@@ -8,6 +8,13 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+
+class JobLocation(models.Model):
+    _name = "job.location"
+    _description = "Job Location"
+
+    name = fields.Char()
+
 class Contract(models.Model):
     _inherit = 'hr.contract'
 
@@ -42,6 +49,12 @@ class Job(models.Model):
     salary_structure = fields.Many2one('hr.payroll.structure.type')
     state = fields.Selection(selection_add=[('draft', 'Draft'), ('recruit',)],
                              ondelete={'draft': 'set default'}, default='draft')
+    job_location = fields.Many2one('job.location', string="Job location")
+    job_type = fields.Selection([
+        ('full_time', 'Full time'),
+        ('contract', 'Contract'),
+        ('internship', 'Internship')
+    ], copy=False, index=True, tracking=True)
 
     def hr_approve(self):
         _logger.info("Hr approve here")
@@ -64,6 +77,8 @@ class Applicant(models.Model):
     _inherit = "hr.applicant"
 
     interview_scores = fields.Float("Interview Scores")
+    resume = fields.Binary(string='Resume/CV')
+    resume_id = fields.Many2one('ir.attachment', string="Resume Attachment", required=True)
 
     # @api.onchange('stage_id')
     # def _onchange_stage(self):
@@ -172,11 +187,11 @@ class Applicant(models.Model):
         #         vals['last_stage_id'] = applicant.stage_id.id
         #         res = super(Applicant, self).write(vals)
         # else:
-        _logger.info("Write last stage: %s", self.stage_id)
-        _logger.info("Write Current stage: %s", vals['stage_id'])
-        if vals['stage_id'] > self.stage_id.id and vals['stage_id'] - self.stage_id.id > 1:
+        # _logger.info("Write last stage: %s", self.stage_id)
+        # _logger.info("Write Current stage: %s", vals['stage_id'])
+        if 'stage_id' in vals and vals['stage_id'] > self.stage_id.id and vals['stage_id'] - self.stage_id.id > 1:
             raise UserError(_("You must proceed to the next stage first"))
-        elif vals['stage_id'] < self.stage_id.id and self.stage_id.id - vals['stage_id'] > 1:
+        elif 'stage_id' in vals and  vals['stage_id'] < self.stage_id.id and self.stage_id.id - vals['stage_id'] > 1:
             raise UserError(_("You must proceed to the next stage first"))
         res = super(Applicant, self).write(vals)
         return res

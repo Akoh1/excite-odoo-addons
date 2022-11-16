@@ -15,12 +15,25 @@
 <!--			<field name="groups" eval="[(4,ref('base.group_user'))]" />-->
 <!--		</record>-->
 
+		<record id="ng_head_hr" model="res.groups">
+			<field name="name">Head of HR</field>
+			<field name="implied_ids" eval="[(4, ref('hr.group_hr_manager')), (4,ref('hr_payroll.group_hr_payroll_manager'))]"/>
+
+		</record>
+
+		<record id="ng_cfo" model="res.groups">
+			<field name="name">CFO</field>
+			<field name="implied_ids" eval="[(4, ref('hr.group_hr_manager')), (4,ref('hr_payroll.group_hr_payroll_manager'))]"/>
+
+		</record>
+
 		<record id="managing_director" model="res.groups">
 			<field name="name">Managing Director</field>
 			<field name="implied_ids" eval="[(4, ref('hr.group_hr_manager')), (4,ref('hr_payroll.group_hr_payroll_manager'))]"/>
 <!--			<field name="groups"-->
 <!--				eval="[(4,ref('hr.group_hr_manager')), (4,ref('hr.group_hr_user'))]" />-->
 		</record>
+		
 <!--		<record id="property_rule_overtime_employee" model="ir.rule">-->
 <!--			<field name="name">Employee overtime</field>-->
 <!--			<field name="model_id" ref="model_hr_overtime" />-->

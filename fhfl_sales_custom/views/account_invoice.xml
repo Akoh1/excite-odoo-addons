@@ -52,6 +52,10 @@
 						groups="fhfl_sales_custom.group_accounting_admin"/>
         </xpath>
 
+        <xpath expr="//page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+            <field name="estate_id" optional="show"/>
+        </xpath>
+
 			</field>
 		</record>
 

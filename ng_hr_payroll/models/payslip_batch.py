@@ -11,6 +11,8 @@ class HrPayslipRun(models.Model):
 
     state = fields.Selection(selection_add=[
                                             ('submit', 'Submit'),
+                                            ('approved_hr', 'HR Approved'),
+                                            ('approve_cfo', 'CFO Approved'),
                                             ('approve', 'Approved'),
                                             ('close',),
                                             ('reject', 'Rejected'),
@@ -18,11 +20,11 @@ class HrPayslipRun(models.Model):
                                             tracking=True)
 
     def action_submit(self):
-        _logger.info("Submit to MD")
+        _logger.info("Submit to Head HR")
         employees = self.env['hr.employee']. \
             search([])
         managing_dir = employees.filtered(lambda l: l.user_id.id and
-                                                  self.env.ref("ng_hr_payroll.managing_director").id in
+                                                  self.env.ref("ng_hr_payroll.ng_head_hr").id in
                                                   l.user_id.groups_id.ids)
         _logger.info("Managing Dir: %s", managing_dir)
         body = "<b> Dear %s </br>" % managing_dir.name
@@ -54,6 +56,13 @@ class HrPayslipRun(models.Model):
         _logger.info("Approved")
         self.write({'state': 'approve'})
 
+    def action_approve_hr(self):
+        self.write({'state': 'approved_hr'})
+
+    def action_approve_cfo(self):
+        self.write({'state': 'approve_cfo'})
+
     def action_reject(self):
         _logger.info("Approved")
         self.write({'state': 'reject'})
+

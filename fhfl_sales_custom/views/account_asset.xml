@@ -1,0 +1,66 @@
+<odoo>
+	<record id="view_fhfl_account_asset_form" model= "ir.ui.view">
+			<field name="name">fhfl.account.asset</field>
+			<field name="model">account.asset</field>
+			<field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//field[@name='first_depreciation_date']" position="after">
+					<field name="serial_num" />
+					<field name="asset_tag" />
+					<field name="asset_status" />
+					<field name="employee_id" attrs="{'required': [('asset_status', '=', 'allocated')]}"/>
+					<field name="department_id" />
+					<field name="location" />
+					<field name="check_allocated" invisible="1"/>
+                </xpath>
+
+			</field>
+		</record>
+
+
+	<record model="ir.ui.view" id="fhfl_asset_location_tree">
+      <field name="name">fhfl.asset.location.tree</field>
+      <field name="model">asset.location</field>
+      <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+      </tree>
+      </field>
+    </record>
+
+    <record id="fhfl_asset_location_form" model="ir.ui.view">
+        <field name="name">fhfl.asset.location.form</field>
+        <field name="model">asset.location</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form>
+             
+                <sheet>
+                 
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            
+                        </group>
+                        
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fhfl_asset_location_config_window">
+      <field name="name">Asset Location</field>
+      <field name="res_model">asset.location</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Asset location" id="fhfl_asset_location_menu"
+              parent="account.account_management_menu"
+              action="fhfl_sales_custom.fhfl_asset_location_config_window"
+              sequence="2"/>
+
+</odoo>

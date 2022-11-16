@@ -202,3 +202,17 @@ class TimeOffCustom(models.Model):
                             raise UserError(
                                 _('You must be either %s\'s manager or Time off Manager to approve this leave') % (
                                     holiday.employee_id.name))
+
+
+    def action_approve(self):
+        res = super().action_approve()
+        _logger.info("Leave Approve")
+        for hols in self:
+            if hols.employee_id.user_id.id == self.env.user.id:
+                raise ValidationError(_("You cannot approve your own "
+                                        "Leave!"))
+        return res
+
+
+
+
