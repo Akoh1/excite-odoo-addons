@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_if_smart_kpi,access_if_smart_kpi,model_if_smart_kpi,base.group_user,1,1,0,0
+access_if_smart_kpi_mgr,access_if_smart_kpi,model_if_smart_kpi,group_kpi_manager,1,1,1,1
+access_smart_kpi_goals,access_smart_kpi_goals,model_smart_kpi_goals,base.group_user,1,1,1,1
+access_smart_kpi_factor,access_smart_kpi_factor,model_smart_kpi_factor,base.group_user,1,1,1,1
+access_employee_core_value,access_employee_core_value,model_employee_core_value,base.group_user,1,1,1,1
+access_kpi_grade,access_kpi_grade,model_kpi_grade,base.group_user,1,1,1,1
+access_kpi_deadline,access_kpi_deadline,model_kpi_deadline,base.group_user,1,1,1,1
+access_employee_biz_value,access_employee_biz_value,model_employee_biz_value,base.group_user,1,1,1,1
+access_smart_kpi_biz,access_smart_kpi_biz,model_smart_kpi_biz,base.group_user,1,1,1,1
+access_employee_year,access_employee_year,model_employee_year,base.group_user,1,1,1,1

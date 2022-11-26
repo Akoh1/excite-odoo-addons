@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="kpi_grade_form" model="ir.ui.view">
+            <field name="name">kpi.grade.form</field>
+            <field name="model">kpi.grade</field>
+            <field name="arch" type="xml">
+                <form string="Performance Grade">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate_from"/>
+                            <field name="rate_to"/>
+                            <field name="rating_comment"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kpi_grade" model="ir.actions.act_window">
+            <field name="name">Performance Grade</field>
+            <field name="res_model">kpi.grade</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="kpi_grade" parent="if_smart_kpi.kpi_config"
+                  name="Performance Grade" action="action_kpi_grade"
+                  groups="if_smart_kpi.group_kpi_manager"/>
+    </data>
+</odoo>

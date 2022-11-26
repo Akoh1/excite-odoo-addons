@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="kpi_factor_tree" model="ir.ui.view">
+            <field name="name">smart.kpi.factor.tree</field>
+            <field name="model">smart.kpi.factor</field>
+            <field name="arch" type="xml">
+                <tree string="Employee KPI Factors">
+                    <field name="name"/>
+<!--                    <field name="target2"/>-->
+                    <field name="max_score2"/>
+                </tree>
+            </field>
+        </record>
+        <record id="kpi_factor_form" model="ir.ui.view">
+            <field name="name">smart.kpi.factor.form</field>
+            <field name="model">smart.kpi.factor</field>
+            <field name="arch" type="xml">
+                <form string="KPI Questionnaire">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="mea_success"/>
+<!--                            <field name="target2"/>-->
+                            <field name="max_score2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kpi_factor" model="ir.actions.act_window">
+            <field name="name">Employee KPI Factor</field>
+            <field name="res_model">smart.kpi.factor</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="smart_kpi_factor" parent="if_smart_kpi.kpi_config"
+                  name="KPI Factors Questionnaire"
+                  action="action_kpi_factor"
+                  groups="if_smart_kpi.group_kpi_manager"
+                  sequence="20"/>
+    </data>
+</odoo>

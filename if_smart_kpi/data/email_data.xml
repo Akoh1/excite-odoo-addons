@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Submit KPI: send to Manager-->
+        <record id="kpi_submit" model="mail.template">
+            <field name="name">KPI Submit</field>
+            <field name="subject">KPI Set for ${object.employee_id.name}</field>
+            <field name="email_from">${object.employee_id.work_email}</field>
+            <field name="email_to">${ctx.get("recipient").work_email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="model_id" ref="model_if_smart_kpi"/>
+            <field name="body_html"><![CDATA[
+                Dear Sir/Ma,
+
+                KPI Set for ${object.employee_id.name} was submitted for your review.
+
+                <p style="height:10px";width:15px;background:#efrggf>
+                    <a href="${ctx.get('url')}">Please follow the Link to See Document</a>
+                </p>
+                <br/>
+                Best Regards,
+                ${object.employee_id.name}
+            ]]>
+
+            </field>
+        </record>
+
+        <!-- Manager Approve: send to Employee after Manager review-->
+        <record id="kpi_approve" model="mail.template">
+            <field name="name">KPI Approved</field>
+            <field name="subject">KPI Set for ${object.employee_id.name}</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${ctx.get("recipient").work_email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="model_id" ref="model_if_smart_kpi"/>
+            <field name="body_html"><![CDATA[
+                Dear Sir/Ma,
+
+                KPI Information submitted for ${object.employee_id.name} has been approved.
+                You can commence the appraisal once the time is announced by HR.
+
+                <p style="height:10px";width:15px;background:#efrggf>
+                    <a href=${ctx.get('url')} target="_blank">See Document</a>
+                </p>
+                <br/>
+                Best Regards,
+                ${user.name}
+            ]]>
+
+            </field>
+        </record>
+
+        <!-- Submit Appraisal: send to Manager-->
+        <record id="appraisal_submit" model="mail.template">
+            <field name="name">Appraisal Submit</field>
+            <field name="subject">Appraisal For ${object.employee_id.name}</field>
+            <field name="email_from">${object.employee_id.work_email}</field>
+            <field name="email_to">${ctx.get("recipient").work_email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="model_id" ref="model_if_smart_kpi"/>
+            <field name="body_html"><![CDATA[
+                Dear Sir/Ma,
+
+                Self appraisal completed by ${object.employee_id.name} for your review and final scoring
+
+                <p style="height:10px";width:15px;background:#efrggf>
+                    <a href=${ctx.get('url')} target="_blank">See Document</a>
+                </p>
+                <br/>
+                Best Regards,
+                ${object.employee_id.name}
+            ]]>
+
+            </field>
+        </record>
+
+        <!-- Employee to Comment: send back to Employee-->
+        <record id="appraisal_submit_employee" model="mail.template">
+            <field name="name">Scoring Completed</field>
+            <field name="subject">Appraisal Scoring For ${object.employee_id.name}</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${ctx.get("recipient").work_email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="model_id" ref="model_if_smart_kpi"/>
+            <field name="body_html"><![CDATA[
+                Dear Sir/Ma,
+
+                Scoring now completed for ${object.employee_id.name} by your Manager. Please put your comment
+
+                <p style="height:10px";width:15px;background:#efrggf>
+                    <a href=${ctx.get('url')} target="_blank">See Document</a>
+                </p>
+                <br/>
+                Best Regards,
+                ${user.name}
+            ]]>
+
+            </field>
+        </record>
+
+        <!-- Appraisal Completed: send to HR-->
+        <record id="appraisal_completed" model="mail.template">
+            <field name="name">Appraisal Completed</field>
+            <field name="subject">Completed Appraisal for the Employee- ${object.employee_id.name}</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${ctx.get("recipient").work_email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="model_id" ref="model_if_smart_kpi"/>
+            <field name="body_html"><![CDATA[
+                Dear HR,
+
+                Appraisal for ${object.employee_id.name} has been fully completed.
+                Please put your final recommendation and close.
+
+                <p style="height:10px";width:15px;background:#efrggf>
+                    <a href=${ctx.get('url')} target="_blank">See Document</a>
+                </p>
+                <br/>
+                Best Regards,
+                ${user.name}
+            ]]>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

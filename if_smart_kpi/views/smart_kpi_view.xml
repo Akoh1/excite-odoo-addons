@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_smart_kpi_tree" model="ir.ui.view">
+            <field name="name">smart.kpi.tree</field>
+            <field name="model">if.smart.kpi</field>
+            <field name="arch" type="xml">
+                <tree string="Employee KPI">
+                    <field name="ref_no"/>
+                    <field name="name"/>
+                    <field name="period"/>
+                    <field name="year"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_smart_kpi_form" model="ir.ui.view">
+            <field name="name">smart.kpi.form</field>
+            <field name="model">if.smart.kpi</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_review" class="oe_highlight" type="object" string="Submit for Review"
+                                states="draft"/>
+                        <button name="button_agree" class="oe_highlight" type="object" string="Manager Approve"
+                                states="review" groups="if_smart_kpi.group_kpi_employee_manager"/>
+                        <button name="button_return" class="oe_highlight" type="object" string="Return to HR/Emp"
+                                states="review" groups="if_smart_kpi.group_kpi_employee_manager"/>
+                        <button name="button_appraise" class="oe_highlight" type="object" string="Start Appraisal"
+                                states="kpi_set"/>
+                        <button name="button_manager" class="oe_highlight" type="object" string="Submit to Manager"
+                                states="self"/>
+                        <button name="button_complete" class="oe_highlight" type="object" string="Complete Appraisal"
+                                states="mgr" groups="if_smart_kpi.group_kpi_employee_manager"/>
+                        <button name="button_emp_comment" class="oe_highlight" type="object" string="Employee Comment"
+                                states="emp_comment"/>
+                        <button name="button_hr_comment" class="oe_highlight" type="object" string="HR Review/Comment"
+                                states="appraised" groups="if_smart_kpi.group_kpi_manager"/>
+
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="ref_no"/>
+                            </h1>
+                        </div>
+<!--                        <label for="name" class="oe_edit_only"/>-->
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="name" attrs="{'readonly': [('state', 'not in', ['draft', 'review'])]}"/>
+                                <field name="year" attrs="{'readonly': [('state', 'not in', ['draft', 'review'])]}"/>
+                                <field name="period" attrs="{'readonly': [('state', 'not in', ['draft', 'review'])]}"/>
+                                <field name="employee_id" attrs="{'readonly': [('state', 'not in', ['draft', 'review'])]}"/>
+                                <field name="department_id"/>
+                                <field name="job_id"/>
+                                <field name="user_id"/>
+                                <field name="user_id_id" invisible="1"/>
+                                <field name="logged_user_id" invisible="1"/>
+                                <field name="appraiser"/>
+                                <field name="appraiser_user_id" invisible="1"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="draft_deadline" invisible="1"/>
+                                <field name="draft_start_date" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                                <field name="appraisal_start_date" attrs="{'invisible': [('state', 'in', ('draft', 'review'))]}"/>
+                                <field name="appraisal_deadline" invisible="1"/>
+                                <field name="draft_end_date" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                                <field name="appraisal_end_date" attrs="{'invisible': [('state', 'in', ('draft', 'review'))]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Smart KPI">
+                                <field name="kpi_goals_ids" attrs="{'readonly': [('state', 'in', ['emp_comment', 'appraised',
+                                'done', 'cancel'])]}">
+                                    <tree string="Smart KPI" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="no_delete" invisible="1"/>
+                                        <field name="perf_area" attrs="{'readonly': [('parent.state', 'not in', ['review', 'draft', 'False'])]}"/>
+<!--                                        <field name="perf_factor"/>-->
+                                        <field name="name" attrs="{'readonly': [('parent.state', 'not in', ['draft', 'review', 'False'])]}"/>
+<!--                                        <field name="measure" attrs="{'readonly': [('parent.state', 'in', ['kpi_set', 'self','False'])]}"/>-->
+                                        <field name="max_score" sum="Total Max Score" attrs="{'readonly': [('parent.state', 'not in', ['draft', 'review', 'False'])]}"/>
+                                        <field name="emp_score" attrs="{'readonly': [('parent.state', 'not in', ['self', 'False'])]}"/>
+                                        <field name="score" attrs="{'readonly': [('parent.state', 'not in', ['mgr', 'False'])]}"/>
+<!--                                        <field name="rating" attrs="{'readonly': [('parent.state', 'in', ['review', 'draft', 'kpi_set', 'self', 'False'])]}"/>-->
+                                        <field name="comment" attrs="{'readonly': [('parent.state', 'not in', ['mgr', 'False'])]}"/>
+                                        <field name="final_score" sum="Final Score"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Core Value">
+                                <field name="kpi_factor_ids" attrs="{'readonly': [('state', 'in', ['emp_comment', 'appraised',
+                                'done', 'cancel'])]}">
+                                    <tree string="KPI Factors" editable="bottom" delete="false">
+                                        <field name="factor_id" invisible="0"/>
+<!--                                        <field name="name"/>-->
+                                        <field name="mea_success"/>
+<!--                                        <field name="target2"/>-->
+                                        <field name="max_score2" sum="Total Max Score"/>
+                                        <field name="emp_score2" attrs="{'readonly': [('parent.state', 'not in', ['self', 'False'])]}"/>
+                                        <field name="score2" attrs="{'readonly': [('parent.state', 'not in', ['mgr', 'False'])]}"/>
+                                        <field name="evi_com" attrs="{'readonly': [('parent.state', 'not in', ['mgr', 'False'])]}"/>
+                                        <field name="smart_kpi_id" invisible="1"/>
+                                        <field name="final_score2" sum="Final Score"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="Business Process Value">
+                                <field name="kpi_biz_ids" attrs="{'readonly': [('state', 'in', ['emp_comment', 'appraised',
+                                'done', 'cancel'])]}">
+                                    <tree string="Business Processes" editable="bottom" delete="false">
+                                        <field name="biz_id" invisible="0"/>
+                                        <field name="mea_success"/>
+                                        <field name="max_score3" sum="Total Max Score"/>
+                                        <field name="emp_score3" attrs="{'readonly': [('parent.state', 'not in', ['self', 'False'])]}"/>
+                                        <field name="score3" attrs="{'readonly': [('parent.state', 'not in', ['mgr', 'False'])]}"/>
+                                        <field name="smart_kpi_id" invisible="1"/>
+                                        <field name="final_score3" sum="Final Score"/>
+                                    </tree>
+                                </field>
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="kpi_total">
+                                    <field name="kpi_goal_score"/>
+                                    <field name="kpi_factor_score"/>
+                                    <field name="kpi_biz_score"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="total_score"/>
+                                    </div>
+                                    <field name="total_score" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group string="Result">
+                                    <field name="kra_comment" attrs="{'invisible': [('state', 'not in', ['mgr', 'emp_comment', 'appraised', 'done'])]}"/>
+                                </group>
+
+                            </page>
+                        </notebook>
+                        <footer>
+                            <group string="Appraiser/Supervisor Section">
+                                <field name="super_comment" attrs="{'required': [('state', '=', 'mgr')], 'invisible': [('state', 'not in', ['mgr', 'done', 'emp_comment', 'appraised'])],
+                                'readonly':[('state', '!=', 'mgr')]}"/>
+                                <field name="super_perf" attrs="{'required': [('state', '=', 'mgr')], 'invisible': [('state', 'not in', ['mgr', 'done', 'emp_comment', 'appraised'])],
+                                'readonly':[('state', '!=', 'mgr')]}"/>
+                                <field name="super_recommend" attrs="{'required': [('state', '=', 'mgr')], 'invisible': [('state', 'not in', ['mgr', 'done', 'emp_comment', 'appraised'])],
+                                'readonly':[('state', '!=', 'mgr')]}"/>
+                            </group>
+                            <group string="Appraisee's Comment Section">
+                                <field name="appraisee_comment" attrs="{'required': [('state', '=', 'emp_comment')], 'invisible': [('state', 'not in', ['emp_comment', 'mgr', 'appraised','done'])],
+                                'readonly':[('state', '!=', 'emp_comment')]}"/>
+                            </group>
+                            <group string="HR Section">
+                                <field name="hr_comment" attrs="{'required': [('state', '=', 'appraised')], 'invisible': [('state', 'not in', ['appraised', 'done'])],
+                                'readonly':[('state', '!=', 'appraised')]}"/>
+                                <field name="kpi_score" attrs="{'invisible': [('state', 'not in', ['appraised', 'done'])]}"/>
+                                <field name="kpi_core" attrs="{'invisible': [('state', 'not in', ['appraised', 'done'])]}"/>
+                                <field name="kpi_score_biz" attrs="{'invisible': [('state', 'not in', ['appraised', 'done'])]}"/>
+                            </group>
+                        </footer>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_smart_kpi" model="ir.actions.act_window">
+            <field name="name">Smart KPI</field>
+            <field name="res_model">if.smart.kpi</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a KPI NOW, the first step in an Employee Evaluation.
+                </p><p>
+                The Manager needs to agree with the Employee on the set objectives for the period
+            </p>
+            </field>
+        </record>
+        <menuitem id="menu_kpi"
+              name="Appraisal Form/KPI"
+              parent="kpi_menu"
+              action="action_smart_kpi"/>
+    </data>
+</odoo>
+

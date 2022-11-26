@@ -101,7 +101,7 @@ class ApplicationAPI(http.Controller):
         except Exception as e:
             response['message'] = "ERROR: %r %r" % (e, kw)
             response['success'] = False
-        _logger.info("Response: %s", response)
+        # _logger.info("Response: %s", response)
         dump_res = json.dumps(response, default=lambda o: o.__dict__)
         load_res = json.loads(dump_res)
         return response

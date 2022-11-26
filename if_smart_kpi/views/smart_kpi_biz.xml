@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="kpi_biz_tree" model="ir.ui.view">
+            <field name="name">smart.kpi.biz.tree</field>
+            <field name="model">smart.kpi.biz</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Business Process">
+                    <field name="name"/>
+                    <field name="max_score3"/>
+                </tree>
+            </field>
+        </record>
+        <record id="kpi_biz_form" model="ir.ui.view">
+            <field name="name">smart.kpi.biz.form</field>
+            <field name="model">smart.kpi.biz</field>
+            <field name="arch" type="xml">
+                <form string="KPI Business Process">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="mea_success3"/>
+                            <field name="max_score3"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kpi_biz" model="ir.actions.act_window">
+            <field name="name">Business Process</field>
+            <field name="res_model">smart.kpi.biz</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="smart_kpi_biz" parent="if_smart_kpi.kpi_config"
+                  name="Business Process"
+                  action="action_kpi_biz"
+                  groups="if_smart_kpi.group_kpi_manager"
+                  sequence="30"/>
+    </data>
+</odoo>

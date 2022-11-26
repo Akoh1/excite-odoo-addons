@@ -6,12 +6,12 @@
 			<field name="arch" type="xml">
 
 
-                <xpath expr="//button[@id='draft_confirm']" position="attributes">
-					<!-- <attribute name="states">cfo_approve</attribute> -->
-					<attribute name="invisible">1</attribute>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+					
+					<attribute name="readonly">0</attribute>
                 </xpath>
 
-                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+               <!--  <xpath expr="//button[@id='bid_confirm']" position="attributes">
 					<attribute name="states">cfo_approve</attribute>
                 </xpath>
 
@@ -23,9 +23,66 @@
 					<button name="button_cfo_approve" type="object" states="sent" 
 						string="CFO Approve" groups="fhfl_sales_custom.group_purchase_cfo_admin"
 						class="oe_highlight"/>
-              </xpath>
+              </xpath> -->
 
 				
 			</field>
 		</record>
+
+
+		<record id="view_fhfl_purchase_requisition_form" model= "ir.ui.view">
+			<field name="name">fhfl.purchase.requisition.form</field>
+			<field name="model">purchase.requisition</field>
+			<field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//div[2]" position="inside">
+					<h3 class="mt0">
+		            
+		              Title: <field name="title" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+		          </h3>
+		        </xpath>
+                <xpath expr="///field[@name='currency_id']" position="after">
+					<field name="company_email"/>
+					<field name="company_name"/>
+					<field name="files_url" widget="url"/>
+                </xpath>
+
+           		<xpath expr="///field[@name='origin']" position="after">
+					<field name="contact_name"/>
+					<field name="contact_phone"/>
+                </xpath>
+
+				
+			</field>
+		</record>
+
+
+	<record id="tender_email_template" model="mail.template">
+          <field name="name">Tender Application Receipt Email Template</field>
+          <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
+          <field name="subject">Tender Application Receipt Acknowledgement</field>
+          <field name="email_to">${object.company_email|safe}</field>
+          <field name="lang">${object.lang}</field>
+          <field name="model_id" ref="model_purchase_requisition"/>
+          <!-- <field name="model_id"ref="module_name.model_sample.mail"> -->
+          <field name="auto_delete" eval="True"/>
+          <field name="body_html">
+            <![CDATA[
+            <p><strong>Dear ${(object.contact_name)}</strong></p>,<br/>
+            <p>This is to inform you that your application for Tender    <strong>${(object.title)}</strong><br/>
+            with reference <strong>${(object.name)}</strong> has been received.</p><br/><br/>
+            % if object.user_id:
+			<p>Your Contact:</p>
+			<p>Name: ${object.user_id.name}</p>
+			<p>Email: ${object.user_id.email or ''}</p>
+			<p>Phone: ${object.user_id.phone or ''} </p>                           
+			% endif
+              ${(object.company_id.name)}
+            
+          ]]>
+        </field>
+  </record>
+
+
 </odoo>

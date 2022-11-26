@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="kfa_report_employee">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px !important;margin:0 0 0 60; padding:0">
+                            <div class="row mt32 mb32">
+                                <table class="table table-condensed" style="border-top:1px solid black;border-bottom:1px solid black; padding:0; margin:0 0 5 0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: none; width: 500; padding-top:5;">
+                                                <strong>KPI Month</strong>
+                                                <span t-att-style="style" t-esc="o.name" />
+                                            </td>
+                                            <td style="border: none; width: 500; padding-top:5;">
+                                                <strong>Year</strong>
+                                                <span t-att-style="style" t-esc="o.year.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none; width: 500; padding-top:5;">
+                                                <strong>Employee</strong>
+                                                <span t-att-style="style" t-esc="o.employee_id.name" />
+                                            </td>
+                                            <td style="border: none; width: 500; padding-top:5;">
+                                                <strong>KPI</strong>
+                                                <span t-att-style="style" t-esc="o.appraiser.name" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br/> <br/>
+                                <table class="table table-condensed" style="padding:0; margin:0">
+                                    <tbody>
+                                        <t t-if="o.kpi_goals_ids">
+                                            <tr>
+                                                <td colspan="2" style="text-align: justify; border: none; width: 500; ">
+                                                    <strong>KPI Questions:</strong>
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:10%;">Question</td>
+                                                <td style="width:15%;">Description</td>
+                                                <td style="width:10%;">Weight Age</td>
+                                                <td style="width:15%;">Manager Rating</td>
+                                                <td style="width:5%;">Manager Remark</td>
+                                                <td style="width:15%;">Final Score</td>
+                                            </tr>
+                                            <tr t-foreach="o.kpi_goals_ids" t-as="l">
+                                                <td style="width:10%;">
+                                                    <span t-field="l.name" />
+                                                </td>
+                                                <td style="width:15%;">
+                                                    <span t-field="l.perf_area" />
+                                                </td>
+                                                <td style="width:10%;">
+                                                    <span t-field="l.max_score" />
+                                                </td>
+                                                <td style="width:15%;">
+                                                    <span t-field="l.score" />
+                                                </td>
+                                                <td style="width:5%;">
+                                                    <span t-field="l.comment" />
+                                                </td>
+                                                <td style="width:15%;">
+                                                    <span t-field="l.final_score" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <report id="report_kra_employee" string="Employee KPI" model="if.smart.kpi" report_type="qweb-pdf" file="if_smart_kpi.kra_report_employee" name="if_smart_kpi.kfa_report_employee" />
+    </data>
+</odoo>

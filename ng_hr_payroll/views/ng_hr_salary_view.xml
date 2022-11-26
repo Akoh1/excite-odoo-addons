@@ -280,5 +280,7 @@
 			binding_model="salary.increment"
 		/>
 
+		
+
 	</data>
 </odoo>        

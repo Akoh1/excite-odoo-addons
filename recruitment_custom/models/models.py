@@ -78,7 +78,7 @@ class Applicant(models.Model):
 
     interview_scores = fields.Float("Interview Scores")
     resume = fields.Binary(string='Resume/CV')
-    resume_id = fields.Many2one('ir.attachment', string="Resume Attachment", required=True)
+    # resume_id = fields.Many2one('ir.attachment', string="Resume Attachment", required=True)
 
     # @api.onchange('stage_id')
     # def _onchange_stage(self):

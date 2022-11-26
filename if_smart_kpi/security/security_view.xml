@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="group_kpi_manager" model="res.groups">
+           <field name="name">KPI Manager</field>
+           <field name="implied_ids" eval="[(4, ref('base.user_admin'))]"/>
+         </record>
+
+
+        <record id="group_kpi_employee_manager" model="res.groups">
+           <field name="name">Employee Manager</field>
+           <field name="implied_ids" eval="[(4, ref('base.user_admin'))]"/>
+         </record>
+
+<!--        <record id="hr_manager_record_rule" model="ir.rule">-->
+<!--            <field name="name">HR Manager KPI Rule</field>-->
+<!--            <field name="model_id" ref="model_smart_kpi"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--            <field name="domain_force">[]</field>-->
+<!--            <field name="groups" eval="[(4,ref('hr.group_hr_manager'))]"/>-->
+<!--        </record>-->
+
+
+        <record id="if_smart_kpi_record_rule_ti" model="ir.rule">
+            <field name="name">Employee Manager KPI Rule</field>
+            <field name="model_id" ref="if_smart_kpi.model_if_smart_kpi"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">[('appraiser_user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('if_smart_kpi.group_kpi_employee_manager'))]"/>
+        </record>
+
+        <record id="hr_employee_manager_record_rule" model="ir.rule">
+            <field name="name">HR Manager KPI Rule</field>
+            <field name="model_id" ref="if_smart_kpi.model_if_smart_kpi"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('if_smart_kpi.group_kpi_manager'))]"/>
+        </record>
+
+        <record id="if_smart_kpi_record_rule_emp" model="ir.rule">
+            <field name="name">Employee KPI</field>
+            <field name="model_id" ref="model_if_smart_kpi"/>
+            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+<!--        <record id="hr_dg_record_rule" model="ir.rule">-->
+<!--            <field name="name">DG Rule</field>-->
+<!--            <field name="model_id" ref="model_hr_kpi"/>-->
+<!--            <field eval="True" name="global"/>-->
+<!--            <field name="domain_force">[]</field>-->
+<!--            <field name="groups" eval="[(4,ref('ng_hr_kpi.group_dg'))]"/>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

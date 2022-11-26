@@ -49,93 +49,100 @@ class CreateJouranlAPI(http.Controller):
         # load_res = json.loads(dump_res)
         return dump_res
 
-    # @http.route('/membership/registration/auto-save',
- #                type='json', methods=['POST'], auth='user',
- #                website=True, )
- #    def auto_save(self, **data):
- #        cleaned_data = self.clean_data(data.copy())
- #        partner = request.env.user.partner_id
- #        current_page = data.get("current_page")
- #        previous_page = current_page - 1
 
- #        registration = request.env["membership.registration"]. \
- #            sudo().search([["member", "=", partner.id]], limit=1)
+class TenderAPI(http.Controller):
 
- #        if 'liasion_number' in cleaned_data and cleaned_data['liasion_number']:
- #            liasion_partner = request.env["res.partner"]. \
- #                sudo().search([
- #                    ["membership_number", "=", cleaned_data['liasion_number']]
- #                ], limit=1)
- #            if liasion_partner:
- #                cleaned_data['liaising_officer_name'] = liasion_partner.name
- #                cleaned_data['liaising_officer_phone'] = liasion_partner.phone
- #                cleaned_data['liaising_officer_email'] = liasion_partner.email
- #            else:
- #                cleaned_data['liasion_number'] = False
+    @http.route('/custom/api/tenders', type='http', methods=['GET'], auth='public', csrf=False)
+    def get_tenders(self, **kw):
+        
+        purReqModel = request.env['purchase.requisition']
+       
+        response = {}
+        try:
+            purReqRecords = purReqModel.sudo().search([])
+            response['data'] = []
+            for rec in purReqRecords:
 
- #        if 'liasion_check' in cleaned_data and cleaned_data['liasion_check']:
- #            if cleaned_data['liasion_check'] == 'yes':
- #                cleaned_data['is_member'] = True
- #            else:
- #                cleaned_data['is_member'] = False
- #            del cleaned_data['liasion_check']
+                response['data'].append({
+                    'id': rec.id,
+                    'name': rec.name,
+                    'title': rec.title,
+                    'company_name': rec.company_name,
+                    'company_email': rec.company_email,
+                    'contact_name': rec.contact_name,
+                    'contact_phone': rec.contact_phone,
+                    'files_url': rec.files_url,
+                })
+            response['message'] = "ok"
 
- #        if previous_page == self.pages["previous_organisation"] \
- #                and data.get("name/0/", False):
- #            lines = self.parse_dict(cleaned_data)
- #            registration.previous_organization_ids.unlink()
- #            cleaned_data.update({
- #                "previous_organization_ids": lines,
- #            })
+        except Exception as e:
+            response['message'] = "ERROR fetching records: %r" % (e)
+        dump_res = json.dumps(response)
+        return dump_res
 
- #        if "pardon_evidence" in data and data["pardon_evidence"]:
- #            cleaned_data["pardon_evidence"] = True
+    @http.route('/custom/api/tenders/<int:record_id>', type='json', methods=['PATCH'], auth='public', csrf=False)
+    def update_tenders(self, record_id, **kw):
+        data = kw
+        http_data = request.httprequest.data and json.loads(request.httprequest.data.decode('utf-8')) or {}
+        _logger.info("Json Data from Tenders API: %s", data)
+        _logger.info("http Data from Tenders API: %s", http_data)
+        modelObj = request.env['purchase.requisition']
+        jobPosModel = request.env['hr.job']
+        response = {}
+        record = http_data or data
+        _logger.info("Record: %s", record)
 
- #        if previous_page == self.pages["declaration"]:
- #            cleaned_data["state"] = "new"
 
- #        _logger.info("Cleaned date: %s", cleaned_data)
- #        self.add_attachments(data, registration.id)
- #        registration.sudo().write(cleaned_data)
+        modelObjData = modelObj.sudo().search([('id', '=', record_id)])
+        
+        try:
+            if 'title' in record:
+                record['title'] = int(record['title'])
 
- #        partner_data = {}
- #        fields_to_map = ["mobile_phone", "home_address", "nationality"]
- #        field_map = {
- #            "mobile_phone": "phone",
- #            "home_address": "street",
- #            "nationality": "country_id",
- #        }
- #        for field in fields_to_map:
- #            if field in cleaned_data:
- #                if field == "nationality":
- #                    partner_data[field_map[field]] = \
- #                        int(cleaned_data[field])
- #                else:
- #                    partner_data[field_map[field]] = \
- #                        cleaned_data[field]
+            if not modelObjData:
+                response['message'] = "No Record found for id(%s) in given model(%s)." % (
+                record_id, 'purchase.requisition')
+                response['success'] = False
+            
+            # modelObjData = modelObj.sudo().search([('id', '=', record_id)])
+            else:
+                modelObjData.sudo().write(record)
+                request.env.cr.commit()
+                response['model_id'] = modelObjData.id
+                response['message'] = "Record has been updated"
+                response['success'] = True
+                
+        except Exception as e:
+            e = "Cannot update title of this record from Web" if 'title' in record else e
+            response['message'] = "ERROR: %r" % (e)
+            response['success'] = False
+        # _logger.info("Response: %s", response)
+        # if response.get('success') is True:
+        #     _logger.info("Send mail function")
+        #     templ = request.env.ref('fhfl_sales_custom.tender_email_template')
+        #     _logger.info("Mail template: %s", templ)
+    
+        #     _logger.info("Testing code block")
 
- #        partner = request.env.user.partner_id
- #        partner.sudo().write(partner_data)
- #        request.env.cr.commit()
- #        return {
- #            "completed": previous_page == self.pages["declaration"],
- #            "updated": True,
- #        }
+        
+        #     _logger.info("Model to send mail: %s", modelObjData)
+          
+        #     _logger.info("Loop self")
 
-# class Module14Template(http.Controller):
-#     @http.route('/module_14_template/module_14_template/', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
+            
+        #     request.env['mail.template'].browse(templ.id). \
+        #         send_mail(modelObjData.id, force_send=True, raise_exception=True)
+                
+        dump_res = json.dumps(response, default=lambda o: o.__dict__)
+        load_res = json.loads(dump_res)
+        return response
 
-#     @http.route('/module_14_template/module_14_template/objects/', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('module_14_template.listing', {
-#             'root': '/module_14_template/module_14_template',
-#             'objects': http.request.env['module_14_template.module_14_template'].search([]),
-#         })
 
-#     @http.route('/module_14_template/module_14_template/objects/<model("module_14_template.module_14_template"):obj>/', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('module_14_template.object', {
-#             'object': obj
-#         })
+
+
+
+
+
+
+
+

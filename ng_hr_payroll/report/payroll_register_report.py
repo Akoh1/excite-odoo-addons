@@ -48,6 +48,7 @@ class payroll_register_report(models.AbstractModel):
 
         mnth_name = []
         rules = []
+        self.rules.clear()
         #        category_id = form.get('category_id', [])
         #        category_id = category_id and category_id[0] or False
         #        rule_ids = self.env['hr.salary.rule'].search(self.cr, self.uid, [('category_id', '=', category_id)])
@@ -55,12 +56,15 @@ class payroll_register_report(models.AbstractModel):
         if rule_ids:
             for r in self.env["hr.salary.rule"].browse(rule_ids):
                 mnth_name.append(r.name)
+                _logger.info("Rule name: %s", r.name)
                 rules.append(r.id)
-                self.rules.append(r.id)
+                # self.rules.append(r.id)
                 self.rules_data.append(r.name)
         _logger.info("Rules: %s", rules)
+        # _logger.info("Self Rules: %s", self.rules)
+        # self.rules.clear()
+        self.rules.extend(rules)
         _logger.info("Self Rules: %s", self.rules)
-        # self.rules = rules
         # self.rules_data = mnth_name
         return [mnth_name]
 
@@ -266,6 +270,7 @@ class payroll_register_report(models.AbstractModel):
         total_mnths = ["Total", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # only for pdf report!
         emp_obj = self.env["hr.employee"]
         emp_ids = form.get("employee_ids", [])
+        sum_total = 0
 
         total_excel_months = [
             "Total",
@@ -279,10 +284,10 @@ class payroll_register_report(models.AbstractModel):
             #                     ('state', '=', 'open')])
             emp_salary.append(emp_id.job_title)
             emp_salary.append(emp_id.registration_number)
-            emp_salary.append(emp_id.contract_id.salary_grade.name)
+            # emp_salary.append(emp_id.contract_id.salary_grade.name)
             emp_salary.append(emp_id.emp_status)
             emp_salary.append(emp_id.emp_date)
-            emp_salary.append(emp_id.paye_state)
+            # emp_salary.append(emp_id.paye_state)
             emp_salary.append(emp_id.bank_account_id.bank_id.name)
             emp_salary.append(emp_id.bank_account_id.acc_number)
             emp_salary.append(emp_id.name)
@@ -293,9 +298,15 @@ class payroll_register_report(models.AbstractModel):
                 )
             else:
                 emp_salary, total, total_mnths = self.get_salary(form, emp_id.id, emp_salary, total_mnths)
+            _logger.info("Emp salary: %s", emp_salary)
+            _logger.info("get emp total: %s", total)
+            _logger.info("get emp total_mnths: %s", total_mnths)
+            _logger.info("Emp salary: %s", emp_salary)
+            sum_total += total
             emp_salary.append(total)
             salary_list.append(emp_salary)
             emp_salary = []
+        total_mnths.append(sum_total)
         self.mnths_total.append(total_mnths)
         return salary_list
 

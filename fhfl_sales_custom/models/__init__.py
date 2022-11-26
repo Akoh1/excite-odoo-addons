@@ -12,4 +12,4 @@ from . import lms
 from . import help_own
 from . import crm_sale
 from . import account_asset
-# from . import purchase
+from . import purchase

@@ -1,0 +1,20 @@
+<odoo>
+  <data>
+
+    <menuitem id="menu_kpi_root"
+              name="Smart KPI"
+              web_icon="if_smart_kpi,static/description/icon.png"/>
+
+    <menuitem id="kpi_menu"
+              name="Smart KPI"
+              parent="if_smart_kpi.menu_kpi_root"/>
+
+    <menuitem id="kpi_config"
+              name="Configurations"
+              parent="if_smart_kpi.menu_kpi_root"/>
+
+
+
+
+  </data>
+</odoo>

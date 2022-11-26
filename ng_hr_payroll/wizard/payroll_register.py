@@ -78,26 +78,30 @@ class payroll_reg(models.TransientModel):
             main_header = obj_pr.get_periods(datas["form"])
             _logger.info("Main header: %s", main_header)
             row = self.render_header(sheet, ["Job Title"] + ["Staff Number"] +
-                                     ['Grade'] + ['Employment Status'] + ['Date Employed'] +
-                                     ['PAYE State'] + ['Bank Name'] + ['Account Number'] +
+                                     ['Employment Status'] + ['Date Employed'] +
+                                     ['Bank Name'] + ['Account Number'] +
                                      ["Name"] + main_header[0] + ["Total"], first_row=5)
             _logger.info("Row: %s", row)
+            _logger.info("Data form: %s", datas["form"])
             emp_datas = obj_pr.get_employee(datas["form"], excel=True)
             _logger.info("Emp Data: %s", emp_datas)
             value_style = xlwt.easyxf("font: name Helvetica,bold on", num_format_str="#,##0.00")
             cell_count = 0
             for value in emp_datas:
+                _logger.info("value in emp_datas: %s", value)
                 for v in value:
-                    sheet.write(row, cell_count, v, value_style)
+                    # sheet.write(row, cell_count, v, value_style)
+                    sheet.write(row, cell_count, v)
                     cell_count += 1
                 row += 1
                 cell_count = 0
-            sheet.write(row + 1, 0, "Total", value_style)
+            sheet.write(row + 1, 0, "Total")
             total_datas = obj_pr.get_months_tol()
-            cell_count = 1
+            _logger.info("total_datas: %s", total_datas)
+            cell_count = 7
             row += 1
             for record in total_datas[-1][1:]:
-                sheet.write(row, cell_count, record, value_style)
+                sheet.write(row, cell_count, record)
                 cell_count += 1
 
             stream = BytesIO()
@@ -112,6 +116,8 @@ class payroll_reg(models.TransientModel):
             myres = actid.read()[0]
             myres["domain"] = "[('id','in',[" + ",".join(map(str, [ir_attachment])) + "])]"
             return myres
+        else:
+            pass
         return self.env["report"].get_action(self, "ng_hr_payroll.payroll_register_report", data=datas)
 
     def render_header(self, ws, fields, first_row=0):

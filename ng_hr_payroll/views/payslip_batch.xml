@@ -66,5 +66,16 @@
 			</field>
 		</record>
 
+		<record id="hr_payroll_ng_inherit" model="ir.ui.view">
+			<field name="name">hr.payroll.ng.inherit</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+			<field name="arch" type="xml">
+				    <xpath expr="//page[@name='worked_days_input']/field[@name='worked_days_line_ids']/tree/field[@name='number_of_days']" position="replace">
+    					<field name="number_of_days" sum="Total Working Days"/>
+					</xpath>
+			</field>
+		</record>
+
 	</data>
 </odoo>
